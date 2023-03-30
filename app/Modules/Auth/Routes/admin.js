@@ -1,9 +1,14 @@
 const {Router} = require('express');
 const {guest} = require('../Middlewares/Guest');
+const {authenticated} = require('../Middlewares/Auth');
 const AuthController = require('../Controllers/Admin/AuthController');
 const ForgetPasswordController = require('../Controllers/Admin/ForgetPasswordController');
 
-const router = new Router('').use(guest);
+const router = new Router('');
+
+router.get('/logout',(req,res,next) => {return authenticated(req,res,next,'admin')},AuthController.logout);
+
+router.use((req,res,next) => {return guest(req,res,next,'admin')});
 
 router.get('/login',AuthController.loginForm);
 

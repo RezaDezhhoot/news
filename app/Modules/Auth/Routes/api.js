@@ -1,10 +1,11 @@
 const {Router} = require('express');
 const {guest} = require('../Middlewares/Guest');
+const {authenticated} = require('../Middlewares/Auth');
 const AuthController = require('../Controllers/Api/V1/AuthController');
 const TokenController = require('../Controllers/Api/V1/TokenController');
 const ForgetPasswordController = require('../Controllers/Api/V1/ForgetPasswordController');
 
-const routerV1 = new Router('').use(guest);
+const routerV1 = new Router().use(guest);
 
 routerV1.post('/register/get-token',TokenController.store);
 

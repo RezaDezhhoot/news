@@ -37,3 +37,11 @@ exports.login = async (req , res ,next) => {
         return res.redirect('login');
     }
 }
+
+exports.logout = (req , res , next) => {
+    req.logout(function(err) {
+        req.session = null;
+        if (err) { return next(err); }
+        return res.redirect('login');
+    });
+}
