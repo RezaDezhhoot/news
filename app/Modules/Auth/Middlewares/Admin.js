@@ -1,7 +1,8 @@
-exports.authenticated = (req,res,next) => {
-    if (req.isAuthenticated()){
+exports.admin = (req,res,next) => {
+    if (req.isAuthenticated() && req.user.role === "admin"){
         return next();
     }
 
-    return res.redirect('/prefix/404');
+    return res.status(403).json({data:{result:'unauthorized admin'},message:'error'});
+
 }

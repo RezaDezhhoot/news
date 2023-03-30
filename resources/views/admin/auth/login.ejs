@@ -1,0 +1,46 @@
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form action="login" class="login100-form validate-form p-l-55 p-r-55 p-t-178" method="post">
+					<span class="login100-form-title">
+                        <%= page_title %>
+					</span>
+
+               <div>
+                   <%- include('../../includes/validation-errors') %>
+               </div>
+
+                <div class="wrap-input100 validate-input m-b-16" data-validate="شماره همراه را وارد نمایید">
+                    <input value="<%= oldPhone%>" class="input100" type="text" id="phone" name="phone" placeholder="شماره همراه">
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input m-b-16" data-validate = "رمز عبور را وارد نمایید">
+                    <input class="input100" type="password" id="password" name="password" placeholder="رمز عبور">
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input mt-2" data-validate = "فیلد امینیتی">
+                    <div class="g-recaptcha" data-sitekey="<%= site_key%>"></div>
+                </div>
+
+                <div class="text-right p-t-13 p-b-23">
+						<span class="txt1">
+							فراموشی
+						</span>
+
+                    <a href="forget-password" class="txt2">
+                        رمز عبور
+                    </a>
+                </div>
+
+                <div class="container-login100-form-btn p-b-40">
+                    <button class="login100-form-btn" type="submit">
+                        ورود
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+	

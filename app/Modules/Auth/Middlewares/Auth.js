@@ -3,5 +3,5 @@ exports.authenticated = (req,res,next) => {
         return next();
     }
 
-    return res.redirect('/prefix/404');
+    return res.status(401).json({data:{result:'unauthorized user'},message:'error'});
 }
