@@ -34,6 +34,7 @@ exports.register = async (req , res) => {
             });
             return res.status(422).json({ data: errorArr, message: 'error' });
         }
+        await Token.deleteMany({phone});
         const user = await User.create({full_name,phone,email,password});
         return res.status(201).json({data:UserResource.make(user,utils.makeToken(user)),message:'success'});
     } catch (e) {

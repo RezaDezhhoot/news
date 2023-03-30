@@ -27,7 +27,7 @@ exports.store = async (req , res) => {
                 ]
         })){
             errorArr.push({
-                filed: 'phone',
+                filed: 'code',
                 message: 'کد تایید قبلا ارسال شده است'
             });
             return res.status(403).json({ data: errorArr, message: 'error' });

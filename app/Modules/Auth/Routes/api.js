@@ -14,8 +14,8 @@ routerV1.post('/register',AuthController.register);
 
 routerV1.post('/login',AuthController.login);
 
-routerV1.post('/forget-password/get-token',ForgetPasswordController.store);
+routerV1.post('/forget-password',ForgetPasswordController.store);
 
-routerV1.post('/forget-password',ForgetPasswordController.verify);
+routerV1.patch('/reset-password',ForgetPasswordController.reset);
 
 exports.routerV1 = routerV1;
