@@ -14,7 +14,7 @@ exports.store = async (req , res) => {
 
         if (await User.findOne({ phone })) {
             errorArr.push({
-                name: 'phone',
+                filed: 'phone',
                 message: 'کاربر با این شماره موجود است'
             });
             return res.status(422).json({ data: errorArr, message: 'error' });
@@ -27,7 +27,7 @@ exports.store = async (req , res) => {
                 ]
         })){
             errorArr.push({
-                name: 'phone',
+                filed: 'phone',
                 message: 'کد تایید قبلا ارسال شده است'
             });
             return res.status(403).json({ data: errorArr, message: 'error' });
@@ -57,7 +57,7 @@ exports.verify = async (req , res) => {
         const code = req.body.code;
         if (await User.findOne({ phone })) {
             errorArr.push({
-                name: 'phone',
+                filed: 'phone',
                 message: 'کاربر با این شماره موجود است'
             });
             return res.status(422).json({ data: errorArr, message: 'error' });
@@ -76,7 +76,7 @@ exports.verify = async (req , res) => {
             return res.status(200).json({ data: {phone: token['phone'],result:'شماره همراه با موفقیت اعبارسنجی شد'}, message: 'success' });
         }
         errorArr.push({
-            name: 'code',
+            filed: 'code',
             message: 'کد تایید نامعتبر'
         });
         return res.status(422).json({ data:errorArr, message: 'error' });

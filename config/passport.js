@@ -1,28 +1,31 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const UserModel = require('../app/Modules/User/Models/User');
-
+const bcrypt = require('bcryptjs');
 const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 
 passport.use(
     'login',
     new localStrategy({
-            usernameField: 'email',
+            usernameField: 'phone',
             passwordField: 'password'
         },
-        async(email, password, done) => {
+        async(phone, password, done) => {
             try {
-                const user = await UserModel.findOne({ email });
-
+                const user = await UserModel.findOne({ phone });
                 if (!user) {
-                    return done(null, false, { message: 'کاربری با این ادرس ایمیل یافت نشد' });
+                    return done(null, false, { message: 'کاربری با این شماره همراه یافت نشد' });
                 }
 
-                const validate = await user.isValidPassword(password);
+                const isMatch = await bcrypt.compare(password,user.password);
 
-                if (!validate) {
-                    return done(null, false, { message: 'رمر عبور یا ادرس ایمیل اشتباه می باشد' });
+                if (isMatch){
+                    return done(null,user);
+                } else {
+                    return done(null,false,{
+                        message: "نام کاربری یا کلمه عبور صحیح نمی باشد"
+                    });
                 }
 
                 return done(null, user, { message: 'ورود با موفقیت انجام شد' });

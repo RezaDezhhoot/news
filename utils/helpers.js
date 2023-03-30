@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 module.exports.normalizeIranianPhoneNumber = (phone) => {
     return phone.startsWith('0') || phone.startsWith('98') ? phone : '0' + phone;
 }
@@ -30,4 +31,11 @@ module.exports.getErrors = (exception) => {
         errors: errorArr,
         status
     };
+}
+
+module.exports.makeToken = (user) => {
+    return jwt.sign({
+            user: { _id: user._id, email: user.phone }
+        }, 'TOP_SECRET'
+    );
 }

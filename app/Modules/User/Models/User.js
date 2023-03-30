@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema({
         required: [true,'شماره همراه الزامی می باشد'],
         trim: true,
         unique: [true,'این شماره همراه قبلا ثبت شده است'],
-        match: /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/,
     },
     email: {
         type: String,
