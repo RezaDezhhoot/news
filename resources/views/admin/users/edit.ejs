@@ -25,6 +25,7 @@
                             <select class="form-control" name="role" id="role">
                                 <option value=""></option>
                                 <option value="admin" <%= (oldData?.role ?? user?.role) === 'admin' ? 'selected': '' %> >admin</option>
+                                <option value="administrator" <%= (oldData?.role ?? user?.role) === 'administrator' ? 'selected': '' %> >administrator</option>
                                 <option value="user" <%= (oldData?.role ?? user?.role) === 'user' ? 'selected': '' %> >user</option>
                             </select>
                         </div>

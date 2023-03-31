@@ -7,7 +7,7 @@ const shortid = require('shortid');
 
 exports.index = async (req,res) => {
     const page = +req.query.page || 1;
-    const userPerPage = 12;
+    const userPerPage = 10;
     let users , userNumbers;
     if (req.query.search) {
         users = await User.find({phone: {$regex: '.*' + req.query.search + '.*'}}).sort([['created_at', 'descending']]).skip((page-1)*userPerPage).limit(userPerPage);
@@ -104,7 +104,9 @@ exports.update = async (req,res) => {
         }
 
         user.full_name = full_name;
-        user.role = role;
+        if (user.role !== "administrator" && role !== "administrator") {
+            user.role = role;
+        }
         user.status = status;
 
         if (password) {
@@ -121,6 +123,13 @@ exports.update = async (req,res) => {
 }
 
 exports.destroy = async (req,res) => {
+    const user = await User.findOne({$and:[
+            {_id:req.params.id},
+        ]});
+
+    if (!user || user.role === "administrator") {
+        return utils.abort(404,res);
+    }
     await User.findByIdAndRemove(req.params.id);
     return res.redirect('/admin');
 }
