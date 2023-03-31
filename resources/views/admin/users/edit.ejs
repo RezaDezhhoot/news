@@ -22,10 +22,12 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="role">نقش*</label>
-                            <select class="form-control" name="role" id="role">
+                            <select <%= (user?.role) === 'administrator' ? 'disabled': '' %> class="form-control" name="role" id="role">
                                 <option value=""></option>
                                 <option value="admin" <%= (oldData?.role ?? user?.role) === 'admin' ? 'selected': '' %> >admin</option>
-                                <option value="administrator" <%= (oldData?.role ?? user?.role) === 'administrator' ? 'selected': '' %> >administrator</option>
+                                <% if(user?.role === 'administrator') { %>
+                                    <option selected >administrator</option>
+                                <% } %>
                                 <option value="user" <%= (oldData?.role ?? user?.role) === 'user' ? 'selected': '' %> >user</option>
                             </select>
                         </div>
@@ -49,10 +51,12 @@
                                 <input type="file" name="image" class="custom-file-input" id="customFile">
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                             </div>
-                            <div class="symbol symbol-50 symbol-lg-120 mt-4">
+                            <% if (user.image) {%>
+                            <div class="symbol symbol-40 symbol-lg-80 mt-4">
                                 <img src="<%= asset(`${USER_PROFILE_IMAGE_FOLDER}/${user.image}`)%>"  class="mr-1 mb-1 imglist"
                                      style="border-radius: 5px" />
                             </div>
+                            <%}%>
                         </div>
                     </div>
                 </div>

@@ -68,14 +68,24 @@ exports.update = async (req,res) => {
 
         req.flash("oldData",{full_name,email,phone,role,status});
 
-        await UserRequest.validate({...req.body,image},{
-           abortEarly: false
-        });
-
         const user = await User.findOne({_id: req.params.id});
         if (!user) {
             return utils.abort(404,res);
         }
+
+        if (user.role === "administrator") {
+            await UserRequest.validate({...req.body,role:"administrator",image},{
+                abortEarly: false
+            });
+        } else {
+            await UserRequest.validate({...req.body,image},{
+                abortEarly: false
+            });
+        }
+
+
+
+
 
 
         if (phone !== user.phone) {
