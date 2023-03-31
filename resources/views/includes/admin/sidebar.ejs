@@ -1,0 +1,48 @@
+<div class="aside aside-left d-flex flex-column" id="kt_aside">
+    <div class="aside-brand d-flex flex-column align-items-center flex-column-auto py-9">
+        <!--begin::Logo-->
+        <div class="btn p-0 symbol symbol-40 symbol-success" href="?page=index" id="kt_quick_user_toggle">
+            <div class="symbol-label">
+                <img alt="Logo" src="/admin/assets/media/svg/avatars/007-boy-2.svg" class="h-75 align-self-end" />
+            </div>
+        </div>
+        <!--end::Logo-->
+    </div>
+    <div class="aside-nav d-flex flex-column align-items-center flex-column-fluid pb-10">
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="کاربران">
+                <a href="/admin" class="nav-link btn btn-icon btn-lg btn-borderless <%= active === 'users' ? 'active' : '' %>">
+					<i class="flaticon2-user"></i>
+                </a>
+            </li>
+			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="دسته بندی ها">
+				<a href="/admin/categories" class="nav-link btn btn-icon btn-lg btn-borderless <%= active === 'categories' ? 'active' : '' %>">
+					<i class="flaticon-list-2"></i>
+				</a>
+			</li>
+			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="گالری">
+				<a href="/admin/gallery" class="nav-link btn btn-icon btn-lg btn-borderless <%= active === 'gallery' ? 'active' : '' %>">
+					<i class="flaticon2-image-file"></i>
+				</a>
+			</li>
+			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="مقالات">
+				<a href="/admin/articles" class="nav-link btn btn-icon btn-lg btn-borderless <%= active === 'articles' ? 'active' : '' %>">
+					<i class="flaticon2-writing"></i>
+				</a>
+			</li>
+			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="چنل های گفتوگو">
+				<a href="/admin/channels" class="nav-link btn btn-icon btn-lg btn-borderless <%= active === 'channels' ? 'active' : '' %>">
+					<i class="flaticon2-group"></i>
+				</a>
+			</li>
+        </ul>
+    </div>
+    <div class="aside-footer d-flex flex-column align-items-center flex-column-auto py-8">
+		<a href="/admin/profile" class="btn btn-icon btn-lg btn-borderless <%= active === 'profile' ? 'active' : '' %> mb-1" id="kt_quick_panel_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="پروفایل">
+			<i class="flaticon-profile"></i>
+		</a>
+        <a href="/admin/auth/logout" class="btn btn-icon btn-lg btn-borderless mb-1" id="kt_quick_panel_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="خروج">
+                <i class="flaticon-logout"></i>
+        </a>
+    </div>
+</div>

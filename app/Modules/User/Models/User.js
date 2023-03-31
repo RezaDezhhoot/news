@@ -35,11 +35,18 @@ const userSchema = new mongoose.Schema({
         default: "user",
         enum: ["admin","user"]
     },
+    status:{
+        type: Boolean,
+        default: true,
+        enum: [true,false]
+    },
     created_at: {
         type: Date,
         default: Date.now()
     }
 });
+
+userSchema.index({'$**': 'text'});
 
 userSchema.pre("save", function(next) {
     let user = this;

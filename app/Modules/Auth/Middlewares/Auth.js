@@ -2,8 +2,6 @@ const jwt = require("jsonwebtoken");
 const Process = require("process");
 
 exports.authenticated = (req,res,next,guard='api') => {
-    console.log();
-
     if (guard === 'api') {
         try {
             const authHeader = req.get('Authorization');
@@ -12,7 +10,6 @@ exports.authenticated = (req,res,next,guard='api') => {
             }
             const token = authHeader.split(" ")[1];
             const decodedToken = jwt.verify(token , process.env.JWT_SECRET);
-            console.log(decodedToken);
             if (! decodedToken) {
                 return res.status(401).json({data:{result:'unauthorized user'},message:'error'});
             }

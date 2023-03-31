@@ -11,6 +11,6 @@ require(path.join(__dirname,'app/Providers/RouteServiceProvider')).loadApiRoutes
 require(path.join(__dirname,'app/Providers/RouteServiceProvider')).loadAdminRoutes(app);
 
 app.listen(process.env.port,() => {
-    console.log(`Server running in ${process.env.port} on port ${process.env.port}`);
+    console.log(`Server running in http://127.0.0.1:${process.env.port}`);
 });
 

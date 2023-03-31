@@ -1,0 +1,65 @@
+<div class="row mt-0 mt-lg-8">
+    <div class="col-12">
+        <div class="card card-custom gutter-b example example-compact">
+            <form action="/admin/update/<%= user.id%>" method="post" enctype="multipart/form-data">
+                <%- include('../../includes/admin/validation-errors') %>
+                <div class="card-header">
+                    <h3 class="card-title"><%=page_title%></h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="full_name">نام کاربر*</label>
+                            <input value="<%= oldData?.full_name ?? user.full_name%>" type="text" name="full_name" id="full_name" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="email">ادرس ایمیل</label>
+                            <input value="<%= oldData?.email ?? user.email%>" type="email" name="email" id="email" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="phone">شماره همراه*</label>
+                            <input value="<%= oldData?.phone ?? user.phone%>" type="text" name="phone" id="phone" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="role">نقش*</label>
+                            <select class="form-control" name="role" id="role">
+                                <option value=""></option>
+                                <option value="admin" <%= (oldData?.role ?? user?.role) === 'admin' ? 'selected': '' %> >admin</option>
+                                <option value="user" <%= (oldData?.role ?? user?.role) === 'user' ? 'selected': '' %> >user</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="status">وضعیت*</label>
+                            <select class="form-control" name="status" id="status">
+                                <option value=""></option>
+                                <option value="1" <%= ((oldData?.status ?? user?.status) == true) ? 'selected': '' %> >فعال</option>
+                                <option value="0" <%= (oldData?.status ?? user?.status) == false ? 'selected': '' %> >غیر فعال</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="password">رمز عبور</label>
+                            <input value="" type="password" name="password" id="password" class="form-control">
+                            <small class="text-info">در صورت رها کردن تغییری اعمال نمی شود</small>
+                        </div>
+                        <div class="form-group col-12">
+                            <label>تصویر پروفایل</label>
+                            <div></div>
+                            <div class="custom-file">
+                                <input type="file" name="image" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            <div class="symbol symbol-50 symbol-lg-120 mt-4">
+                                <img src="<%= asset(`${USER_PROFILE_IMAGE_FOLDER}/${user.image}`)%>"  class="mr-1 mb-1 imglist"
+                                     style="border-radius: 5px" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary mr-2">دخیره <i class="fa fa-save"></i></button>
+                    <a href="/admin"  class="btn btn-secondary">بازگشت <i class="fa fa-times"></i></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

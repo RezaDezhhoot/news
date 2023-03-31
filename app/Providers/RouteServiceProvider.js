@@ -8,11 +8,19 @@ exports.loadApiRoutes = (app) => {
 
     // Authentication API routes V1:
     const {routerV1} = require(path.join(appDir,'app','Modules/Auth/Routes/api.js'));
-    app.use('/api/v1',routerV1);
+    app.use('/api/v1/auth',routerV1);
+
+    // User API routes V1:
+    const {userRouterV1} = require(path.join(appDir,'app','Modules/User/Routes/api.js'));
+    app.use('/api/v1/user',userRouterV1);
 }
 
 exports.loadAdminRoutes = (app) => {
     // Authentication admin routes:
     const {routerAdmin} = require(path.join(appDir,'app','Modules/Auth/Routes/admin.js'));
     app.use('/admin/auth',routerAdmin);
+
+    // User admin routes:
+    const {routerUserAdmin} = require(path.join(appDir,'app','Modules/User/Routes/admin.js'));
+    app.use('/admin',routerUserAdmin);
 }

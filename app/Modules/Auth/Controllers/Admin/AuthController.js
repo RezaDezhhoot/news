@@ -28,7 +28,7 @@ exports.login = async (req , res ,next) => {
 
     if (json.success) {
         passport.authenticate("admin_login",{
-            successRedirect: 'dashboard',
+            successRedirect: '/admin',
             failureRedirect: 'login',
             failureFlash: true
         })(req,res,next);
