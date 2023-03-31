@@ -1,0 +1,44 @@
+<div class="row mt-0 mt-lg-8">
+    <div class="col-12">
+        <div class="card card-custom gutter-b example example-compact">
+            <form action="/admin/categories/store" method="post" enctype="multipart/form-data">
+                <%- include('../../includes/admin/validation-errors') %>
+                <div class="card-header">
+                    <h3 class="card-title"><%=page_title%></h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label for="title">عنوان*</label>
+                            <input value="<%= oldData?.title %>" type="text" name="title" id="title" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="status">وضعیت*</label>
+                            <select class="form-control" name="status" id="status">
+                                <option value=""></option>
+                                <option value="1" <%= ((oldData?.status) == true) ? 'selected': '' %> >فعال</option>
+                                <option value="0" <%= (oldData?.status) == false ? 'selected': '' %> >غیر فعال</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>تصویر </label>
+                            <div></div>
+                            <div class="custom-file">
+                                <input type="file" name="image" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="description">توضیحات</label>
+                            <textarea rows="10" class="form-control" name="description" id="description"><%= oldData?.description %></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary mr-2">دخیره <i class="fa fa-save"></i></button>
+                    <a href="/admin/categories"  class="btn btn-secondary">بازگشت <i class="fa fa-times"></i></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

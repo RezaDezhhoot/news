@@ -23,4 +23,8 @@ exports.loadAdminRoutes = (app) => {
     // User admin routes:
     const {routerUserAdmin} = require(path.join(appDir,'app','Modules/User/Routes/admin.js'));
     app.use('/admin',routerUserAdmin);
+
+    // Category admin routes:
+    const {routerCategoryAdmin} = require(path.join(appDir,'app','Modules/Category/Routes/admin.js'));
+    app.use('/admin/categories',routerCategoryAdmin);
 }

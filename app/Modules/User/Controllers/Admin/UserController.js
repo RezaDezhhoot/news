@@ -83,11 +83,6 @@ exports.update = async (req,res) => {
             });
         }
 
-
-
-
-
-
         if (phone !== user.phone) {
             if (await User.findOne({ $and:[
                     {phone},
@@ -129,6 +124,7 @@ exports.update = async (req,res) => {
     }
 
     req.flash("success_msg",'اظلاعات با موفقیت ذحیره شد');
+    req.flash("oldData",null);
     return res.redirect(`/admin/edit/${req.params.id}`);
 }
 
@@ -140,6 +136,6 @@ exports.destroy = async (req,res) => {
     if (!user || user.role === "administrator") {
         return utils.abort(404,res);
     }
-    await User.findByIdAndRemove(req.params.id);
+    await User.findOneAndDelete({id:req.params.id});
     return res.redirect('/admin');
 }
