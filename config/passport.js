@@ -48,7 +48,7 @@ passport.use(
             try {
                 const user = await UserModel.findOne({ $and: [
                         {phone: utils.normalizeIranianPhoneNumber(phone)},
-                        {role: "admin"}
+                        {$or:[{role: "admin"}, {role: "administrator"}]}
                     ]
                 });
                 if (!user) {

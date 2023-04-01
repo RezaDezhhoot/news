@@ -26,9 +26,9 @@ const categorySchema = new mongoose.Schema({
     }
 });
 
-categorySchema.pre("findOneAndDelete", function() {
-    console.log("called!!!");
-});
+// categorySchema.pre("findOneAndDelete", function() {
+//     console.log("called!!!");
+// });
 
 const Category = mongoose.model('Category', categorySchema);
 

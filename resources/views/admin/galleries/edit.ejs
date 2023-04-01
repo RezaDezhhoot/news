@@ -1,0 +1,62 @@
+<div class="row mt-0 mt-lg-8">
+    <div class="col-12">
+        <div class="card card-custom gutter-b example example-compact">
+            <form action="/admin/galleries/update/<%= gallery.id%>" method="post" enctype="multipart/form-data">
+                <%- include('../../includes/admin/validation-errors') %>
+                <div class="card-header">
+                    <h3 class="card-title"><%=page_title%></h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-12">
+                            <label for="title">عنوان*</label>
+                            <input value="<%= oldData?.title ?? gallery.title %>" type="text" name="title" id="title" class="form-control">
+                        </div>
+                        <div class="form-group col-12 col-lg-6">
+                            <label for="category">دسته این تصویر</label>
+                            <select class="form-control select2 " id="category" name="category">
+                                <option value="">انتخاب</option>
+                                <% for (let category in categories) { %>
+                                    <option <%= (oldData?.category ?? gallery?.category?.id) === categories[category]['id'] ? 'selected' : '' %> value="<%=categories[category]._id %>"> <%=categories[category]['title'] %></option>
+                                <%}%>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="status">وضعیت*</label>
+                            <select class="form-control" name="status" id="status">
+                                <option value=""></option>
+                                <option value="1" <%= ((oldData?.status ?? gallery.status) == true) ? 'selected': '' %> >فعال</option>
+                                <option value="0" <%= (oldData?.status ?? gallery.status) == false ? 'selected': '' %> >غیر فعال</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>تصویر </label>
+                            <div class="custom-file">
+                                <input type="file" name="image" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            <% if (gallery.image) {%>
+                                <div class="symbol symbol-40 symbol-lg-80 mt-4">
+                                    <img src="<%= asset(`${GALLERY_IMAGE_FOLDER}/${gallery.image}`)%>"  class="mr-1 mb-1 imglist"
+                                         style="border-radius: 5px" />
+                                </div>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary mr-2">دخیره <i class="fa fa-save"></i></button>
+                    <a href="/admin/galleries"  class="btn btn-secondary">بازگشت <i class="fa fa-times"></i></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(() => {
+        $('#category').select2()
+        $('#category').on('change', function (e) {
+            var data = $('#category').select2("val");
+        });
+    })
+</script>

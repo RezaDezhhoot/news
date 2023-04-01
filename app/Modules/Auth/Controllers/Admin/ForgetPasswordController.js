@@ -40,7 +40,7 @@ exports.forget = async (req , res , next) => {
 
         if (! await User.findOne({ $and:[
                 {phone},
-                {role: "admin"}
+                {$or:[{role: "admin"}, {role: "administrator"}]}
             ] })) {
             req.flash("error",'کاربری با این شماره یافت نشد');
             return res.redirect('forget-password');
@@ -102,7 +102,7 @@ exports.reset = async (req , res) => {
 
             const user = await User.findOne({$and:[
                     { phone },
-                    {role: "admin"}
+                    {$or:[{role: "admin"}, {role: "administrator"}]}
                 ]});
             if (! user) {
                 req.flash("error",'کاربری با این شماره یافت نشد');
