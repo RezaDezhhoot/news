@@ -13,6 +13,14 @@ exports.loadApiRoutes = (app) => {
     // User API routes V1:
     const {userRouterV1} = require(path.join(appDir,'app','Modules/User/Routes/api.js'));
     app.use('/api/v1/user',userRouterV1);
+
+    // Category API routes V1:
+    const {categoryRouterV1} = require(path.join(appDir,'app','Modules/Category/Routes/api.js'));
+    app.use('/api/v1/categories',categoryRouterV1);
+
+    // Gallery API routes V1:
+    const {galleryRouterV1} = require(path.join(appDir,'app','Modules/Gallery/Routes/api.js'));
+    app.use('/api/v1/galleries',galleryRouterV1);
 }
 
 exports.loadAdminRoutes = (app) => {

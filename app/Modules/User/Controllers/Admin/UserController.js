@@ -4,6 +4,7 @@ const utils = require('../../../../../utils/helpers');
 const UserRequest = require('../../Requests/Admin/UserRequest');
 const {USER_PROFILE_IMAGE_FOLDER} = require('../../../../Base/Constants/File');
 const shortid = require('shortid');
+const RoleConst = require('../../../../Base/Constants/Role');
 
 exports.index = async (req,res) => {
     const page = +req.query.page || 1;
@@ -73,8 +74,8 @@ exports.update = async (req,res) => {
             return utils.abort(404,res);
         }
 
-        if (user.role === "administrator") {
-            await UserRequest.validate({...req.body,role:"administrator",image},{
+        if (user.role === RoleConst.ADMINSTRATOR) {
+            await UserRequest.validate({...req.body,role:RoleConst.ADMINSTRATOR,image},{
                 abortEarly: false
             });
         } else {
@@ -109,7 +110,7 @@ exports.update = async (req,res) => {
         }
 
         user.full_name = full_name;
-        if (user.role !== "administrator" && role !== "administrator") {
+        if (user.role !== RoleConst.ADMINSTRATOR && role !== RoleConst.ADMINSTRATOR) {
             user.role = role;
         }
         user.status = status;
@@ -133,7 +134,7 @@ exports.destroy = async (req,res) => {
             {_id:req.params.id},
         ]});
 
-    if (!user || user.role === "administrator") {
+    if (!user || user.role === RoleConst.ADMINSTRATOR) {
         return utils.abort(404,res);
     }
     await User.findOneAndDelete({id:req.params.id});

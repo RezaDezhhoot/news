@@ -5,6 +5,7 @@ const utils = require("../../../../../utils/helpers");
 const User = require("../../../User/Models/User");
 const Token = require("../../../User/Models/Token");
 const ResetPasswordRequest = require("../../Requests/Admin/ResetPasswordRequest");
+const RoleConst = require('../../../../Base/Constants/Role');
 
 exports.forgetForm = (req , res , next) => {
     res.render(path.join('admin/auth/forget-password'),
@@ -40,7 +41,7 @@ exports.forget = async (req , res , next) => {
 
         if (! await User.findOne({ $and:[
                 {phone},
-                {$or:[{role: "admin"}, {role: "administrator"}]}
+                {$or:[{role: RoleConst.ADMIN}, {role: RoleConst.ADMINSTRATOR}]}
             ] })) {
             req.flash("error",'کاربری با این شماره یافت نشد');
             return res.redirect('forget-password');
@@ -102,7 +103,7 @@ exports.reset = async (req , res) => {
 
             const user = await User.findOne({$and:[
                     { phone },
-                    {$or:[{role: "admin"}, {role: "administrator"}]}
+                    {$or:[{role: RoleConst.ADMIN}, {role: RoleConst.ADMINSTRATOR}]}
                 ]});
             if (! user) {
                 req.flash("error",'کاربری با این شماره یافت نشد');
