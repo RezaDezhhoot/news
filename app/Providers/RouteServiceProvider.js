@@ -1,10 +1,23 @@
 const path = require('path');
 const appDir = path.dirname(require.main.filename);
 const {Headers} = require('../Base/Middlewares/Headers');
+const rateLimit = require("express-rate-limit");
 
 exports.loadApiRoutes = (app) => {
     // Set global headers:
-    app.use(Headers);
+    app.use('/api',Headers);
+
+    app.use(
+        '/api',
+        rateLimit({
+            windowMs: 3 * 60 * 60 * 1000,
+            max: 150,
+            message: {
+                message: 'too many requests'
+            },
+            headers: true,
+        })
+    );
 
     // Authentication API routes V1:
     const {routerV1} = require(path.join(appDir,'app','Modules/Auth/Routes/api.js'));
@@ -21,6 +34,10 @@ exports.loadApiRoutes = (app) => {
     // Gallery API routes V1:
     const {galleryRouterV1} = require(path.join(appDir,'app','Modules/Gallery/Routes/api.js'));
     app.use('/api/v1/galleries',galleryRouterV1);
+
+    // Article API routes V1:
+    const {articleRouterV1} = require(path.join(appDir,'app','Modules/Article/Routes/api.js'));
+    app.use('/api/v1/articles',articleRouterV1);
 }
 
 exports.loadAdminRoutes = (app) => {
@@ -39,4 +56,8 @@ exports.loadAdminRoutes = (app) => {
     // Gallery admin routes:
     const {routerGalleryAdmin} = require(path.join(appDir,'app','Modules/Gallery/Routes/admin.js'));
     app.use('/admin/galleries',routerGalleryAdmin);
+
+    // Article admin routes:
+    const {routerArticleAdmin} = require(path.join(appDir,'app','Modules/Article/Routes/admin.js'));
+    app.use('/admin/articles',routerArticleAdmin);
 }
