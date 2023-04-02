@@ -1,23 +1,22 @@
 const utils = require('../../../../../../utils/helpers');
 const {ARTICLE_IMAGE_FOLDER} = require('../../../../../Base/Constants/File');
 
-module.exports.make = (category) => {
+module.exports.make = (article) => {
     return {
-        '_id': category._id,
-        'title': category.title,
-        'body': category.description,
-        'created_at': category.created_at,
-        'image': utils.asset(ARTICLE_IMAGE_FOLDER + '/' + category.image),
+        '_id': article._id,
+        'title': article.title,
+        'body': article.description,
+        'created_at': article.created_at,
+        'image': utils.asset(ARTICLE_IMAGE_FOLDER + '/' + article.image),
     }
 }
 
-module.exports.collection = (categories) => {
+module.exports.collection = (articles) => {
     let res = [];
-    categories.forEach( (v , k) => {
+    articles.forEach( (v , k) => {
         res[k] =  {
             '_id': v._id,
             'title': v.title,
-            'status': v.status,
             'created_at': v.created_at,
             'image': utils.asset(ARTICLE_IMAGE_FOLDER + '/' + v.image),
         }

@@ -1,10 +1,6 @@
 const utils = require('../../../../../../utils/helpers');
 const {GALLERY_IMAGE_FOLDER} = require('../../../../../Base/Constants/File');
 
-module.exports.make = (category) => {
-
-}
-
 module.exports.collection = (galleries) => {
     let res = [];
     galleries.forEach( (v , k) => {

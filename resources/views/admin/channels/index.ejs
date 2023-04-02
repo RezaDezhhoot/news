@@ -1,0 +1,68 @@
+<div class="row mt-0 mt-lg-8">
+    <%- include('../../includes/admin/search-form') %>
+    <div class="col-12 p-0 m-0">
+        <%- include('../../includes/admin/validation-errors') %>
+    </div>
+    <div class="col-12 table-responsive">
+        <table  class="table table-striped table-bordered" id="kt_datatable">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>تصویر</th>
+                <th>عنوان</th>
+                <th>وضعیت</th>
+                <th>تاریخ انتشار</th>
+                <th>عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if(channels.length > 0) { %>
+                <% for (let channel in channels) { %>
+                    <tr>
+                        <td><%= eval(channel) + 1 %></td>
+                        <td>
+                            <div class="symbol symbol-30 symbol-circle">
+                                <img src="<%= asset(`${CHANNEL_IMAGE_FOLDER}/${channels[channel].image}`)%>" >
+                            </div>
+                        </td>
+                        <td><%= channels[channel]['title'] %></td>
+                        <td><%= channels[channel].status == true ? 'منتشر شده' : 'پیشنویس' %></td>
+                        <td><%= formatDate(channels[channel]['created_at']) %></td>
+                        <td>
+                            <a type="button" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2" href="channels/edit/<%= channels[channel]['id'] %>">
+                                <i class="flaticon2-edit"></i>
+                            </a>
+                            <button onclick="deleteItem('<%=channels[channel]['id'] %>')" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2">
+                                <i class="flaticon-delete"></i>
+                            </button>
+                        </td>
+                    </tr>
+                <% } %>
+            <% } else { %>
+                <td class="text-center" colspan="8">
+                    دیتایی جهت نمایش وجود ندارد
+                </td>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<%- include('../../includes/admin/pagination') %>
+<script>
+    function deleteItem(id) {
+        Swal.fire({
+            title: 'حذف!',
+            text: 'آیا از حذف کانال اطمینان دارید؟',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'خیر',
+            confirmButtonText: 'بله'
+        }).then((result) => {
+            if (result.value) {
+                window.location.href = "channels/delete/"+id;
+            }
+        })
+    }
+</script>
