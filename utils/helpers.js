@@ -5,6 +5,7 @@ const appDir = path.dirname(require.main.filename);
 const fs = require('fs');
 const sharp = require("sharp");
 const multer = require('multer');
+const User = require('../app/Modules/User/Models/User');
 
 module.exports.normalizeIranianPhoneNumber = (phone) => {
     return phone.startsWith('0') || phone.startsWith('98') ? phone : '0' + phone;
@@ -82,4 +83,17 @@ exports.upload = async (file , filename , folder , with_delete_old = false , old
 
 exports.asset = (file) => {
     return `${process.env.APP_URL}/storage/${file}`;
+}
+
+exports.findUserByToken = async (data) => {
+    const token = data.token.split(" ")[1];
+
+    if (token) {
+        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+        const user = await User.findOne({id:decoded.user.userId});
+        return user;
+    } else {
+        return false;
+    }
+
 }

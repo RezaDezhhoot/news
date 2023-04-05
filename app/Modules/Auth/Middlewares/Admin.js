@@ -1,6 +1,6 @@
 const RoleConst = require('../../../Base/Constants/Role');
 
-exports.admin = (req,res,next,guard = 'api') => {
+exports.admin = (req,res,next,guard = 'admin') => {
     if (req.isAuthenticated() && (req.user.role === RoleConst.ADMIN || req.user.role === RoleConst.ADMINSTRATOR)){
         return next();
     }

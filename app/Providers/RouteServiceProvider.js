@@ -40,8 +40,12 @@ exports.loadApiRoutes = (app) => {
     app.use('/api/v1/articles',articleRouterV1);
 
     // Channel API routes V1:
-    const chatRouter = require(path.join(appDir,'app','Modules/Chat/Routes/api.js'));
-    app.use('/api/v1/channels',chatRouter.channelRouterV1);
+    const {channelRouterV1} = require(path.join(appDir,'app','Modules/Chat/Routes/api.js'));
+    app.use('/api/v1/channels',channelRouterV1);
+
+    // Chat API routes V1:
+    const {chatRouterV1} = require(path.join(appDir,'app','Modules/Chat/Routes/api.js'));
+    app.use('/api/v1/chats',chatRouterV1);
 }
 
 exports.loadAdminRoutes = (app) => {

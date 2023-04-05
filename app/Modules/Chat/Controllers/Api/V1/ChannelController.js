@@ -19,7 +19,7 @@ module.exports.index = async (req , res) => {
 
     return res.status(200).json({
         data: {
-            articles: ChannelResource.collection(channels),
+            channels: ChannelResource.collection(channels),
             meta:{
                 currentPage: page,
                 nextPage: hasNextPage ? page + 1 : undefined,
