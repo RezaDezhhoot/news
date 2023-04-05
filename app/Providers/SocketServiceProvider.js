@@ -9,10 +9,10 @@ module.exports.load = async (server) => {
             origin: '*',
         }
     });
+
     const {chatChannelV1} = require(path.join(appDir,'app','Modules/Chat/Routes/channels.js'));
+
     const channels = await Channel.find({status: true});
 
-    for (const channel of channels) {
-        chatChannelV1(IO.of('/stream/v1/channels/'+channel.id),channel);
-    }
+    for (const channel of channels) chatChannelV1(IO.of(`/stream/v1/channels/${channel.id}`) , channel);
 }

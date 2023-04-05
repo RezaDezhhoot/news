@@ -59,7 +59,6 @@ module.exports.online = async (io , socket , data) => {
         },
         status
     });
-    console.log(users);
 }
 
 module.exports.disconnect = async (io , socket  , channel) => {

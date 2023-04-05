@@ -18,6 +18,11 @@ const chatSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Chat"
     },
+    was_edited:{
+        type: Boolean,
+        default: false,
+        enum: [true,false]
+    },
     created_at: {
         type: Date,
         default: Date.now()
