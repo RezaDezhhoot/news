@@ -4,6 +4,7 @@ const Chat = require('../../../Models/Chat');
 const Channel = require('../../../Models/Channel');
 const ChatsResource = require("../../../Resources/Api/V1/ChatsResource");
 let users = [];
+let typistUsers = [];
 
 module.exports.index = async (req , res) => {
    try {
@@ -64,6 +65,14 @@ module.exports.online = async (io , socket , data) => {
 module.exports.disconnect = async (io , socket  , channel) => {
     console.log(`User disconnected with id: ${socket.id} from ${channel.title} channel.`);
     delete users[socket.id];
+    delete typistUsers[socket.id];
+
+    socket.broadcast.emit('getTypistUsers',{
+        data: {
+            typistUsers
+        },
+        status: 200
+    })
     io.emit('online',{
         data: {
             users
@@ -73,10 +82,9 @@ module.exports.disconnect = async (io , socket  , channel) => {
 }
 
 module.exports.sendMessage = async (io , socket  , channel , data) => {
-    let user = users[socket.id].user;
     let chat = null ,  status = 422;
-
-    if (user._id && data.text) {
+    if (typeof users[socket.id]?.user !== undefined && data.text) {
+        let user = users[socket.id].user;
         try {
             chat = await Chat.create({
                 text: data.text,
@@ -88,6 +96,7 @@ module.exports.sendMessage = async (io , socket  , channel , data) => {
                 path: 'reply',
                 populate: {path: 'user' , model: 'User'}
             }]);
+            console.log(`message has been sent by client : ${socket.id} , name : ${user.full_name} , text: ${data.text}`)
             status = 201;
         } catch (e) {
             status = 500;
@@ -101,10 +110,59 @@ module.exports.sendMessage = async (io , socket  , channel , data) => {
     });
 }
 
-module.exports.deleteMessage = async (io , socket  , channel) => {
+module.exports.deleteMessage = async (io , socket  , channel , data) => {
+    let status = 200;
+    try {
+        if (data.chat_id && typeof users[socket.id]?.user !== undefined) {
+            const chat = await Chat.findOne({$and:[
+                    {_id: data.chat_id},
+                    {user: users[socket.id].user._id}
+                ]} );
+            if (chat) {
+                await Chat.findByIdAndRemove(chat._id);
+                console.log(`chat with id : ${chat._id} has been removed`);
+            } else {
+                console.log('chat not found !')
+                throw 'chat not found !';
+            }
+        }
 
+    } catch (e) {
+        status = 500;
+    }
+    io.emit('deleteMessage',{
+        data:{
+            chat_id: data.chat_id,
+            status
+        }
+    })
+}
+
+module.exports.getTypistUsers = async (io , socket  , channel) => {
+    socket.broadcast.emit('getTypistUsers',{
+        data:{
+            typistUsers
+        },
+        status: 200
+    });
 }
 
 module.exports.typingFeedback = async (io , socket  , channel) => {
+    typistUsers[socket.id] = users[socket.id];
+    socket.broadcast.emit('getTypistUsers',{
+        data:{
+            typistUsers
+        },
+        status: 200
+    });
+}
 
+module.exports.finishTypingFeedback = async (io , socket  , channel , data) => {
+    delete typistUsers[socket.id];
+    socket.broadcast.emit('getTypistUsers',{
+        data:{
+            typistUsers
+        },
+        status: 200
+    });
 }

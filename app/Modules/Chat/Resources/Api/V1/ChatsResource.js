@@ -1,5 +1,4 @@
 const UserResource = require('../../../../User/Resources/Api/V1/UserResource');
-const User = require('../../../../User/Models/User');
 
 module.exports.make = (chat) => {
     return {
