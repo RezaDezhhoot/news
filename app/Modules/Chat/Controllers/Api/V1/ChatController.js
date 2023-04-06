@@ -43,23 +43,23 @@ module.exports.index = async (req , res) => {
    }
 }
 
-module.exports.online = async (io , socket , data) => {
-    let user = await utils.findUserByToken(data) , status = 200;
+module.exports.online = async (io , socket , data , channel) => {
+        let user = await utils.findUserByToken(data) , status = 200;
 
-    if (! user) {
-        status = 401;
-    }
+        if (! user) {
+            status = 401;
+        }
 
-    users[socket.id] = {
-        socketId: socket.id,
-        user: user ? UserResource.make(user , null,['role','status','phone','email']) : null,
-    };
-    io.emit('online',{
-        data:{
-            users
-        },
-        status
-    });
+        users[socket.id] = {
+            socketId: socket.id,
+            user: user ? UserResource.make(user , null,['role','status','phone','email']) : null,
+        };
+        io.emit('online',{
+            data:{
+                users
+            },
+            status
+        });
 }
 
 module.exports.disconnect = async (io , socket  , channel) => {
@@ -83,7 +83,7 @@ module.exports.disconnect = async (io , socket  , channel) => {
 
 module.exports.sendMessage = async (io , socket  , channel , data) => {
     let chat = null ,  status = 422;
-    if (typeof users[socket.id]?.user !== undefined && data.text) {
+    if (typeof users[socket.id]?.user !== undefined && data.text && await Channel.exists({_id: channel._id}) ) {
         let user = users[socket.id].user;
         try {
             chat = await Chat.create({
