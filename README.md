@@ -25,3 +25,9 @@ you can enter the following command to run app on development mode
 npm start
 ````
 you can Now access to the admin panel in ****APP_DOMAIN/admin/login****
+
+##  Test app
+You can use the following command to test the app
+````bash
+npm test
+````
