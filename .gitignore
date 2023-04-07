@@ -1,8 +1,4 @@
 /node_modules
-/public/storage/articles/*
-/public/storage/categories/*
-/public/storage/channels/*
-/public/storage/profiles/*
 npm-debug.log
 yarn-error.log
 /.idea
