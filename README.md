@@ -1,6 +1,6 @@
 # Pirooz Backend
 
-## Get start
+## Get started
 
 1) Install nodemon
 ````bash
