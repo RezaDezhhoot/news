@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const RoleConst = require('../../../Base/Constants/Role');
-const shortid = require("shortid");
+const utils = require('../../../../utils/helpers');
 
 const userSchema = new mongoose.Schema({
     full_name: {
@@ -47,7 +47,7 @@ userSchema.index({'$**': 'text'});
 userSchema.statics.factory = async function() {
     return await this.create({
         full_name: 'name',
-        phone: shortid.generate(),
+        phone: `09${utils.getRandomIntInclusive(100000000,999999999)}`,
         password: '1234'
     });
 }

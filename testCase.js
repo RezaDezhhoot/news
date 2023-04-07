@@ -6,6 +6,8 @@ const app = express();
 
 require('./app/Libraries/Dotenv');
 require('./app/Libraries/ConnectMongo');
+require('./app/Libraries/Session').useByApp(app);
+require('./app/Libraries/Passport').useByApp(app);
 const utils = require("./utils/helpers");
 
 app.use(express.urlencoded({extended: false}));
