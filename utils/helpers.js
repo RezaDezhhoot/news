@@ -90,7 +90,7 @@ exports.findUserByToken = async (data) => {
 
     if (token) {
         const decoded = jwt.verify(token,process.env.JWT_SECRET);
-        const user = await User.findOne({id:decoded.user.userId});
+        const user = await User.findById(decoded.user.userId);
         return user;
     } else {
         return false;

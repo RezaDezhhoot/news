@@ -1,9 +1,10 @@
 const UserResource = require('../../../../User/Resources/Api/V1/UserResource');
 
-module.exports.make = (chat) => {
+module.exports.make = (chat , userId) => {
     return {
         '_id': chat._id,
         'text': chat.text,
+        'my_chat': chat.user.id === userId,
         'reply': chat.reply ? {
             '_id': chat.reply._id,
             'text': chat.reply.text,
@@ -14,10 +15,10 @@ module.exports.make = (chat) => {
     }
 }
 
-module.exports.collection = (chats) => {
+module.exports.collection = (chats , userId) => {
     let res = [];
     chats.forEach( (v , k) => {
-        res[k] = this.make(v)
+        res[k] = this.make(v , userId)
     } );
 
     return res;

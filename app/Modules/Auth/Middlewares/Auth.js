@@ -12,7 +12,7 @@ exports.authenticated = (req,res,next,guard='api') => {
             if (! decodedToken) {
                 return res.status(401).json({data:{result:'unauthorized user'},message:'error'});
             }
-            req.userId = decodedToken.user.userId;
+            req.userId = decodedToken.user._id;
             req.token = token;
             next();
         } catch (err) {
