@@ -1,7 +1,9 @@
 # Pirooz Backend
 
 ## Get started
-
+````bash
+cp .env.example .env 
+````
 1) Install nodemon
 ````bash
 npm install -g nodemon
