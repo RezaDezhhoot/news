@@ -26,6 +26,14 @@ const categorySchema = new mongoose.Schema({
     }
 });
 
+categorySchema.statics.factory = async function() {
+    return await this.create({
+        title: 'title',
+        description: 'description',
+    });
+}
+
+
 // categorySchema.pre("findOneAndDelete", function() {
 //     console.log("called!!!");
 // });

@@ -65,9 +65,9 @@ exports.update = async (req,res) => {
     try {
         const image = req.files ? req.files.image : {};
         const phone = utils.normalizeIranianPhoneNumber(req.body.phone);
-        const {full_name , email , password , role , status}  = req.body;
+        const {full_name  , password , role , status}  = req.body;
 
-        req.flash("oldData",{full_name,email,phone,role,status});
+        req.flash("oldData",{full_name,phone,role,status});
 
         const user = await User.findOne({_id: req.params.id});
         if (!user) {
@@ -92,16 +92,6 @@ exports.update = async (req,res) => {
             }
             user.phone = phone;
         }
-
-        if (email !== user.email) {
-            if (await User.findOne({ $and:[
-                    {email},
-                ] })) {
-                throw 'کاربری با این ایمیل وجود دارد';
-            }
-            user.email = email;
-        }
-
 
         if (image.name) {
             const filename = `${shortid.generate()}${image.name}`;

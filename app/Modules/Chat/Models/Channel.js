@@ -23,6 +23,13 @@ const channelSchema = new mongoose.Schema({
     }
 });
 
+channelSchema.statics.factory = async function() {
+    return await this.create({
+        title: 'title',
+    });
+}
+
+
 const Channel = mongoose.model('Channel', channelSchema);
 
 module.exports = Channel;

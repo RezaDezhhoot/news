@@ -29,6 +29,15 @@ const chatSchema = new mongoose.Schema({
     }
 });
 
+chatSchema.statics.factory = async function(channel , user) {
+    return await this.create({
+        text: 'text',
+        channel,
+        user
+    });
+}
+
+
 const Chat = mongoose.model('Chat', chatSchema);
 
 module.exports = Chat;

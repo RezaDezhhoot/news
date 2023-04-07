@@ -3,6 +3,7 @@ const VerifyTokenRequest = require('../../../Requests/Api/V1/VerifyTokenRequest'
 const User = require('../../../../User/Models/User');
 const Token = require('../../../../User/Models/Token');
 const utils = require('../../../../../../utils/helpers');
+const SMS = require('../../../Services/SmsService');
 
 exports.store = async (req , res) => {
     const errorArr = [];
@@ -36,11 +37,18 @@ exports.store = async (req , res) => {
 
         const value = utils.getRandomIntInclusive(1111,9999);
         const expires_at = Date.now() + 2 * 60 * 1000;
-        const token = await Token.create({phone, value, expires_at});
 
         // Send sms api...
+        const status = await SMS.send(phone,value);
+        if (status === 200) {
+            const token = await Token.create({phone, value, expires_at});
+            return res.status(201).json({ data: {
+                phone: token['phone'],
+                    expires_at:token['expires_at'],
+                    value: process.env.MODE === 'development' ? value : undefined
+                }, message: 'success' });
+        } else throw 'خظا در هنگام ارسال sms';
 
-        return res.status(201).json({ data: {phone: token['phone'],expires_at:token['expires_at']}, message: 'success' });
     } catch (exception) {
         const errors = utils.getErrors(exception);
         return res.status(errors.status).json({ data: errors.errors, message: 'error' });

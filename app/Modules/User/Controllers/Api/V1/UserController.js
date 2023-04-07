@@ -21,7 +21,6 @@ module.exports.profile = async (req,res) => {
     });
 }
 
-
 module.exports.update = async (req,res) => {
     const errorArr = [];
     try {

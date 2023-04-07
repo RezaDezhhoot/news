@@ -27,6 +27,13 @@ const gallerySchema = new mongoose.Schema({
 });
 
 
+gallerySchema.statics.factory = async function(category) {
+    return await this.create({
+        title: 'title',
+        category
+    });
+}
+
 const Gallery = mongoose.model('Gallery', gallerySchema);
 
 module.exports = Gallery;

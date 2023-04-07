@@ -9,7 +9,6 @@ exports.make = (user , token = null , ignore = []) => {
     return {
         _id: user._id,
         full_name: user.full_name,
-        email: user.email,
         phone: user.phone,
         image: utils.asset(USER_PROFILE_IMAGE_FOLDER + '/' + user.image),
         status: user.status,

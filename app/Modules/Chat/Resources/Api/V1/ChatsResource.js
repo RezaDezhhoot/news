@@ -7,9 +7,9 @@ module.exports.make = (chat) => {
         'reply': chat.reply ? {
             '_id': chat.reply._id,
             'text': chat.reply.text,
-            'user':  UserResource.make(chat.reply.user,undefined,['role','status','phone','email'])
+            'user':  UserResource.make(chat.reply.user,undefined,['role','status','phone'])
         } : undefined,
-        'user': chat.user ? UserResource.make(chat.user,undefined,['role','status','phone','email']) : undefined,
+        'user': chat.user ? UserResource.make(chat.user,undefined,['role','status','phone']) : undefined,
         'created_at': chat.created_at,
     }
 }

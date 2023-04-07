@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const shortid = require("shortid");
 
 const articleSchema = new mongoose.Schema({
     title: {
@@ -25,6 +26,13 @@ const articleSchema = new mongoose.Schema({
         default: Date.now()
     }
 });
+
+articleSchema.statics.factory = async function() {
+    return await this.create({
+        title: 'title',
+        description: 'description',
+    });
+}
 
 const Article = mongoose.model('Article', articleSchema);
 

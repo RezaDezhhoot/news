@@ -52,7 +52,7 @@ module.exports.online = async (io , socket , data , channel) => {
 
         users[socket.id] = {
             socketId: socket.id,
-            user: user ? UserResource.make(user , null,['role','status','phone','email']) : null,
+            user: user ? UserResource.make(user , null,['role','status','phone']) : null,
         };
         io.emit('online',{
             data:{

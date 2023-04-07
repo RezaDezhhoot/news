@@ -6,6 +6,7 @@ const User = require("../../../User/Models/User");
 const Token = require("../../../User/Models/Token");
 const ResetPasswordRequest = require("../../Requests/Admin/ResetPasswordRequest");
 const RoleConst = require('../../../../Base/Constants/Role');
+const SMS = require("../../Services/SmsService");
 
 exports.forgetForm = (req , res , next) => {
     res.render(path.join('admin/auth/forget-password'),
@@ -59,9 +60,17 @@ exports.forget = async (req , res , next) => {
         await Token.deleteMany({phone});
         const value = utils.getRandomIntInclusive(1111,9999);
         const expires_at = Date.now() + 2 * 60 * 1000;
-        await Token.create({phone, value, expires_at});
 
         // Send sms api...
+        const status = await SMS.send(phone,value);
+
+        if (status === 200) {
+            await Token.create({phone, value, expires_at});
+        } else {
+            req.flash("error",'خظا در هنگام ارسال sms');
+            return res.redirect('forget-password');
+        }
+
         req.flash("success_msg",'کد ارسال شده را وارد نمایید');
         return res.redirect('reset-password?phone='+phone);
     } else {

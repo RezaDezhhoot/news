@@ -7,7 +7,6 @@ connectDB().then((r)=>{});
 
 const User = require('./app/Modules/User/Models/User');
 
-
 const exec = commands => {
     execSync(commands, { stdio: 'inherit', shell: true });
 };
@@ -22,9 +21,7 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-
 rl.question("Enter your name : ", (name) => {
-    // exec(`npm run start -- ${ip}`);
     rl.question("Enter your phone : ", async (phone) => {
         rl.question("Enter your password : ", async (password) => {
             try {
