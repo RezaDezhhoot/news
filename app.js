@@ -18,5 +18,5 @@ require(path.join(appDir,'app/Providers/SocketServiceProvider')).load(server);
 
 server.listen(process.env.port, () => {
     console.log(`Server running in ${process.env.APP_DOMAIN}:${process.env.port}`);
-    console.log(`Admin panel running in ${process.env.APP_DOMAIN}:${process.env.port}/admin`);
+    console.log(`Admin panel running in ${process.env.APP_DOMAIN}:${process.env.port}/admin`);  
 });
