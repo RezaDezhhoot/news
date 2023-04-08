@@ -20,7 +20,7 @@ npm run seed
 1) Enter your name : Your name
 2) Enter your phone : Your phone
 3) Enter your password : Your password
-4) Enter your country code (example:0098) : Your contry code
+4) Enter your country code (example:0098) : Your country code
 ````
 ##  Run app
 you can enter the following command to run app on development mode
