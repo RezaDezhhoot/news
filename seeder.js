@@ -29,7 +29,8 @@ rl.question("Enter your name : ", (name) => {
                     full_name: name,
                     phone,
                     password,
-                    role: roles.ADMINSTRATOR
+                    role: roles.ADMINSTRATOR,
+                    city: 'Tehran'
                 });
                 console.log('seeding has been completed successfully.')
                 process.exit(0);

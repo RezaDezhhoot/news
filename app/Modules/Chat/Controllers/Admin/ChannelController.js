@@ -111,7 +111,7 @@ module.exports.update = async (req , res) => {
         const image = req.files ? req.files.image : {};
         const {title  , status , sub_title}  = req.body;
 
-        req.flash("oldData",{title,status});
+        req.flash("oldData",{title,status,sub_title});
 
         const channel = await Channel.findOne({_id: req.params.id});
         if (! channel) {

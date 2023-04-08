@@ -48,19 +48,25 @@ module.exports.index = async (req , res) => {
 module.exports.online = async (io , socket , data , channel) => {
     const token = data.token.split(" ")[1];
     const decoded = jwt.verify(token,process.env.JWT_SECRET);
-    const user = await User.findById(decoded.user._id);
+    const user = await User.findOne({$and:[
+            {_id:decoded.user._id},
+            {status: true}
+        ]}).exec();
+
     let status = 200;
 
     if (! user) {
         status = 401;
     }
 
-    users[socket.id] = {
-        socketId: socket.id,
-        user: user ? UserResource.make(user , null,['role','status','phone']) : null,
-    };
-    console.log('online users :');
-    console.log(users);
+    if (user) {
+        users[socket.id] = {
+            socketId: socket.id,
+            user: user ? UserResource.make(user , null,['role','status','phone']) : null,
+        };
+        console.log('online users :');
+        console.log(users);
+    }
 
     io.emit('online',{
         data:{
