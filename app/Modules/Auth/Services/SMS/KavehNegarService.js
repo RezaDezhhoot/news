@@ -1,6 +1,6 @@
 const fetch =  require('node-fetch')
 
-module.exports.send = async ( receptor , code , template = 'verification') => {
+module.exports.send = async ( receptor , code , template = 'pirouzverification') => {
     const url = `https://api.kavenegar.com/v1/${process.env.KAVEH_NEGAR_API_KEY}/verify/lookup.json?receptor=${receptor}&template=${template}&token=${code}`;
 
     try {

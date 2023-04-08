@@ -39,11 +39,12 @@ exports.store = async (req , res) => {
         const expires_at = Date.now() + 2 * 60 * 1000;
 
         // Send sms api...
-        const status = await SMS.send(phone,value);
+        const status = await SMS.send(utils.normalizePhoneNumber(req.body.country_code,phone),value);
         if (status === 200 || process.env.MODE === 'test') {
-            const token = await Token.create({phone, value, expires_at});
+            const token = await Token.create({phone , country_code: req.body.country_code , value, expires_at});
             return res.status(201).json({ data: {
                 phone: token['phone'],
+                    country_code:req.body.country_code,
                     expires_at:token['expires_at'],
                     value: (process.env.MODE === 'development' || process.env.MODE === 'test') ? value : undefined
                 }, message: 'success' });
@@ -81,7 +82,7 @@ exports.verify = async (req , res) => {
         if (token){
             token.status = true;
             await token.save();
-            return res.status(200).json({ data: {phone: token['phone'],result:'شماره همراه با موفقیت اعبارسنجی شد'}, message: 'success' });
+            return res.status(200).json({ data: {phone: token['phone'],country_code:token['country_code'],result:'شماره همراه با موفقیت اعبارسنجی شد'}, message: 'success' });
         }
         errorArr.push({
             filed: 'code',

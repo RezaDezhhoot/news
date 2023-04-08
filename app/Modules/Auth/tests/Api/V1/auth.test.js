@@ -39,12 +39,14 @@ describe('/Post register',  function() {
         const user = {
             full_name: 'name',
             phone: `09${utils.getRandomIntInclusive(100000000,999999999)}`,
+            country_code: '0098',
             password: '1234abc',
             city: 'Tehran',
             floatingConfirmation: '1234abc',
         };
         const tokenRes = await request(app).post("/register/get-token").send({
             phone: user.phone,
+            country_code: user.country_code
         });
         expect(tokenRes.statusCode).toBe(201);
         expect(tokenRes.body.data).toBeDefined();

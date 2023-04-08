@@ -64,10 +64,9 @@ exports.edit = async (req,res) => {
 exports.update = async (req,res) => {
     try {
         const image = req.files ? req.files.image : {};
-        const phone = utils.normalizeIranianPhoneNumber(req.body.phone);
         const {full_name  , password , role , status , city}  = req.body;
 
-        req.flash("oldData",{full_name,phone,role,status});
+        req.flash("oldData",{full_name,role,status});
 
         const user = await User.findOne({_id: req.params.id});
         if (!user) {
@@ -82,15 +81,6 @@ exports.update = async (req,res) => {
             await UserRequest.validate({...req.body,image},{
                 abortEarly: false
             });
-        }
-
-        if (phone !== user.phone) {
-            if (await User.findOne({ $and:[
-                    {phone},
-                ] })) {
-                throw 'کاربری با این شماره وجود دارد';
-            }
-            user.phone = phone;
         }
 
         if (image.name) {
@@ -111,6 +101,7 @@ exports.update = async (req,res) => {
         }
         await user.save();
     } catch (e) {
+        console.log(e);
         const errors = utils.getErrors(e);
         req.flash("error",errors['errors']);
     }

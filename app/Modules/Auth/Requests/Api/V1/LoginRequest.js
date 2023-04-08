@@ -1,6 +1,7 @@
 const Yup = require('yup');
+const {validPhone} = require('../../../../../Base/Constants/Regex');
 const schema = Yup.object().shape({
-    phone: Yup.string().required('شماره همراه الزامی می باشد').matches('^(\\98?)?{?(0?9[0-9]{9,9}}?)$'),
+    phone: Yup.string().required('شماره همراه الزامی می باشد').matches(validPhone),
     password: Yup.string().required('رمز عبور الزامی می باشد'),
 });
 

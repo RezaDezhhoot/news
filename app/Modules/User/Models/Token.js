@@ -7,6 +7,10 @@ const tokenSchema = new mongoose.Schema({
         required: [true,'شماره همراه الزامی می باشد'],
         trim: true,
     },
+    country_code:{
+        type: String,
+        trim: true,
+    },
     value: {
         type: Number,
         required: true,

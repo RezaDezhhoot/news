@@ -39,11 +39,11 @@ exports.forget = async (req , res , next) => {
 
     if (json.success) {
         const phone = utils.normalizeIranianPhoneNumber(req.body.phone);
-
-        if (! await User.findOne({ $and:[
+        let user = await User.findOne({ $and:[
                 {phone},
                 {$or:[{role: RoleConst.ADMIN}, {role: RoleConst.ADMINSTRATOR}]}
-            ] })) {
+            ] })
+        if (! user) {
             req.flash("error",'کاربری با این شماره یافت نشد');
             return res.redirect('forget-password');
         }
@@ -62,7 +62,7 @@ exports.forget = async (req , res , next) => {
         const expires_at = Date.now() + 2 * 60 * 1000;
 
         // Send sms api...
-        const status = await SMS.send(phone,value);
+        const status = await SMS.send(utils.normalizePhoneNumber(user.country_code,phone),value);
 
         if (status === 200) {
             await Token.create({phone, value, expires_at});

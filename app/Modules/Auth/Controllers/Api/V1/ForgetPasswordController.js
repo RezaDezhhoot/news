@@ -12,8 +12,8 @@ exports.store = async (req , res) => {
             abortEarly: false,
         });
         const phone = utils.normalizeIranianPhoneNumber(req.body.phone);
-
-        if (! await User.findOne({ phone })) {
+        let user = await User.findOne({ phone });
+        if (! user) {
             errorArr.push({
                 filed: 'phone',
                 message: 'کاربر با این شماره وجود ندارد'
@@ -39,7 +39,7 @@ exports.store = async (req , res) => {
         const expires_at = Date.now() + 3 * 60 * 1000;
 
         // Send sms api...
-        const status = await SMS.send(phone,value);
+        const status = await SMS.send(utils.normalizePhoneNumber(user.country_code,phone),value);
 
         if (status === 200 || process.env.MODE === 'test') {
             const token = await Token.create({phone, value, expires_at});

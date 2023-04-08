@@ -24,20 +24,23 @@ const rl = readline.createInterface({
 rl.question("Enter your name : ", (name) => {
     rl.question("Enter your phone : ", async (phone) => {
         rl.question("Enter your password : ", async (password) => {
-            try {
-                await User.create({
-                    full_name: name,
-                    phone,
-                    password,
-                    role: roles.ADMINSTRATOR,
-                    city: 'Tehran'
-                });
-                console.log('seeding has been completed successfully.')
-                process.exit(0);
-            } catch (e) {
-                console.log(e);
-                process.exit(1);
-            }
+            rl.question("Enter your country code (example:0098) : ", async (country_code) => {
+                try {
+                    await User.create({
+                        full_name: name,
+                        phone,
+                        password,
+                        role: roles.ADMINSTRATOR,
+                        city: 'Tehran',
+                        country_code
+                    });
+                    console.log('seeding has been completed successfully.')
+                    process.exit(0);
+                } catch (e) {
+                    console.log(e);
+                    process.exit(1);
+                }
+            });
         });
     });
 });

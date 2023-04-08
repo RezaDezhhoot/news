@@ -1,6 +1,7 @@
 const Yup = require('yup');
+const {validPhone} = require('../../../../../Base/Constants/Regex');
 const schema = Yup.object().shape({
-    phone: Yup.string().matches('^(\\98?)?{?(0?9[0-9]{9,9}}?)$').required('شماره همراه الزامی می باشد')
+    phone: Yup.string().matches(validPhone).required('شماره همراه الزامی می باشد')
 });
 
 module.exports = schema;

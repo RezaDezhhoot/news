@@ -11,6 +11,15 @@ module.exports.normalizeIranianPhoneNumber = (phone) => {
     return phone.startsWith('0') || phone.startsWith('98') ? phone : '0' + phone;
 }
 
+module.exports.normalizePhoneNumber = (country_code,phone) => {
+    country_code = this.normalizeCountryCallingCode(country_code);
+    return phone.startsWith('09') ? country_code + phone.substring(1) : country_code+phone;
+}
+
+module.exports.normalizeCountryCallingCode = (country_code) => {
+    return country_code.startsWith('+') ?  country_code.replace('+','00') :  country_code;
+}
+
 module.exports.getRandomIntInclusive = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);

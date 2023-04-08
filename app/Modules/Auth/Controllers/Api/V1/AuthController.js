@@ -21,13 +21,13 @@ exports.register = async (req , res) => {
             });
             return res.status(422).json({ data: errorArr, message: 'error' });
         }
-
-        if (! await Token.findOne({$and:
+        let token = await Token.findOne({$and:
                 [
                     {phone},
                     {status: true}
                 ]
-        })){
+        });
+        if (! token ){
             errorArr.push({
                 filed: 'phone',
                 message: 'این شماره همراه هنوز تایید نشده'
@@ -35,7 +35,7 @@ exports.register = async (req , res) => {
             return res.status(422).json({ data: errorArr, message: 'error' });
         }
         await Token.deleteMany({phone});
-        const user = await User.create({full_name,phone,city,password});
+        const user = await User.create({full_name,country_code:token['country_code'],phone,city,password});
         return res.status(201).json({data:UserResource.make(user,utils.makeToken(user)),message:'success'});
     } catch (e) {
         const errors = utils.getErrors(e);

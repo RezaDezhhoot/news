@@ -14,6 +14,11 @@ const userSchema = new mongoose.Schema({
         trim: true,
         unique: [true,'این شماره همراه قبلا ثبت شده است'],
     },
+    country_code:{
+        type: String,
+        required: [true,'کد کشور الزامی می باشد'],
+        trim: true,
+    },
     image:{
         type: String,
         required: false,
@@ -52,6 +57,7 @@ userSchema.statics.factory = async function() {
     return await this.create({
         full_name: 'name',
         phone: `09${utils.getRandomIntInclusive(100000000,999999999)}`,
+        country_code: '0098',
         city: 'Tehran',
         password: '1234'
     });
