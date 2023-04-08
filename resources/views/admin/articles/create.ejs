@@ -42,3 +42,13 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/37.0.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#description' ) ,{
+            language:'fa'
+        })
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
