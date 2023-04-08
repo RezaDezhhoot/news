@@ -13,6 +13,10 @@
                             <input value="<%= oldData?.full_name ?? user.full_name%>" type="text" name="full_name" id="full_name" class="form-control">
                         </div>
                         <div class="form-group col-md-6">
+                            <label for="full_name">شهر*</label>
+                            <input value="<%= oldData?.city ?? user.city%>" type="text" name="city" id="city" class="form-control">
+                        </div>
+                        <div class="form-group col-md-12">
                             <label for="phone">شماره همراه*</label>
                             <input value="<%= oldData?.phone ?? user.phone%>" type="text" name="phone" id="phone" class="form-control">
                         </div>

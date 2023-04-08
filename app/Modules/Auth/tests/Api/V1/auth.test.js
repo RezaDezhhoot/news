@@ -4,12 +4,10 @@ const {routerV1} = require('../../../Routes/api');
 
 const User = require('../../../../User/Models/User');
 const Token = require('../../../../User/Models/Token');
-let testUser ;
 
 app.use(routerV1);
 
 beforeAll(async () => {
-    testUser = await User.factory();
     await mongoose.connect(process.env.MONGO_URI);
 });
 
@@ -21,6 +19,7 @@ afterAll(async () => {
 
 describe('/Post login',  function() {
     it('user can login', async function() {
+        let testUser = await User.factory();
         const res = await request(app).post("/login").send({
             phone: testUser.phone,
             password: '1234'
@@ -41,6 +40,7 @@ describe('/Post register',  function() {
             full_name: 'name',
             phone: `09${utils.getRandomIntInclusive(100000000,999999999)}`,
             password: '1234abc',
+            city: 'Tehran',
             floatingConfirmation: '1234abc',
         };
         const tokenRes = await request(app).post("/register/get-token").send({

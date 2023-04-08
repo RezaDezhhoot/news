@@ -12,6 +12,7 @@ exports.make = (user , token = null , ignore = []) => {
         phone: user.phone,
         image: utils.asset(USER_PROFILE_IMAGE_FOLDER + '/' + user.image),
         status: user.status,
+        city: user.city,
         role: user.role,
         token: token ? token : undefined
     };

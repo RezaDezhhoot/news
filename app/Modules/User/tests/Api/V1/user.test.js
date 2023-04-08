@@ -30,6 +30,7 @@ describe('/Get user',  function() {
         expect(res.body.data.image).toBeDefined();
         expect(res.body.data.status).toBeDefined();
         expect(res.body.data.role).toBeDefined();
+        expect(res.body.data.city).toBeDefined();
     });
 });
 
@@ -42,6 +43,7 @@ describe('/PATCH user',  function() {
             }).send({
             full_name: 'Reza Dezhhoot',
             password: '1234abc',
+            city: 'Tehran',
             floatingConfirmation: '1234abc',
         });
         expect(res.statusCode).toBe(200);

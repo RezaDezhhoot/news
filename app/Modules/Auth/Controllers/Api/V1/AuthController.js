@@ -13,7 +13,7 @@ exports.register = async (req , res) => {
             abortEarly: false,
         });
         const phone = utils.normalizeIranianPhoneNumber(req.body.phone);
-        const {full_name , password} = req.body;
+        const {full_name , password , city} = req.body;
         if (await User.findOne({ phone })) {
             errorArr.push({
                 filed: 'phone',
@@ -35,7 +35,7 @@ exports.register = async (req , res) => {
             return res.status(422).json({ data: errorArr, message: 'error' });
         }
         await Token.deleteMany({phone});
-        const user = await User.create({full_name,phone,password});
+        const user = await User.create({full_name,phone,city,password});
         return res.status(201).json({data:UserResource.make(user,utils.makeToken(user)),message:'success'});
     } catch (e) {
         const errors = utils.getErrors(e);

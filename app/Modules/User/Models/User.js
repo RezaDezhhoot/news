@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
         default: RoleConst.USER,
         enum: [RoleConst.ADMIN,RoleConst.USER,RoleConst.ADMINSTRATOR]
     },
+    city:{
+        type: String,
+        required: [true,'شهر الزامی می باشد'],
+    },
     status:{
         type: Boolean,
         default: true,
@@ -48,6 +52,7 @@ userSchema.statics.factory = async function() {
     return await this.create({
         full_name: 'name',
         phone: `09${utils.getRandomIntInclusive(100000000,999999999)}`,
+        city: 'Tehran',
         password: '1234'
     });
 }

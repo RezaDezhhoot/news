@@ -65,7 +65,7 @@ exports.update = async (req,res) => {
     try {
         const image = req.files ? req.files.image : {};
         const phone = utils.normalizeIranianPhoneNumber(req.body.phone);
-        const {full_name  , password , role , status}  = req.body;
+        const {full_name  , password , role , status , city}  = req.body;
 
         req.flash("oldData",{full_name,phone,role,status});
 
@@ -100,6 +100,7 @@ exports.update = async (req,res) => {
         }
 
         user.full_name = full_name;
+        user.city = city;
         if (user.role !== RoleConst.ADMINSTRATOR && role !== RoleConst.ADMINSTRATOR) {
             user.role = role;
         }
