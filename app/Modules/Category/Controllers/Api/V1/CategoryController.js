@@ -15,7 +15,7 @@ module.exports.index = async (req,res) =>
 
     return res.status(200).json({
         data: {
-            categories: CategoryResource.collection(categories),
+            categories: await CategoryResource.collection(categories),
             meta:{
                 currentPage: page,
                 nextPage: hasNextPage ? page + 1 : undefined,

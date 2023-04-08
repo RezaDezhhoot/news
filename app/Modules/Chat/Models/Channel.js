@@ -7,6 +7,10 @@ const channelSchema = new mongoose.Schema({
         trim: true,
         required: [true,'عنوان الزامی می باشد'],
     },
+    sub_title:{
+        type: String,
+        trim: true,
+    },
     image:{
         type: String,
         required: false,
@@ -26,6 +30,7 @@ const channelSchema = new mongoose.Schema({
 channelSchema.statics.factory = async function() {
     return await this.create({
         title: 'title',
+        sub_title: 'test'
     });
 }
 

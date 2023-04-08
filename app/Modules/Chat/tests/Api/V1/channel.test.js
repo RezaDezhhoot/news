@@ -37,8 +37,8 @@ describe('/Get channels',  function() {
     });
 });
 
-describe('/Get article',  function() {
-    it('it should GET a article', async function() {
+describe('/Get channel',  function() {
+    it('it should GET a channel', async function() {
         const channel = await Channel.factory();
         const res = await request(app).get(`/${channel._id}`).set({
             "authorization": 'Bearer '+utils.makeToken(user)
@@ -47,6 +47,7 @@ describe('/Get article',  function() {
         expect(res.body.data).toBeDefined();
         expect(res.body.data._id).toBeDefined();
         expect(res.body.data.title).toBeDefined();
+        expect(res.body.data.sub_title).toBeDefined();
         expect(res.body.data.created_at).toBeDefined();
         expect(res.body.data.image).toBeDefined();
     });

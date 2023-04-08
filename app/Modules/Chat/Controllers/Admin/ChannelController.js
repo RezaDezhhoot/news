@@ -54,8 +54,8 @@ module.exports.create = async (req , res) => {
 module.exports.store = async (req , res) => {
     try {
         const image = req.files ? req.files.image : {};
-        const {title, status}  = req.body;
-        req.flash("oldData",{title,status});
+        const {title, status , sub_title}  = req.body;
+        req.flash("oldData",{title,status,sub_title});
 
         await ChannelRequest.validate({...req.body,image},{
             abortEarly: false
@@ -68,7 +68,7 @@ module.exports.store = async (req , res) => {
         }
 
         await Channel.create({
-            title  , status , image: filename
+            title , sub_title , status , image: filename
         });
 
     } catch (e) {
@@ -109,7 +109,7 @@ module.exports.edit = async (req , res) => {
 module.exports.update = async (req , res) => {
     try {
         const image = req.files ? req.files.image : {};
-        const {title  , status}  = req.body;
+        const {title  , status , sub_title}  = req.body;
 
         req.flash("oldData",{title,status});
 
@@ -128,6 +128,7 @@ module.exports.update = async (req , res) => {
             channel.image = filename;
         }
         channel.title = title;
+        channel.sub_title = sub_title;
         channel.status = status;
         await channel.save();
     } catch (e) {

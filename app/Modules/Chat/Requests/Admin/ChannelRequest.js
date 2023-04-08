@@ -1,6 +1,7 @@
 const Yup = require('yup');
 const schema = Yup.object().shape({
-    title: Yup.string().required('عنوان الزامی می باشد').max(255,'حداکثر طول برای اسم رعایت نشده است'),
+    title: Yup.string().required('عنوان الزامی می باشد').max(255,'حداکثر طول برای عنوان رعایت نشده است'),
+    sub_title: Yup.string().max(255,'حداکثر طول برای زیر عنوان رعایت نشده است'),
     status: Yup.mixed().required('فیلذ وضعیت الزامی می باشد').oneOf(['0','1'],'وضعیت انتخاب شده نامعتبر می باشد'),
     image: Yup.object().shape({
         name: Yup.string(),

@@ -6,7 +6,7 @@ const shortid = require("shortid");
 const {USER_PROFILE_IMAGE_FOLDER} = require("../../../../../Base/Constants/File");
 
 module.exports.profile = async (req,res) => {
-    const user = await User.findOne({id:req.userId});
+    const user = await User.findOne({_id:req.userId});
 
     if (!user) {
         return res.status(404).json({
@@ -36,7 +36,7 @@ module.exports.update = async (req,res) => {
         }
 
 
-        const user = await User.findOne({id:req.userId});
+        const user = await User.findOne({_id:req.userId});
         if (!user) {
             return res.status(404).json({
                 data: 'user not found',

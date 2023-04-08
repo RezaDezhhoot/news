@@ -3,12 +3,10 @@ const path = require('path');
 const {userRouterV1} = require('../../../Routes/api');
 
 const User = require('../../../../User/Models/User');
-let user;
 
 app.use(userRouterV1);
 
 beforeAll(async () => {
-    user = await User.factory();
     await mongoose.connect(process.env.MONGO_URI);
 });
 
@@ -19,6 +17,8 @@ afterAll(async () => {
 
 describe('/Get user',  function() {
     it('it should GET user profile', async function() {
+        let user = await User.factory();
+
         const res = await request(app).get("/").set({
             "authorization": 'Bearer '+utils.makeToken(user)
         });
@@ -35,6 +35,8 @@ describe('/Get user',  function() {
 
 describe('/PATCH user',  function() {
     it('it should update user profile', async function() {
+        let user = await User.factory();
+
         const res = await request(app).patch("/").set({
                 "authorization": 'Bearer '+utils.makeToken(user)
             }).send({
