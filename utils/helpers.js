@@ -70,7 +70,7 @@ exports.abort = (code,res) => {
 exports.upload = async (file , filename , folder , with_delete_old = false , old= null) => {
     const uploadPath = `${appDir}/public/storage/${folder}`;
     if (!fs.existsSync(uploadPath)) {
-        fs.mkdirSync(uploadPath);
+        await fs.promises.mkdir(uploadPath, { recursive: true })
     }
     if (with_delete_old && old) {
         fs.unlink(`${uploadPath}/${old}`,async (err) => {
