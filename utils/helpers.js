@@ -8,7 +8,7 @@ const multer = require('multer');
 const User = require('../app/Modules/User/Models/User');
 
 module.exports.normalizeIranianPhoneNumber = (phone) => {
-    return phone.startsWith('0') || phone.startsWith('98') ? phone : '0' + phone;
+    return phone.startsWith('9') ? '0'+phone :  phone;
 }
 
 module.exports.normalizePhoneNumber = (country_code,phone) => {
