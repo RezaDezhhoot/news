@@ -1,8 +1,7 @@
 const {Router} = require('express');
 const ArticleController = require('../Controllers/Api/V1/ArticleController');
-const {authenticated} = require("../../Auth/Middlewares/Auth");
 
-const router = new Router('').use(authenticated);
+const router = new Router('');
 
 router.get('/',ArticleController.index);
 
