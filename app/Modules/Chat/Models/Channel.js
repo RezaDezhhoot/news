@@ -21,6 +21,11 @@ const channelSchema = new mongoose.Schema({
         default: true,
         enum: [true,false]
     },
+    color:{
+        type: String,
+        trim: true,
+        efault: '#ffffff',
+    },
     created_at: {
         type: Date,
         default: Date.now()
@@ -30,7 +35,8 @@ const channelSchema = new mongoose.Schema({
 channelSchema.statics.factory = async function() {
     return await this.create({
         title: 'title',
-        sub_title: 'test'
+        sub_title: 'test',
+        color: '#000'
     });
 }
 

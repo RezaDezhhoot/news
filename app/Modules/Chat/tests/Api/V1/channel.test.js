@@ -50,5 +50,6 @@ describe('/Get channel',  function() {
         expect(res.body.data.sub_title).toBeDefined();
         expect(res.body.data.created_at).toBeDefined();
         expect(res.body.data.image).toBeDefined();
+        expect(res.body.data.color).toBeDefined();
     });
 });

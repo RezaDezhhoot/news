@@ -7,6 +7,7 @@ module.exports.make = (channel) => {
         'title': channel.title,
         'sub_title': channel.sub_title,
         'created_at': channel.created_at,
+        'color': channel?.color,
         'image': utils.asset(CHANNEL_IMAGE_FOLDER + '/' + channel.image),
     }
 }
@@ -19,6 +20,7 @@ module.exports.collection = (channels) => {
             'title': v.title,
             'sub_title': v.sub_title,
             'created_at': v.created_at,
+            'color': v?.color,
             'image': utils.asset(CHANNEL_IMAGE_FOLDER + '/' + v.image),
         }
     } );

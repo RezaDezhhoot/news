@@ -54,8 +54,8 @@ module.exports.create = async (req , res) => {
 module.exports.store = async (req , res) => {
     try {
         const image = req.files ? req.files.image : {};
-        const {title, status , sub_title}  = req.body;
-        req.flash("oldData",{title,status,sub_title});
+        const {title, status , sub_title , color}  = req.body;
+        req.flash("oldData",{title,status,color,sub_title});
 
         await ChannelRequest.validate({...req.body,image},{
             abortEarly: false
@@ -68,7 +68,7 @@ module.exports.store = async (req , res) => {
         }
 
         await Channel.create({
-            title , sub_title , status , image: filename
+            title , sub_title , status , color , image: filename
         });
 
     } catch (e) {
@@ -109,9 +109,9 @@ module.exports.edit = async (req , res) => {
 module.exports.update = async (req , res) => {
     try {
         const image = req.files ? req.files.image : {};
-        const {title  , status , sub_title}  = req.body;
+        const {title  , status , color , sub_title}  = req.body;
 
-        req.flash("oldData",{title,status,sub_title});
+        req.flash("oldData",{title,status , color,sub_title});
 
         const channel = await Channel.findOne({_id: req.params.id});
         if (! channel) {
@@ -130,6 +130,7 @@ module.exports.update = async (req , res) => {
         channel.title = title;
         channel.sub_title = sub_title;
         channel.status = status;
+        channel.color = color;
         await channel.save();
     } catch (e) {
         const errors = utils.getErrors(e);

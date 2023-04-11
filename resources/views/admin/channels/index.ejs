@@ -11,6 +11,7 @@
                 <th>تصویر</th>
                 <th>عنوان</th>
                 <th>وضعیت</th>
+                <th>رنگ</th>
                 <th>تاریخ انتشار</th>
                 <th>عملیات</th>
             </tr>
@@ -27,6 +28,9 @@
                         </td>
                         <td><%= channels[channel]['title'] %></td>
                         <td><%= channels[channel].status == true ? 'منتشر شده' : 'پیشنویس' %></td>
+                        <td>
+                            <div class="circle" style="background: <%= channels[channel].color %>"></div>
+                        </td>
                         <td><%= formatDate(channels[channel]['created_at']) %></td>
                         <td>
                             <a type="button" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2" href="channels/edit/<%= channels[channel]['id'] %>">
