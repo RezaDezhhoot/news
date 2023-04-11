@@ -5,6 +5,7 @@ const Channel = require('../../../Models/Channel');
 const ChatsResource = require("../../../Resources/Api/V1/ChatsResource");
 const jwt = require("jsonwebtoken");
 const User = require("../../../../User/Models/User");
+const {ADMIN, ADMINSTRATOR} = require("../../../../../Base/Constants/Role");
 let users = [];
 let typistUsers = [];
 
@@ -129,11 +130,8 @@ module.exports.deleteMessage = async (io , socket  , channel , data) => {
     let status = 200;
     try {
         if (data.chat_id && typeof users[socket.id]?.user !== undefined) {
-            const chat = await Chat.findOne({$and:[
-                    {_id: data.chat_id},
-                    {user: users[socket.id].user._id}
-                ]} );
-            if (chat) {
+            const chat = await Chat.findOne({_id: data.chat_id});
+            if (chat && (users[socket.id].user.role === ADMIN || users[socket.id].user.role === ADMINSTRATOR || users[socket.id].user._id === chat.user) ) {
                 await Chat.findByIdAndRemove(chat._id);
                 console.log(`chat with id : ${chat._id} has been removed`);
             } else {
