@@ -44,7 +44,7 @@ module.exports.update = async (req,res) => {
             });
         }
 
-        const {full_name , password} = req.body;
+        const {full_name , password , city} = req.body;
 
         if (image.name) {
             const filename = `${shortid.generate()}${image.name}`;
@@ -53,6 +53,7 @@ module.exports.update = async (req,res) => {
         }
 
         user.full_name = full_name;
+        user.city = city;
         if (password) {
             user.password = password;
         }
