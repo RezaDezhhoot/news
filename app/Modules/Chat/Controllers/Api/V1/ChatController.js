@@ -61,7 +61,7 @@ module.exports.online = async (io , socket , data , channel) => {
     } else {
         users[socket.id] = {
             socketId: socket.id,
-            user:UserResource.make(user , null,['role','status','phone']),
+            user:UserResource.make(user , null,['status','phone']),
         };
         console.log('online users :');
         console.log(users);
