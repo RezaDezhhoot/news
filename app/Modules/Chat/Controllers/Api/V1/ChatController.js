@@ -6,8 +6,8 @@ const ChatsResource = require("../../../Resources/Api/V1/ChatsResource");
 const jwt = require("jsonwebtoken");
 const User = require("../../../../User/Models/User");
 const {ADMIN, ADMINSTRATOR} = require("../../../../../Base/Constants/Role");
-let users = [];
-let typistUsers = [];
+let users = {};
+let typistUsers = {};
 
 module.exports.index = async (req , res) => {
    try {
@@ -58,12 +58,10 @@ module.exports.online = async (io , socket , data , channel) => {
 
     if (! user) {
         status = 401;
-    }
-
-    if (user) {
+    } else {
         users[socket.id] = {
             socketId: socket.id,
-            user: user ? UserResource.make(user , null,['role','status','phone']) : null,
+            user:UserResource.make(user , null,['role','status','phone']),
         };
         console.log('online users :');
         console.log(users);
