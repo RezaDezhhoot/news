@@ -6,8 +6,8 @@ const ChatsResource = require("../../../Resources/Api/V1/ChatsResource");
 const jwt = require("jsonwebtoken");
 const User = require("../../../../User/Models/User");
 const {ADMIN, ADMINSTRATOR} = require("../../../../../Base/Constants/Role");
-let users = {};
-let typistUsers = {};
+let users = [];
+let typistUsers = [];
 
 module.exports.index = async (req , res) => {
    try {
@@ -59,10 +59,10 @@ module.exports.online = async (io , socket , data , channel) => {
     if (! user) {
         status = 401;
     } else {
-        users[socket.id] = {
+        users.push({
             socketId: socket.id,
             user:UserResource.make(user , null,['status','phone']),
-        };
+        });
         console.log('online users :');
         console.log(users);
     }
@@ -77,8 +77,15 @@ module.exports.online = async (io , socket , data , channel) => {
 
 module.exports.disconnect = async (io , socket  , channel) => {
     console.log(`User disconnected with id: ${socket.id} from ${channel.title} channel.`);
-    delete users[socket.id];
-    delete typistUsers[socket.id];
+
+    users = users.filter((v) => {
+        return v.socketId !== socket.id
+    });
+
+    typistUsers = typistUsers.filter((v) => {
+        return v.socketId !== socket.id
+    });
+
     console.log('online users :');
     console.log(users);
     socket.broadcast.emit('getTypistUsers',{
@@ -97,8 +104,11 @@ module.exports.disconnect = async (io , socket  , channel) => {
 
 module.exports.sendMessage = async (io , socket  , channel , data) => {
     let chat = null ,  status = 422;
-    if (typeof users[socket.id]?.user !== undefined && data.text && await Channel.exists({_id: channel._id}) ) {
-        let user = users[socket.id].user;
+
+    let user = users.filter((v) => {return v.socketId === socket.id})[0];
+
+    if (typeof user !== undefined && data.text && await Channel.exists({_id: channel._id}) ) {
+
         try {
             chat = await Chat.create({
                 text: data.text,
@@ -118,7 +128,7 @@ module.exports.sendMessage = async (io , socket  , channel , data) => {
     }
     io.emit('getMessage',{
         data: {
-            chat: chat ? ChatsResource.make(chat,users[socket.id].user._id) : null
+            chat: chat ? ChatsResource.make(chat,user._id) : null
         },
         status
     });
@@ -126,10 +136,11 @@ module.exports.sendMessage = async (io , socket  , channel , data) => {
 
 module.exports.deleteMessage = async (io , socket  , channel , data) => {
     let status = 200;
+    let user = users.filter((v) => {return v.socketId === socket.id})[0];
     try {
-        if (data.chat_id && typeof users[socket.id]?.user !== undefined) {
+        if (data.chat_id && typeof user !== undefined) {
             const chat = await Chat.findOne({_id: data.chat_id});
-            if (chat && (users[socket.id].user.role === ADMIN || users[socket.id].user.role === ADMINSTRATOR || users[socket.id].user._id === chat.user) ) {
+            if (chat && (user.role === ADMIN || user.role === ADMINSTRATOR || user._id === chat.user) ) {
                 await Chat.findByIdAndRemove(chat._id);
                 console.log(`chat with id : ${chat._id} has been removed`);
             } else {
@@ -161,7 +172,14 @@ module.exports.getTypistUsers = async (io , socket  , channel) => {
 }
 
 module.exports.typingFeedback = async (io , socket  , channel) => {
-    typistUsers[socket.id] = users[socket.id];
+    if (! typistUsers.filter((v) => {
+        return v.socketId === v.socketId;
+    })[0]) {
+        typistUsers.push(users.filter((v) => {
+            return v.socketId === socket.id
+        })[0]);
+    }
+
     console.log('typist users :');
     console.log(typistUsers);
     socket.broadcast.emit('getTypistUsers',{
@@ -173,7 +191,9 @@ module.exports.typingFeedback = async (io , socket  , channel) => {
 }
 
 module.exports.finishTypingFeedback = async (io , socket  , channel , data) => {
-    delete typistUsers[socket.id];
+    typistUsers = typistUsers.filter((v) => {
+        return v.socketId !== socket.id
+    });
     console.log('typist users :');
     console.log(typistUsers);
     socket.broadcast.emit('getTypistUsers',{
