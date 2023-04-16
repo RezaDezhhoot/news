@@ -9,7 +9,7 @@ module.exports.index = async (req , res) => {
         options.$and.push({title: {$regex: '.*' + req.query.search + '.*'}});
 
     channels = await Channel.find(options)
-        .select(['_id','title','image','created_at'])
+        .select(['_id','title','image','created_at','color'])
         .sort([['created_at', 'descending']])
         .skip((page-1)*PerPage)
         .limit(PerPage);
