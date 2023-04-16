@@ -105,7 +105,7 @@ module.exports.disconnect = async (io , socket  , channel) => {
 module.exports.sendMessage = async (io , socket  , channel , data) => {
     let chat = null ,  status = 422;
 
-    let user = users.filter((v) => {return v.socketId === socket.id})[0];
+    let user = users.filter((v) => {return v.socketId === socket.id})[0].user;
 
     if (typeof user !== undefined && data.text && await Channel.exists({_id: channel._id}) ) {
 
@@ -128,7 +128,7 @@ module.exports.sendMessage = async (io , socket  , channel , data) => {
     }
     io.emit('getMessage',{
         data: {
-            chat: chat ? ChatsResource.make(chat,user._id) : null
+            chat: (chat && user._id) ? ChatsResource.make(chat,user._id) : null
         },
         status
     });
@@ -136,7 +136,7 @@ module.exports.sendMessage = async (io , socket  , channel , data) => {
 
 module.exports.deleteMessage = async (io , socket  , channel , data) => {
     let status = 200;
-    let user = users.filter((v) => {return v.socketId === socket.id})[0];
+    let user = users.filter((v) => {return v.socketId === socket.id})[0].user;
     try {
         if (data.chat_id && typeof user !== undefined) {
             const chat = await Chat.findOne({_id: data.chat_id});
