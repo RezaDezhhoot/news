@@ -107,7 +107,7 @@ module.exports.sendMessage = async (io , socket  , channel , data) => {
 
     let user = users.filter((v) => {return v.socketId === socket.id})[0].user;
 
-    if (typeof user !== undefined && data.text && await Channel.exists({_id: channel._id}) ) {
+    if (typeof user._id !== undefined && data.text && await Channel.exists({_id: channel._id}) ) {
 
         try {
             chat = await Chat.create({
