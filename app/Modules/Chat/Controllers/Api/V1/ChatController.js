@@ -151,10 +151,10 @@ module.exports.deleteMessage = async (io , socket  , channel , data) => {
             console.log(user._id.toString() === chat.user.toString() );
             if (chat && (user._id.toString() === chat.user.toString() || user.role === ADMIN || user.role === ADMINSTRATOR) ) {
                 await Chat.findByIdAndRemove(chat._id);
-                message = `chat with id : ${chat._id} has been removed`;
+                message = 'پیام مورد نظر با موفقیت حذف شد';
                 console.log(message);
             } else {
-                message = 'chat not found !';
+                message = 'پیام مورد نظر پیدا نشد';
                 console.log(message)
                 status = 404;
             }

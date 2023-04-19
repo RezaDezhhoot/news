@@ -39,7 +39,7 @@ module.exports.getErrors = (exception) => {
         status = 422;
     } else {
         errorArr.push({
-            filed: 'unKnow',
+            filed: 'خطا در برقراری ارتباط با سرور',
             message: exception
         });
     }
