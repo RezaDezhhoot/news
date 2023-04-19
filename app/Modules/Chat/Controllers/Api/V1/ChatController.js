@@ -41,6 +41,8 @@ module.exports.index = async (req , res) => {
            message: 'success'
        });
    } catch (e) {
+
+       console.log(e);
        const errors = utils.getErrors(e);
        return res.status(errors.status).json({ data: errors.errors, message: 'error' });
    }
@@ -83,7 +85,7 @@ module.exports.disconnect = async (io , socket  , channel) => {
     });
 
     typistUsers = typistUsers.filter((v) => {
-        return v.socketId !== socket.id
+        return v?.socketId !== socket.id
     });
 
     console.log('online users :');
@@ -126,36 +128,48 @@ module.exports.sendMessage = async (io , socket  , channel , data) => {
             status = 500;
         }
     }
-    io.emit('getMessage',{
-        data: {
-            chat: (chat && user._id) ? ChatsResource.make(chat,user._id) : null
-        },
-        status
+
+
+    users.forEach(v => {
+        io.to(v.socketId).emit('getMessage',{
+            data: {
+                chat: (chat && user._id) ? ChatsResource.make(chat,v.user._id) : null
+            },
+            status
+        });
     });
 }
 
 module.exports.deleteMessage = async (io , socket  , channel , data) => {
     let status = 200;
+    let message;
     let user = users.filter((v) => {return v.socketId === socket.id})[0].user;
     try {
         if (data.chat_id && typeof user !== undefined) {
             const chat = await Chat.findOne({_id: data.chat_id});
-            if (chat && (user.role === ADMIN || user.role === ADMINSTRATOR || user._id === chat.user) ) {
+            console.log(user._id.toString() , chat.user.toString() );
+            console.log(user._id.toString() === chat.user.toString() );
+            if (chat && (user._id.toString() === chat.user.toString() || user.role === ADMIN || user.role === ADMINSTRATOR) ) {
                 await Chat.findByIdAndRemove(chat._id);
-                console.log(`chat with id : ${chat._id} has been removed`);
+                message = `chat with id : ${chat._id} has been removed`;
+                console.log(message);
             } else {
-                console.log('chat not found !')
-                throw 'chat not found !';
+                message = 'chat not found !';
+                console.log(message)
+                status = 404;
             }
         }
 
     } catch (e) {
         status = 500;
+        message = e;
     }
+    console.log(status);
     io.emit('deleteMessage',{
         data:{
             chat_id: data.chat_id,
-            status
+            status,
+            message
         }
     })
 }
@@ -172,21 +186,27 @@ module.exports.getTypistUsers = async (io , socket  , channel) => {
 }
 
 module.exports.typingFeedback = async (io , socket  , channel) => {
-    if (! typistUsers.filter((v) => {
-        return v.socketId === v.socketId;
-    })[0]) {
-        typistUsers.push(users.filter((v) => {
-            return v.socketId === socket.id
-        })[0]);
-    }
+    let status;
+   try {
+       if (! typistUsers.filter((v) => {
+           return socket.id === v.socketId;
+       })[0]) {
+           typistUsers.push(users.filter((v) => {
+               return v.socketId === socket.id
+           })[0]);
+       }
 
-    console.log('typist users :');
-    console.log(typistUsers);
+       console.log('typist users :');
+       console.log(typistUsers);
+       status = 200;
+   } catch (e) {
+       status = 500;
+   }
     socket.broadcast.emit('getTypistUsers',{
         data:{
             typistUsers
         },
-        status: 200
+        status
     });
 }
 

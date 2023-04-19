@@ -4,7 +4,7 @@ module.exports.make = (chat , userId) => {
     return {
         '_id': chat._id,
         'text': chat.text,
-        'my_chat': chat.user.id === userId,
+        'my_chat': chat.user._id.toString() === userId.toString(),
         'reply': chat.reply ? {
             '_id': chat.reply._id,
             'text': chat.reply.text,
@@ -18,7 +18,9 @@ module.exports.make = (chat , userId) => {
 module.exports.collection = (chats , userId) => {
     let res = [];
     chats.forEach( (v , k) => {
-        res[k] = this.make(v , userId)
+        if (v.user) {
+            res[k] = this.make(v , userId)
+        }
     } );
 
     return res;
