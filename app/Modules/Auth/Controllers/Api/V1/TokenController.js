@@ -25,6 +25,7 @@ exports.store = async (req , res) => {
                 [
                     {expires_at:{$gt:Date.now()}},
                     {phone},
+                    {country_code: req.body.country_code},
                 ]
         })){
             errorArr.push({

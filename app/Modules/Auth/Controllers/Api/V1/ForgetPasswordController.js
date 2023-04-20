@@ -42,7 +42,7 @@ exports.store = async (req , res) => {
         const status = await SMS.send(utils.normalizePhoneNumber(user.country_code,phone),value);
 
         if (status === 200 || process.env.MODE === 'test') {
-            const token = await Token.create({phone, value, expires_at});
+            const token = await Token.create({phone , country_code: user.country_code , value, expires_at});
             return res.status(201).json({ data: {
                     phone: token['phone'],
                     expires_at:token['expires_at'],
@@ -51,7 +51,6 @@ exports.store = async (req , res) => {
         } else throw 'خظا در هنگام ارسال sms';
 
     } catch (exception) {
-        console.log(exception)
         const errors = utils.getErrors(exception);
         return res.status(errors.status).json({ data: errors.errors, message: 'error' });
     }
