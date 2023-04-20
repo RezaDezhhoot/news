@@ -1,7 +1,7 @@
 const Yup = require('yup');
 const schema = Yup.object().shape({
     full_name: Yup.string().required('نام الزامی می باشد').max(255,'حداکثر طول برای اسم رعایت نشده است'),
-    city: Yup.string().required('شهر الزامی می باشد').max(255,'حداکثر طول برای شهر رعایت نشده است'),
+    city: Yup.string().max(255,'حداکثر طول برای شهر رعایت نشده است'),
     image: Yup.object().shape({
         name: Yup.string(),
         size: Yup.number().max(1024 * 1024 * 3,'حداکثر حجم تصویر 3 مگایایت می باشد'),

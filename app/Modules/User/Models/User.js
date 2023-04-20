@@ -38,7 +38,6 @@ const userSchema = new mongoose.Schema({
     },
     city:{
         type: String,
-        required: [true,'شهر الزامی می باشد'],
     },
     status:{
         type: Boolean,
