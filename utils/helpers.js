@@ -107,5 +107,5 @@ exports.findUserByToken = async (data) => {
 }
 
 exports.convertTZ = (date) => {
-    return moment(date).locale("fa").format();
+    return new Date(date.toLocaleString({timeZone: 'Asia/Tehran'}))
 }
