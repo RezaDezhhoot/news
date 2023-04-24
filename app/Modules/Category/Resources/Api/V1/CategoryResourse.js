@@ -14,7 +14,7 @@ module.exports.collection = async (categories) => {
             '_id': v._id,
             'title': v.title,
             'description': v.description,
-            'created_at': v.created_at,
+            'created_at': utils.convertTZ(v.created_at),
             'image': utils.asset(CATEGORY_IMAGE_FOLDER + '/' + v.image),
             'items_count': await Gallery.find({category: v._id}).countDocuments()
         }

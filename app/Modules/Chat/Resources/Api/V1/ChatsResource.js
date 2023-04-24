@@ -1,4 +1,5 @@
 const UserResource = require('../../../../User/Resources/Api/V1/UserResource');
+const utils = require("../../../../../../utils/helpers");
 
 module.exports.make = (chat , userId) => {
     return {
@@ -11,7 +12,7 @@ module.exports.make = (chat , userId) => {
             'user':  UserResource.make(chat.reply.user,undefined,['role','status','phone'])
         } : undefined,
         'user': chat.user ? UserResource.make(chat.user,undefined,['role','status','phone']) : undefined,
-        'created_at': chat.created_at,
+        'created_at': utils.convertTZ(chat.created_at),
     }
 }
 

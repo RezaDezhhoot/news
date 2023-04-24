@@ -8,7 +8,7 @@ module.exports.collection = (galleries) => {
             '_id': v._id,
             'title': v.title,
             'image': utils.asset(GALLERY_IMAGE_FOLDER + '/' + v.image),
-            'created_at': v.created_at,
+            'created_at': utils.convertTZ(v.created_at),
         }
     } );
 

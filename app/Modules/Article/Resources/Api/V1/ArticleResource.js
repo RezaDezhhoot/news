@@ -6,7 +6,7 @@ module.exports.make = (article) => {
         '_id': article._id,
         'title': article.title,
         'body': article.description,
-        'created_at': article.created_at,
+        'created_at': utils.convertTZ(article.created_at),
         'image': utils.asset(ARTICLE_IMAGE_FOLDER + '/' + article.image),
     }
 }
@@ -17,7 +17,7 @@ module.exports.collection = (articles) => {
         res[k] =  {
             '_id': v._id,
             'title': v.title,
-            'created_at': v.created_at,
+            'created_at': utils.convertTZ(v.created_at),
             'image': utils.asset(ARTICLE_IMAGE_FOLDER + '/' + v.image),
         }
     } );

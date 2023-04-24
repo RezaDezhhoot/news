@@ -104,5 +104,8 @@ exports.findUserByToken = async (data) => {
     } else {
         return false;
     }
+}
 
+exports.convertTZ = (date) => {
+    return moment(date).locale("fa").format();
 }
