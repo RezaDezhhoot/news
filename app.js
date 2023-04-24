@@ -4,8 +4,8 @@ const express = require('express');
 const app = express();
 const appDir = path.dirname(require.main.filename);
 
-app.use(express.urlencoded({extended: false}));
-app.use(express.json());
+app.use(express.urlencoded({limit: '50mb',extended: false}));
+app.use(express.json({limit: '50mb'}));
 app.use(express.static(path.join(appDir,'public')));
 
 const server = http.createServer(app);
