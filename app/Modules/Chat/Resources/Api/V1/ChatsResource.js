@@ -12,7 +12,7 @@ module.exports.make = (chat , userId) => {
             'user':  UserResource.make(chat.reply.user,undefined,['role','status','phone'])
         } : undefined,
         'user': chat.user ? UserResource.make(chat.user,undefined,['role','status','phone']) : undefined,
-        'created_at': utils.convertTZ(chat.created_at),
+        'created_at':  Math.round(new Date(chat.created_at).getTime() / 1000),
     }
 }
 
