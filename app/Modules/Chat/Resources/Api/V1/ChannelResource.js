@@ -6,7 +6,7 @@ module.exports.make = (channel) => {
         '_id': channel._id,
         'title': channel.title,
         'sub_title': channel.sub_title,
-        'created_at': utils.convertTZ(channel.created_at),
+        'created_at': Math.round(new Date(channel.created_at).getTime() / 1000),
         'color': channel?.color,
         'image': utils.asset(CHANNEL_IMAGE_FOLDER + '/' + channel.image),
     }
@@ -19,7 +19,7 @@ module.exports.collection = (channels) => {
             '_id': v._id,
             'title': v.title,
             'sub_title': v.sub_title,
-            'created_at': utils.convertTZ(v.created_at),
+            'created_at': Math.round(new Date(v.created_at).getTime() / 1000),
             'color': v?.color,
             'image': utils.asset(CHANNEL_IMAGE_FOLDER + '/' + v.image),
         }
