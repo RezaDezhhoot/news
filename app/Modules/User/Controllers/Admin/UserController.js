@@ -119,6 +119,6 @@ exports.destroy = async (req,res) => {
     if (!user || user.role === RoleConst.ADMINSTRATOR) {
         return utils.abort(404,res);
     }
-    await User.findOneAndDelete({id:req.params.id});
+    await User.findOneAndDelete({_id:req.params.id});
     return res.redirect('/admin');
 }
