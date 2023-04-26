@@ -31,7 +31,7 @@ module.exports.index = async (req , res) => {
 
        return res.status(200).json({
            data: {
-               chats: chats ? ChatsResource.collection(chats,req.userId) : {},
+               chats: chats ? ChatsResource.collection(chats.filter(x => !!x),req.userId) : {},
                meta:{
                    currentPage: page,
                    nextPage: hasNextPage ? page + 1 : undefined,
