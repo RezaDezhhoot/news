@@ -24,5 +24,5 @@ module.exports.collection = (chats , userId) => {
         }
     } );
 
-    return res;
+    return res.filter(x => !!x);
 }
