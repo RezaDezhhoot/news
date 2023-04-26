@@ -6,12 +6,12 @@ module.exports.make = (chat , userId) => {
         '_id': chat._id,
         'text': chat.text,
         'my_chat': chat.user._id.toString() === userId.toString(),
-        'reply': chat.reply ? {
+        'reply': (chat.reply && chat.reply.user) ? {
             '_id': chat.reply._id,
             'text': chat.reply.text,
-            'user': chat.reply.user ? UserResource.make(chat.reply.user,undefined,['role','status','phone']) : undefined
+            'user': UserResource.make(chat.reply.user,undefined,['role','status','phone'])
         } : undefined,
-        'user': chat.user ? UserResource.make(chat.user,undefined,['role','status','phone']) : undefined,
+        'user': UserResource.make(chat.user,undefined,['role','status','phone']),
         'created_at': Math.ceil(chat.created_at.getTime() / 1000),
     }
 }
