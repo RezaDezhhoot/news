@@ -1,4 +1,5 @@
 const Channel = require("../../Models/Channel");
+const Chat = require("../../Models/Chat");
 const path = require("path");
 const utils = require("../../../../../utils/helpers");
 const {CHANNEL_IMAGE_FOLDER, ARTICLE_IMAGE_FOLDER} = require("../../../../Base/Constants/File");
@@ -142,6 +143,7 @@ module.exports.update = async (req , res) => {
 }
 
 module.exports.destroy = async (req , res) => {
+    await Chat.deleteMany({channel: req.params.id});
     await Channel.findOneAndDelete({_id:req.params.id});
     return res.redirect('/admin/channels');
 }

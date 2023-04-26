@@ -1,5 +1,6 @@
 const path = require("path");
 const User = require("../../../User/Models/User");
+const Chat = require("../../../Chat/Models/Chat");
 const utils = require('../../../../../utils/helpers');
 const UserRequest = require('../../Requests/Admin/UserRequest');
 const {USER_PROFILE_IMAGE_FOLDER} = require('../../../../Base/Constants/File');
@@ -119,6 +120,7 @@ exports.destroy = async (req,res) => {
     if (!user || user.role === RoleConst.ADMINSTRATOR) {
         return utils.abort(404,res);
     }
+    await Chat.deleteMany({user: req.params.id});
     await User.findOneAndDelete({_id:req.params.id});
     return res.redirect('/admin');
 }
