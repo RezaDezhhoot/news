@@ -1,9 +1,10 @@
 exports.Headers = (req, res, next) => {
     res.set({
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
-        'Access-Control-Allow-Headers': 'Origin,Content-Type, Accept, Authorization, X-Requested-With, Cache-Control',
-        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Expose-Headers': 'Authorization',
+        'Access-Control-Allow-Methods': '*',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+        'Access-Control-Allow-Credentials': 'true',
     });
 
     next();

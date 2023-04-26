@@ -35,7 +35,6 @@ module.exports.update = async (req,res) => {
             });
         }
 
-
         const user = await User.findOne({_id:req.userId});
         if (!user) {
             return res.status(404).json({
