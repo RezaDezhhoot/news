@@ -12,7 +12,10 @@ let typistUsers = [];
 module.exports.index = async (req , res) => {
    try {
        const page = +req.query.page || 1 , PerPage = +req.query.per_page ||  10;
-       let chats , itemNumbers = 0 , options = {channel: req.params.channel};
+       let chats , itemNumbers = 0 , options = {$and:[
+           {channel: req.params.channel},
+               {user: {$exists:true}}
+           ]};
 
        if (await Channel.exists({ $and:[
                {_id: req.params.channel}, {status: true}
