@@ -14,7 +14,7 @@ module.exports.index = async (req , res) => {
        const page = +req.query.page || 1 , PerPage = +req.query.per_page ||  10;
        let chats , itemNumbers = 0 , options = {$and:[
            {channel: req.params.channel},
-               {user: {$exists:true}}
+               // {user: {$exists:true}}
            ]};
 
        if (await Channel.exists({ $and:[
@@ -31,7 +31,7 @@ module.exports.index = async (req , res) => {
 
        return res.status(200).json({
            data: {
-               chats: chats ? ChatsResource.collection(chats.filter(x => !!x),req.userId) : {},
+               chats: chats ? ChatsResource.collection(chats,req.userId) : {},
                meta:{
                    currentPage: page,
                    nextPage: hasNextPage ? page + 1 : undefined,
