@@ -18,7 +18,7 @@ exports.store = async (req , res) => {
                 filed: 'phone',
                 message: 'کاربر با این شماره وجود ندارد'
             });
-            return res.status(422).json({ data: errorArr, message: 'error' });
+            return res.status(404).json({ data: errorArr, message: 'error' });
         }
 
         if (await Token.findOne({$and:
@@ -36,12 +36,12 @@ exports.store = async (req , res) => {
         await Token.deleteMany({phone});
 
         const value = utils.getRandomIntInclusive(1111,9999);
-        const expires_at = Date.now() + 3 * 60 * 1000;
 
         // Send sms api...
         const status = await SMS.send(utils.normalizePhoneNumber(user.country_code,phone),value);
 
         if (status === 200 || process.env.MODE === 'test') {
+            const expires_at = Date.now() + 3 * 60 * 1000;
             const token = await Token.create({phone , country_code: user.country_code , value, expires_at});
             return res.status(201).json({ data: {
                     phone: token['phone'],

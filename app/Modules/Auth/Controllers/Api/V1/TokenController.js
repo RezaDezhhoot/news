@@ -35,14 +35,14 @@ exports.store = async (req , res) => {
             return res.status(403).json({ data: errorArr, message: 'error' });
         }
         await Token.deleteMany({phone});
-
         const value = utils.getRandomIntInclusive(1111,9999);
-        const expires_at = Date.now() + 2 * 60 * 1000;
 
         // Send sms api...
         const status = await SMS.send(utils.normalizePhoneNumber(req.body.country_code,phone),value);
         if (status === 200 || process.env.MODE === 'test') {
+            const expires_at = Date.now() + 2 * 60 * 1000;
             const token = await Token.create({phone , country_code: req.body.country_code , value, expires_at});
+
             return res.status(201).json({ data: {
                 phone: token['phone'],
                     country_code:req.body.country_code,
@@ -50,7 +50,6 @@ exports.store = async (req , res) => {
                     value: (process.env.MODE === 'development' || process.env.MODE === 'test') ? value : undefined
                 }, message: 'success' });
         } else throw 'خظا در هنگام ارسال sms';
-
     } catch (exception) {
         const errors = utils.getErrors(exception);
         return res.status(errors.status).json({ data: errors.errors, message: 'error' });

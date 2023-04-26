@@ -57,14 +57,14 @@ exports.forget = async (req , res , next) => {
             req.flash("error",'کد تایید قبلا ارسال شده است');
             return res.redirect('forget-password');
         }
-        await Token.deleteMany({phone});
         const value = utils.getRandomIntInclusive(1111,9999);
-        const expires_at = Date.now() + 2 * 60 * 1000;
 
         // Send sms api...
         const status = await SMS.send(utils.normalizePhoneNumber(user.country_code,phone),value);
 
         if (status === 200) {
+            await Token.deleteMany({phone});
+            const expires_at = Date.now() + 2 * 60 * 1000;
             await Token.create({phone, value, expires_at});
         } else {
             req.flash("error",'خظا در هنگام ارسال sms');
