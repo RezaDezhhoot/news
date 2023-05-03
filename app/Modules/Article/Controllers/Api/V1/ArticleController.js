@@ -1,19 +1,39 @@
 const Article = require("../../../Models/Article");
 const ArticleResource = require("../../../Resources/Api/V1/ArticleResource");
+const Redis = require('../../../../../Libraries/Redis');
 
 module.exports.index = async (req , res) => {
     const page = +req.query.page || 1 , PerPage = +req.query.per_page || 10
+
     let articles , itemNumbers , options = {$and:[{status: true}]};
 
-    if (req.query.search)
-        options.$and.push({title: {$regex: '.*' + req.query.search + '.*'}});
+    await Redis.connect();
 
-    articles = await Article.find(options)
-        .select(['_id','title','image','created_at'])
-        .sort([['created_at', 'descending']])
-        .skip((page-1)*PerPage)
-        .limit(PerPage);
-    itemNumbers = await Article.find(options).countDocuments();
+    const redis_key = `articles${page}${PerPage}${req.query.search}`;
+    let value;
+
+    if (value = await Redis.get(redis_key)) {
+        value = JSON.parse(value);
+        articles = value.items;
+        itemNumbers = value.count;
+    } else {
+        if (req.query.search)
+            options.$and.push({title: {$regex: '.*' + req.query.search + '.*'}});
+
+        articles = await Article.find(options)
+            .select(['_id','title','image','created_at'])
+            .sort([['created_at', 'descending']])
+            .skip((page-1)*PerPage)
+            .limit(PerPage);
+        itemNumbers = await Article.find(options).countDocuments();
+
+        await Redis.set(redis_key,JSON.stringify({
+            items: articles,
+            count: itemNumbers
+        }),"EX",eval(process.env.REDIS_LIFETIME) * 60 * 60);
+    }
+
+    await Redis.disconnect();
 
     let hasNextPage = PerPage * page < itemNumbers , hasPrePage = page>1 ;
 
