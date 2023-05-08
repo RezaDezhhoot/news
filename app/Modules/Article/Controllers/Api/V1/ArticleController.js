@@ -9,11 +9,11 @@ module.exports.index = async (req , res) => {
 
     await Redis.connect();
 
-    const redis_key = `articles${page}${PerPage}${req.query.search}`;
-    let value;
+    const redis_key = `articles${page}${PerPage}${req.query.search ?? null}`;
 
-    if (value = await Redis.get(redis_key)) {
-        value = JSON.parse(value);
+    let value =  await Redis.get(redis_key);
+    value = JSON.parse(value);
+    if (value) {
         articles = value.items;
         itemNumbers = value.count;
     } else {
