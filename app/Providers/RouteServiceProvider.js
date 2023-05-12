@@ -11,7 +11,7 @@ exports.loadApiRoutes = (app) => {
         '/api',
         rateLimit({
             windowMs: 3 * 60 * 60 * 1000,
-            max: 150,
+            max: 250,
             message: {
                 message: 'too many requests'
             },
