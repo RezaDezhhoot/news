@@ -22,7 +22,9 @@
                         <td><%= eval(article) + 1 %></td>
                         <td>
                             <div class="symbol symbol-30 symbol-circle">
+                              <% if(articles[article].image) { %>
                                 <img src="<%= asset(`${ARTICLE_IMAGE_FOLDER}/${articles[article].image}`)%>" >
+                               <% } %>
                             </div>
                         </td>
                         <td><%= articles[article]['title'] %></td>

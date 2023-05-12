@@ -21,7 +21,9 @@
                         <td><%= eval(category) + 1 %></td>
                         <td>
                             <div class="symbol symbol-30 symbol-circle">
-                                <img src="<%= asset(`${CATEGORY_IMAGE_FOLDER}/${categories[category].image}`)%>" >
+                                <% if(categories[category].image) { %>
+                                    <img src="<%= asset(`${CATEGORY_IMAGE_FOLDER}/${categories[category].image}`)%>" >
+                                 <% } %>
                             </div>
                         </td>
                         <td><%= categories[category]['title'] %></td>

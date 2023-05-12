@@ -23,7 +23,9 @@
                         <td><%= eval(channel) + 1 %></td>
                         <td>
                             <div class="symbol symbol-30 symbol-circle">
+                              <% if(channels[channel].image) { %>
                                 <img src="<%= asset(`${CHANNEL_IMAGE_FOLDER}/${channels[channel].image}`)%>" >
+                              <% } %>
                             </div>
                         </td>
                         <td><%= channels[channel]['title'] %></td>

@@ -22,7 +22,9 @@
                         <td><%= eval(gallery) + 1 %></td>
                         <td>
                             <div class="symbol symbol-30 symbol-circle">
+                             <% if(galleries[gallery].image) { %>
                                 <img src="<%= asset(`${GALLERY_IMAGE_FOLDER}/${galleries[gallery].image}`)%>" >
+                             <% } %>
                             </div>
                         </td>
                         <td><%= galleries[gallery]['title'] %></td>
