@@ -30,7 +30,8 @@ module.exports.index = async (req , res) => {
         await Redis.set(redis_key,JSON.stringify({
             items: articles,
             count: itemNumbers
-        }),"EX",eval(process.env.REDIS_LIFETIME) * 60 * 60);
+        }));
+        await Redis.expire(redis_key, eval(process.env.REDIS_LIFETIME) * 60 * 60);
     }
 
     await Redis.disconnect();
