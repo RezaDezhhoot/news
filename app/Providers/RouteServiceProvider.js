@@ -72,4 +72,8 @@ exports.loadAdminRoutes = (app) => {
     // Channel admin routes:
     const {routerChatAdmin} = require(path.join(appDir,'app','Modules/Chat/Routes/admin.js'));
     app.use('/admin/channels',routerChatAdmin);
+
+    // Redis admin routes:
+    const {routerRedis} = require(path.join(appDir,'app','Modules/Redis/Routes/admin.js'));
+    app.use('/admin/redis',routerRedis);
 }
