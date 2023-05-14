@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const utils = require("../utils/helpers");
+const {ADMIN, ADMINSTRATOR} = require("../app/Base/Constants/Role");
 
 passport.use(
     'login',
@@ -48,7 +49,7 @@ passport.use(
             try {
                 const user = await UserModel.findOne({ $and: [
                         {phone: utils.normalizeIranianPhoneNumber(phone)},
-                        {$or:[{role: "admin"}, {role: "administrator"}]}
+                        {$or:[{role: ADMIN}, {role: ADMINSTRATOR}]}
                     ]
                 });
                 if (!user) {
