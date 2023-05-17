@@ -65,7 +65,7 @@ module.exports.store = async (req , res) => {
         let filename = null;
         if (image.name) {
             filename = `${shortid.generate()}${image.name}`;
-            await utils.upload(image,filename,CHANNEL_IMAGE_FOLDER)
+            filename = await utils.upload(image,filename,CHANNEL_IMAGE_FOLDER)
         }
 
         await Channel.create({
@@ -124,8 +124,8 @@ module.exports.update = async (req , res) => {
         });
 
         if (image.name) {
-            const filename = `${shortid.generate()}${image.name}`;
-            await utils.upload(image,filename,CHANNEL_IMAGE_FOLDER,true,channel.image)
+            let filename = `${shortid.generate()}${image.name}`;
+            filename = await utils.upload(image,filename,CHANNEL_IMAGE_FOLDER,true,channel.image)
             channel.image = filename;
         }
         channel.title = title;

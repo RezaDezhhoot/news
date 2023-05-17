@@ -46,8 +46,8 @@ module.exports.update = async (req,res) => {
         const {full_name , password , city} = req.body;
 
         if (image.name) {
-            const filename = `${shortid.generate()}${image.name}`;
-            await utils.upload(image,filename,USER_PROFILE_IMAGE_FOLDER,true,user.image)
+            let filename = `${shortid.generate()}${image.name}`;
+            filename = await utils.upload(image,filename,USER_PROFILE_IMAGE_FOLDER,true,user.image,1)
             user.image = `${filename}`;
         }
 

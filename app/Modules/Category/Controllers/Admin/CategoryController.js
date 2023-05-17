@@ -67,7 +67,7 @@ module.exports.store = async (req , res) => {
         let filename = null;
         if (image.name) {
             filename = `${shortid.generate()}${image.name}`;
-            await utils.upload(image,filename,CATEGORY_IMAGE_FOLDER)
+            filename = await utils.upload(image,filename,CATEGORY_IMAGE_FOLDER)
         }
 
         await Category.create({
@@ -126,8 +126,8 @@ module.exports.update = async (req , res) => {
         });
 
         if (image.name) {
-            const filename = `${shortid.generate()}${image.name}`;
-            await utils.upload(image,filename,CATEGORY_IMAGE_FOLDER,true,category.image)
+            let filename = `${shortid.generate()}${image.name}`;
+            filename = await utils.upload(image,filename,CATEGORY_IMAGE_FOLDER,true,category.image,40)
             category.image = filename;
         }
         category.title = title;

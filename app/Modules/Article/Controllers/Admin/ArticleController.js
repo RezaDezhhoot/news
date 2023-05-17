@@ -67,7 +67,7 @@ module.exports.store = async (req , res) => {
         let filename = null;
         if (image.name) {
             filename = `${shortid.generate()}${image.name}`;
-            await utils.upload(image,filename,ARTICLE_IMAGE_FOLDER)
+            filename = await utils.upload(image,filename,ARTICLE_IMAGE_FOLDER)
         }
 
         await Article.create({
@@ -126,8 +126,8 @@ module.exports.update = async (req , res) => {
         });
 
         if (image.name) {
-            const filename = `${shortid.generate()}${image.name}`;
-            await utils.upload(image,filename,ARTICLE_IMAGE_FOLDER,true,article.image)
+            let filename = `${shortid.generate()}${image.name}`;
+            filename = await utils.upload(image,filename,ARTICLE_IMAGE_FOLDER,true,article.image)
             article.image = filename;
         }
         article.title = title;

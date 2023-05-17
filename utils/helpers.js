@@ -67,26 +67,49 @@ exports.abort = (code,res) => {
     });
 }
 
-exports.upload = async (file , filename , folder , with_delete_old = false , old= null) => {
+exports.upload = async (file , filename , folder , with_delete_old = false , old= null , quality = 40) => {
     const uploadPath = `${appDir}/public/storage/${folder}`;
     if (!fs.existsSync(uploadPath)) {
         await fs.promises.mkdir(uploadPath, { recursive: true })
     }
+    const file_ext = path.extname(file.name);
+    let file_name;
     if (with_delete_old && old) {
         fs.unlink(`${uploadPath}/${old}`,async (err) => {
             if (err) console.log(err);
-            await sharp(file.data).png({
-                quality: 60,
-            }).toFile(`${uploadPath}/${filename}`).catch(err => {
+        });
+        file_name = await this.uploadFIle(file,quality,uploadPath,filename,file_ext);
+    } else {
+        file_name = await this.uploadFIle(file,quality,uploadPath,filename,file_ext);
+    }
+    return file_name;
+}
+
+exports.uploadFIle = async (file , quality , uploadPath , filename , file_ext) => {
+    let file_name;
+    switch (file_ext) {
+        case '.PNG':
+        case '.png':
+            await sharp(file.data).png({quality})
+                .toFile(`${uploadPath}/${filename}`).catch(err => {
                 console.log(err);
             });
-        });
-    } else {
-        await sharp(file.data).png({
-            quality: 60,
-        }).toFile(`${uploadPath}/${filename}`).catch(err => {
-            console.log(err);
-        });
+            return filename;
+        case '.JPG':
+        case '.jpg':
+            file_name = filename.replace(file_ext,'')+'.jpeg';
+            await sharp(file.data).toFormat('jpeg').jpeg({quality})
+                .toFile(`${uploadPath}/${file_name}`).catch(err => {
+                console.log(err);
+            });
+            return file_name;
+        case '.JPEG':
+        case '.jpeg':
+            await sharp(file.data).jpeg({quality})
+                .toFile(`${uploadPath}/${filename}`).catch(err => {
+                console.log(err);
+            });
+            return filename;
     }
 }
 
