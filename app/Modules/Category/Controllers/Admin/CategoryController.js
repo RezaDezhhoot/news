@@ -71,7 +71,7 @@ module.exports.store = async (req , res) => {
         }
 
         await Category.create({
-            title , description , status , image: filename
+            title , description , status , image: filename, created_at: Date.now()
         });
 
     } catch (e) {

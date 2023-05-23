@@ -20,7 +20,7 @@ module.exports.index = async (req , res) => {
            chats = await Chat.find(options).populate(['user','reply',{
                path: 'reply',
                populate: {path: 'user' , model: 'User'}
-           }]).sort([['_id', 'descending']]).skip((page-1)*PerPage).limit(PerPage).exec();
+           }]).sort('created_at').skip((page-1)*PerPage).limit(PerPage).exec();
            itemNumbers = await Chat.find(options).countDocuments();
        }
 

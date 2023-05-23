@@ -83,7 +83,7 @@ module.exports.store = async (req, res) => {
         }
 
         await Gallery.create({
-            title , category , status , image: filename
+            title , category , status , image: filename, created_at: Date.now()
         });
     } catch (e) {
         console.log(e);
