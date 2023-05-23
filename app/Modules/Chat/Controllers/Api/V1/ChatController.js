@@ -116,7 +116,8 @@ module.exports.sendMessage = async (io , socket  , channel , data) => {
                 text: data.text,
                 user: user._id,
                 channel: channel.id,
-                reply: data.reply ? data.reply : undefined
+                reply: data.reply ? data.reply : undefined,
+                created_at: Date.now()
             });
             await Chat.populate(chat,['user','reply',{
                 path: 'reply',
