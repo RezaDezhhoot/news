@@ -122,7 +122,7 @@ module.exports.sendMessage = async (io , socket  , channel , data) => {
                 path: 'reply',
                 populate: {path: 'user' , model: 'User'}
             }]);
-            console.log(`message has been sent by client : ${socket.id} , name : ${user.full_name} , text: ${data.text}`)
+            console.log(`message has been sent by client : ${socket.id} , name : ${user.full_name} , text: ${data.text} , date : ${chat.created_at}`)
             status = 201;
         } catch (e) {
             status = 500;
