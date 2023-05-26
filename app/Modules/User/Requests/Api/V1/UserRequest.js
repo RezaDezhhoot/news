@@ -1,14 +1,15 @@
 const Yup = require('yup');
-const schema = Yup.object().shape({
-    full_name: Yup.string().required('نام الزامی می باشد').max(255,'حداکثر طول برای اسم رعایت نشده است'),
-    city: Yup.string().max(255,'حداکثر طول برای شهر رعایت نشده است'),
-    image: Yup.object().shape({
-        name: Yup.string(),
-        size: Yup.number().max(1024 * 1024 * 3,'حداکثر حجم تصویر 3 مگایایت می باشد'),
-        // mimetype: Yup.mixed().oneOf(['image/png','image/jpeg','image/jpg'],'تصویر ارسالی نامعتر'),
-    }),
-    password: Yup.string().min(6,'حداقل طول برای رمز عبور 6 کاراکتر می باشد').max(240).required('رمز عبور الزامی می باشد'),
-    floatingConfirmation: Yup.string().required().oneOf([Yup.ref('password'),null],"رمز عبور وارد شده معتبر نمی باشد"),
-});
 
-module.exports = schema;
+module.exports = (res) => {
+    return Yup.object().shape({
+        full_name: Yup.string().required(res.__("validation.required",res.__('fields.name'))).max(255,res.__("validation.max",res.__('fields.name'),255)),
+        city: Yup.string().max(255,res.__("validation.max",res.__('fields.city'),255)),
+        image: Yup.object().shape({
+            name: Yup.string(),
+            size: Yup.number().max(1,res.__("validation.max_size",res.__('fields.image'),3)),
+            // mimetype: Yup.mixed().oneOf(['image/png','image/jpeg','image/jpg'],'تصویر ارسالی نامعتر'),
+        }),
+        password: Yup.string().min(6,res.__("validation.min",res.__('fields.password'),6)).max(240,res.__("validation.max",res.__('fields.name'),240)).required(res.__("validation.required",res.__('fields.password'))),
+        floatingConfirmation: Yup.string().required(res.__("validation.required",res.__('fields.floating_confirmation'))).oneOf([Yup.ref('password'),null],res.__("validation.matches",res.__('fields.password'))),
+    });
+};

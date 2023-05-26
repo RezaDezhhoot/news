@@ -1,14 +1,14 @@
 const Yup = require('yup');
 const {validPhone} = require("../../../../../Base/Constants/Regex");
 
-const schema = Yup.object().shape({
-    full_name: Yup.string().required('نام الزامی می باشد').max(255,'حداکثر طول برای اسم رعایت نشده است'),
-    city: Yup.string().max(255,'حداکثر طول برای شهر رعایت نشده است'),
-    phone: Yup.string().required('شماره همراه الزامی می باشد').matches(validPhone,{
-        message: 'شماره همراه نامعتبر'
-    }),
-    password: Yup.string().min(6,'حداقل طول برای رمز عبور 6 کاراکتر می باشد').max(240).required('رمز عبور الزامی می باشد'),
-    floatingConfirmation: Yup.string().required().oneOf([Yup.ref('password'),null],"رمز عبور وارد شده معتبر نمی باشد"),
-});
-
-module.exports = schema;
+module.exports = (res) => {
+  return Yup.object().shape({
+      full_name: Yup.string().required(res.__("validation.required",res.__('fields.name'))).max(255,res.__("validation.max",res.__('fields.name'),255)),
+      city: Yup.string().max(255,res.__("validation.max",res.__('fields.city'),255)),
+      phone: Yup.string().required(res.__("validation.required",res.__('fields.phone'))).matches(validPhone,{
+          message: res.__("validation.pattern",res.__('fields.phone'))
+      }),
+      password: Yup.string().min(6,res.__("validation.min",res.__('fields.password'),6)).max(240,res.__("validation.max",res.__('fields.name'),240)).required(res.__("validation.required",res.__('fields.password'))),
+      floatingConfirmation: Yup.string().required(res.__("validation.required",res.__('fields.floating_confirmation'))).oneOf([Yup.ref('password'),null],res.__("validation.matches",res.__('fields.password'))),
+  });
+};

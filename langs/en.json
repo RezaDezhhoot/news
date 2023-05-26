@@ -1,0 +1,35 @@
+{
+	"general.success": "Success",
+	"general.error": "Error",
+	"general.not_found": "Not found",
+	"general.unauthorized": "Unauthorized",
+	"general.access_denied": "Access denied",
+
+	"auth.user_has_already_registered": "This number is already registered",
+	"auth.token_has_already_sent": "Token has been already sent",
+	"auth.success": "Mobile number has been validated successfully",
+	"auth.invalid_token": "Invalid verification code",
+	"auth.not_verified_mobile": "This mobile number has not been verified yet",
+	"auth.invalid_mobile_or_password": "The number or password is wrong",
+	"auth.user_not_found": "There is no user with this number",
+	"auth.password_updated": "Password edited successfully",
+
+	"validation.required": "%s is required",
+	"validation.pattern": "Invalid %s",
+	"validation.max": "The maximum length for the %s is %s",
+	"validation.max_size": "The maximum size for the %s is %sMB",
+	"validation.min": "The minimum length for the %s is %s",
+	"validation.matches": "The %s entered is not valid",
+
+	"fields.phone": "Phone",
+	"fields.name": "Full name",
+	"fields.city": "City",
+	"fields.password": "Password",
+	"fields.country_code": "Country code",
+	"fields.code": "Verification code",
+	"fields.image": "Image",
+	"fields.floating_confirmation": "Floating confirmation",
+
+	"sms.error": "Error while sending sms"
+
+}

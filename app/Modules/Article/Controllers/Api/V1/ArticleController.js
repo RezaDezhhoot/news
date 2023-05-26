@@ -50,12 +50,12 @@ module.exports.index = async (req , res) => {
                 hasPrePage,
             }
         },
-        message: 'success'
+        message: res.__('general.success')
     });
 }
 
 module.exports.show = async (req , res) => {
-    let data = {} , message = 'success' , status = 200;
+    let data = {} , message = req.__('general.success') , status = 200;
     try {
         const article = await Article.findOne({$and: [
             {_id: req.params.id},
@@ -63,11 +63,11 @@ module.exports.show = async (req , res) => {
             ]
         });
         if (! article) {
-            message = 'article not found';
+            message = req.__('general.not_found');
             status = 404;
         } else data = ArticleResource.make(article);
     } catch (e) {
-        message = 'error';
+        message = req.__('general.error');
         status = 500;
     }
     return res.status(status).json({data, message});

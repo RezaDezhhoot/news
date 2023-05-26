@@ -29,12 +29,12 @@ module.exports.index = async (req , res) => {
                 hasPrePage,
             }
         },
-        message: 'success'
+        message: req.__('general.success')
     });
 }
 
 module.exports.show = async (req , res) => {
-    let data = {} , message = 'success' , status = 200;
+    let data = {} , message = req.__('general.success') , status = 200;
     try {
         const channel = await Channel.findOne({$and: [
                 {_id: req.params.id},
@@ -42,11 +42,11 @@ module.exports.show = async (req , res) => {
             ]
         });
         if (! channel) {
-            message = 'article not found';
+            message = req.__('general.not_found');
             status = 404;
         } else data = ChannelResource.make(channel);
     } catch (e) {
-        message = 'error';
+        message = req.__('general.error');
         status = 500;
     }
     return res.status(status).json({data, message});

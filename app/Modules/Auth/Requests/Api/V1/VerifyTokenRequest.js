@@ -1,10 +1,11 @@
 const Yup = require('yup');
 const {validPhone} = require("../../../../../Base/Constants/Regex");
-const schema = Yup.object().shape({
-    phone: Yup.string().matches(validPhone,{
-        message: 'شماره همراه نامعتبر'
-    }).required('شماره همراه الزامی می باشد'),
-    code: Yup.number().required('کد تایید الزامی می باشد'),
-});
 
-module.exports = schema;
+module.exports = (res) => {
+    return Yup.object().shape({
+        phone: Yup.string().required(res.__("validation.required",res.__('fields.phone'))).matches(validPhone,{
+            message: res.__("validation.pattern",res.__('fields.phone'))
+        }),
+        code: Yup.number().required(res.__("validation.required",res.__('fields.code'))),
+    });
+};

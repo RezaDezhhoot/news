@@ -49,11 +49,11 @@ module.exports.index = async (req , res) => {
                     hasPrePage,
                 }
             },
-            message: 'success'
+            message: res.__('general.success')
         });
     } catch (e) {
         return res.status(500).json({
-            message: 'error'
+            message: res.__('general.error')
         });
     }
 }

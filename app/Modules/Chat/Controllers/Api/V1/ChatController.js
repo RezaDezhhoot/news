@@ -38,13 +38,11 @@ module.exports.index = async (req , res) => {
                    hasPrePage,
                }
            },
-           message: 'success'
+           message: req.__('general.success')
        });
    } catch (e) {
-
-       console.log(e);
        const errors = utils.getErrors(e);
-       return res.status(errors.status).json({ data: errors.errors, message: 'error' });
+       return res.status(errors.status).json({ data: errors.errors, message: req.__('general.error') });
    }
 }
 
@@ -130,7 +128,6 @@ module.exports.sendMessage = async (io , socket  , channel , data) => {
         }
     }
 
-
     users.forEach(v => {
         io.to(v.socketId).emit('getMessage',{
             data: {
@@ -143,7 +140,6 @@ module.exports.sendMessage = async (io , socket  , channel , data) => {
 
 module.exports.deleteMessage = async (io , socket  , channel , data) => {
     let status = 200;
-    let message;
     let user = users.filter((v) => {return v.socketId === socket.id})[0].user;
     try {
         if (data.chat_id && typeof user !== undefined) {
@@ -152,25 +148,18 @@ module.exports.deleteMessage = async (io , socket  , channel , data) => {
             console.log(user._id.toString() === chat.user.toString() );
             if (chat && (user._id.toString() === chat.user.toString() || user.role === ADMIN || user.role === ADMINSTRATOR) ) {
                 await Chat.findByIdAndRemove(chat._id);
-                message = 'پیام مورد نظر با موفقیت حذف شد';
-                console.log(message);
             } else {
-                message = 'پیام مورد نظر پیدا نشد';
-                console.log(message)
                 status = 404;
             }
         }
 
     } catch (e) {
         status = 500;
-        message = e;
     }
-    console.log(status);
     io.emit('deleteMessage',{
         data:{
             chat_id: data.chat_id,
             status,
-            message
         }
     })
 }

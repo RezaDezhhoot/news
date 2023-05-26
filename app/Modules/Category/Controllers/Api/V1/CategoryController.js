@@ -44,7 +44,7 @@ module.exports.index = async (req,res) =>
                 hasPrePage,
             }
         },
-        message: 'success'
+        message: res.__('general.success')
     });
 
 }

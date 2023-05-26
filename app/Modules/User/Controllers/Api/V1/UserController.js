@@ -10,14 +10,13 @@ module.exports.profile = async (req,res) => {
 
     if (!user) {
         return res.status(404).json({
-            data: 'user not found',
-            message: 'error'
+            message: req.__('general.not_found')
         });
     }
 
     return res.status(200).json({
         data: UserResource.make(user),
-        message: 'success'
+        message: req.__('general.success')
     });
 }
 
@@ -26,11 +25,11 @@ module.exports.update = async (req,res) => {
     try {
         const image = req.files ? req.files.image : {};
         if (req.body.password) {
-            await UserRequest.validate({...req.body,image}, {
+            await UserRequest(res).validate({...req.body,image}, {
                 abortEarly: false,
             });
         } else {
-            await UserRequest.validate({...req.body,image,password:'1234abc',floatingConfirmation:'1234abc'}, {
+            await UserRequest(res).validate({...req.body,image,password:'1234abc',floatingConfirmation:'1234abc'}, {
                 abortEarly: false,
             });
         }
@@ -59,10 +58,10 @@ module.exports.update = async (req,res) => {
         await user.save();
         return res.status(200).json({
             data: UserResource.make(user),
-            message: 'success'
+            message: req.__('general.success')
         });
     } catch (e) {
         const errors = utils.getErrors(e);
-        return res.status(errors.status).json({ data: errors.errors, message: 'error' });
+        return res.status(errors.status).json({ data: errors.errors, message: req.__('general.error') });
     }
 }

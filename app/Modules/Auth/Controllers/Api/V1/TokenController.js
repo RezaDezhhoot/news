@@ -8,7 +8,7 @@ const SMS = require('../../../Services/SmsService');
 exports.store = async (req , res) => {
     const errorArr = [];
     try {
-        await GetTokenRequest.validate(req.body, {
+        await GetTokenRequest(res).validate(req.body, {
             abortEarly: false,
         });
         const phone = utils.normalizeIranianPhoneNumber(req.body.phone);
@@ -16,9 +16,9 @@ exports.store = async (req , res) => {
         if (await User.findOne({ phone })) {
             errorArr.push({
                 filed: 'phone',
-                message: 'کاربر با این شماره موجود است'
+                message: res.__('auth.user_has_already_registered')
             });
-            return res.status(422).json({ data: errorArr, message: 'error' });
+            return res.status(422).json({ data: errorArr, message: res.__('general.error') });
         }
 
         if (await Token.findOne({$and:
@@ -30,9 +30,9 @@ exports.store = async (req , res) => {
         })){
             errorArr.push({
                 filed: 'code',
-                message: 'کد تایید قبلا ارسال شده است'
+                message: res.__('auth.token_has_already_sent')
             });
-            return res.status(403).json({ data: errorArr, message: 'error' });
+            return res.status(403).json({ data: errorArr, message: res.__('general.error') });
         }
         await Token.deleteMany({phone});
         const value = utils.getRandomIntInclusive(1111,9999);
@@ -48,18 +48,18 @@ exports.store = async (req , res) => {
                     country_code:req.body.country_code,
                     expires_at:token['expires_at'],
                     value: (process.env.MODE === 'development' || process.env.MODE === 'test') ? value : undefined
-                }, message: 'success' });
-        } else throw 'خظا در هنگام ارسال sms';
+                }, message: res.__('general.success') });
+        } else throw res.__('sms.error');
     } catch (exception) {
         const errors = utils.getErrors(exception);
-        return res.status(errors.status).json({ data: errors.errors, message: 'error' });
+        return res.status(errors.status).json({ data: errors.errors, message: res.__('general.error') });
     }
 }
 
 exports.verify = async (req , res) => {
     const errorArr = [];
     try {
-        await VerifyTokenRequest.validate(req.body, {
+        await VerifyTokenRequest(res).validate(req.body, {
             abortEarly: false,
         });
         const phone =  utils.normalizeIranianPhoneNumber(req.body.phone);
@@ -67,9 +67,9 @@ exports.verify = async (req , res) => {
         if (await User.findOne({ phone })) {
             errorArr.push({
                 filed: 'phone',
-                message: 'کاربر با این شماره موجود است'
+                message: res.__('auth.user_has_already_registered')
             });
-            return res.status(422).json({ data: errorArr, message: 'error' });
+            return res.status(422).json({ data: errorArr, message: res.__('general.error') });
         }
         const token = await Token.findOne({$and:
                 [
@@ -82,15 +82,15 @@ exports.verify = async (req , res) => {
         if (token){
             token.status = true;
             await token.save();
-            return res.status(200).json({ data: {phone: token['phone'],country_code:token['country_code'],result:'شماره همراه با موفقیت اعبارسنجی شد'}, message: 'success' });
+            return res.status(200).json({ data: {phone: token['phone'],country_code:token['country_code']},message: res.__('auth.success'), });
         }
         errorArr.push({
             filed: 'code',
-            message: 'کد تایید نامعتبر'
+            message: res.__('auth.invalid_token')
         });
-        return res.status(422).json({ data:errorArr, message: 'error' });
+        return res.status(422).json({ data:errorArr, message: res.__('general.error') });
     } catch (exception) {
         const errors = utils.getErrors(exception);
-        return res.status(errors.status).json({ data: errors.errors, message: 'error' });
+        return res.status(errors.status).json({ data: errors.errors, message: res.__('general.error') });
     }
 }

@@ -1,0 +1,35 @@
+{
+	"general.success": "عملیات با موفقیت انجام شد",
+	"general.error": "خظایی رخ داده است",
+	"general.not_found": "موردی یافت نشد",
+	"general.unauthorized": "ورود غیرمجاز",
+	"general.access_denied": "دسترسی محدود شده است",
+
+	"auth.user_has_already_registered": "این شماره قبلا ثبت شده است",
+	"auth.token_has_already_sent": "کد تایید قبلا ارسال شده است",
+	"auth.success": "شماره موبایل با موفقیت تایید شد",
+	"auth.invalid_token": "کد تأیید نامعتبر است",
+	"auth.not_verified_mobile": "این شماره موبایل هنوز تایید نشده است",
+	"auth.invalid_mobile_or_password": "شماره یا رمز عبور اشتباه است",
+	"auth.user_not_found": "کاربری با این شماره وجود ندارد",
+	"auth.password_updated": "رمز عبور با موفقیت ویرایش شد",
+
+	"validation.required": "%s اجباری می باشد",
+	"validation.pattern": "نامعتبر %s",
+	"validation.max": "حداکثر طول برای %s %s کارکتر می باشد",
+	"validation.max_size": "حداکثر اندازه برای %s %s مگابایت می باشد",
+	"validation.min": "حداقل طول برای %s %s کارکتر می باشد",
+	"validation.matches": "%s وارد شده معتبر نیست",
+
+	"fields.phone": "شماره همراه",
+	"fields.name": "نام کامل",
+	"fields.city": "شهر",
+	"fields.password": "رمز عبور",
+	"fields.country_code": "کد کشور",
+	"fields.code": "کد تایید",
+	"fields.image": "تصویر",
+	"fields.floating_confirmation": "تکرار رمز عبور",
+
+	"sms.error": "خظایی در هنگرام ارسال sms رخ داده است ، پس از مدتی دوباره تلاش کنید"
+
+}
