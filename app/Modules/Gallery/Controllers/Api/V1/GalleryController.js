@@ -10,7 +10,7 @@ module.exports.index = async (req , res) => {
 
     try {
         await Redis.connect();
-        const redis_key = `galleries${page}${PerPage}${req.query.search ?? null}`;
+        const redis_key = `galleries${page}${PerPage}${req.query.category}${req.query.search ?? null}`;
         let value =  await Redis.get(redis_key);
         value = JSON.parse(value);
         if (value) {
