@@ -3,8 +3,16 @@ const Channel = require('../Models/Channel');
 
 module.exports.chatChannelV1 = async (io) => {
     io.on('connection', async  socket => {
+
+        const transport = socket.conn.transport.name; // in most cases, "polling"
+
+        socket.conn.on("upgrade", () => {
+            const upgradedTransport = socket.conn.transport.name; // in most cases, "websocket"
+        });
+
         const namespace = socket.nsp.name.split('-')[1];
         const channel = await Channel.findOne({_id:namespace}).exec();
+
         if (channel && channel.status) {
             console.log(`User connected with id: ${socket.id} in ${channel.title} channel.`);
 
