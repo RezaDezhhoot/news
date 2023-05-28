@@ -6,7 +6,7 @@ module.exports = (res) => {
         city: Yup.string().max(255,res.__("validation.max",res.__('fields.city'),255)),
         image: Yup.object().shape({
             name: Yup.string(),
-            size: Yup.number().max(1,res.__("validation.max_size",res.__('fields.image'),3)),
+            size: Yup.number().max(3 * 1024 * 1024,res.__("validation.max_size",res.__('fields.image'),3)),
             // mimetype: Yup.mixed().oneOf(['image/png','image/jpeg','image/jpg'],'تصویر ارسالی نامعتر'),
         }),
         password: Yup.string().min(6,res.__("validation.min",res.__('fields.password'),6)).max(240,res.__("validation.max",res.__('fields.name'),240)).required(res.__("validation.required",res.__('fields.password'))),
