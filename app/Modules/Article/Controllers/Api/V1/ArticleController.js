@@ -3,7 +3,7 @@ const ArticleResource = require("../../../Resources/Api/V1/ArticleResource");
 const Redis = require('../../../../../Libraries/Redis');
 
 module.exports.index = async (req , res) => {
-    const page = +req.query.page || 1 , PerPage = +req.query.per_page || 10
+    const page = +req.query.page || 1 , PerPage = +req.query.per_page || 4
 
     let articles , itemNumbers , options = {$and:[{status: true}]};
 
