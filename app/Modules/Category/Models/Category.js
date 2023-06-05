@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {clearCache} = require("../../../../utils/helpers");
 
 const categorySchema = new mongoose.Schema({
     title: {
@@ -33,10 +34,10 @@ categorySchema.statics.factory = async function() {
     });
 }
 
-
-// categorySchema.pre("findOneAndDelete", function() {
-//     console.log("called!!!");
-// });
+categorySchema.pre('findOneAndDelete', async function(next) {
+    await clearCache('categories*');
+    next();
+});
 
 const Category = mongoose.model('Category', categorySchema);
 

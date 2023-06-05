@@ -6,6 +6,7 @@ const fs = require('fs');
 const sharp = require("sharp");
 const multer = require('multer');
 const User = require('../app/Modules/User/Models/User');
+const Redis = require("../app/Libraries/Redis");
 
 module.exports.normalizeIranianPhoneNumber = (phone) => {
     return phone.startsWith('9') ? '0'+phone :  phone;
@@ -131,4 +132,16 @@ exports.findUserByToken = async (data) => {
 
 exports.convertTZ = (date) => {
     return date
+}
+
+exports.clearCache = async (key) => {
+    await Redis.connect();
+
+    let keys = await Redis.keys(key, function(err , keys)  {
+        return keys;
+    });
+    if (keys.length > 0) {
+        await Redis.del(keys);
+    }
+    await Redis.disconnect();
 }

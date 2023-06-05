@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {clearCache} = require("../../../../utils/helpers");
 
 const gallerySchema = new mongoose.Schema({
     title: {
@@ -33,6 +34,11 @@ gallerySchema.statics.factory = async function(category) {
         category
     });
 }
+
+gallerySchema.pre('findOneAndDelete', async function(next) {
+    await clearCache('galleries*');
+    next();
+});
 
 const Gallery = mongoose.model('Gallery', gallerySchema);
 

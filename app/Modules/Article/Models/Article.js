@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const shortid = require("shortid");
+const Redis = require("../../../Libraries/Redis");
+const {clearCache} = require('../../../../utils/helpers');
 
 const articleSchema = new mongoose.Schema({
     title: {
@@ -33,6 +35,11 @@ articleSchema.statics.factory = async function() {
         description: 'description',
     });
 }
+
+articleSchema.pre('findOneAndDelete', async function(next) {
+    await clearCache('articles*');
+    next();
+});
 
 const Article = mongoose.model('Article', articleSchema);
 
