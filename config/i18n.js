@@ -8,7 +8,7 @@ const i18n = new I18n({
     locales: ['en','fa'],
     defaultLocale: 'en',
     directory: path.join(appDir,'langs'),
-
+    updateFiles: false
 });
 
 module.exports = i18n;
