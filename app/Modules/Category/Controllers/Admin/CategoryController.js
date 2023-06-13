@@ -7,7 +7,7 @@ const Category = require("../../Models/Category");
 
 module.exports.index = async (req , res) => {
     const page = +req.query.page || 1;
-    const PerPage = 10;
+    const PerPage = 5;
     let categories , itemNumbers;
 
     if (req.query.search) {

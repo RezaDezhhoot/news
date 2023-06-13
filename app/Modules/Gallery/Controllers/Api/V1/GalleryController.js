@@ -5,7 +5,7 @@ const Redis = require("../../../../../Libraries/Redis");
 
 module.exports.index = async (req , res) => {
     const page = +req.query.page || 1;
-    const PerPage = +req.query.per_page || 10;
+    const PerPage = +req.query.per_page || 4;
     let galleries , itemNumbers;
 
     try {

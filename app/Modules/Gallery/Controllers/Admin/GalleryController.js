@@ -9,7 +9,7 @@ const CategoryRequest = require("../../../Category/Requests/Admin/CategoryReques
 
 module.exports.index = async (req, res) => {
     const page = +req.query.page || 1;
-    const PerPage = 10;
+    const PerPage = 5;
     let galleries , itemNumbers;
 
     if (req.query.search) {

@@ -46,7 +46,7 @@ module.exports.update = async (req,res) => {
 
         if (image.name) {
             let filename = `${shortid.generate()}${image.name}`;
-            filename = await utils.upload(image,filename,USER_PROFILE_IMAGE_FOLDER,true,user.image,1)
+            filename = await utils.upload(image,filename,USER_PROFILE_IMAGE_FOLDER,true,user.image)
             user.image = `${filename}`;
         }
 
