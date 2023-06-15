@@ -10,4 +10,6 @@ router.get('/',UserController.profile);
 
 router.patch('/',UserController.update);
 
+router.delete('/',UserController.destroy);
+
 exports.userRouterV1 = router;

@@ -4,6 +4,8 @@ const UserRequest = require('../../../Requests/Api/V1/UserRequest');
 const utils = require("../../../../../../utils/helpers");
 const shortid = require("shortid");
 const {USER_PROFILE_IMAGE_FOLDER} = require("../../../../../Base/Constants/File");
+const RoleConst = require("../../../../../Base/Constants/Role");
+const Chat = require("../../../../Chat/Models/Chat");
 
 module.exports.profile = async (req,res) => {
     const user = await User.findOne({_id:req.userId});
@@ -64,4 +66,19 @@ module.exports.update = async (req,res) => {
         const errors = utils.getErrors(e);
         return res.status(errors.status).json({ data: errors.errors, message: req.__('general.error') });
     }
+}
+
+module.exports.destroy = async (req , res) => {
+    const user = await User.findOne({_id:req.userId});
+
+    if (! user) {
+        return res.status(404).json({
+            message: req.__('general.not_found')
+        });
+    }
+    await Chat.deleteMany({user: req.userId});
+    await User.findOneAndDelete({_id:req.userId});
+    return res.status(200).json({
+        message: req.__('general.success')
+    });
 }

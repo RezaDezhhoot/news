@@ -34,6 +34,17 @@ describe('/Get user',  function() {
     });
 });
 
+describe('/Delete user',  function() {
+    it('it should DELETE user', async function() {
+        let user = await User.factory();
+
+        const res = await request(app).delete("/").set({
+            "authorization": 'Bearer '+utils.makeToken(user)
+        });
+        expect(res.statusCode).toBe(200);
+    });
+});
+
 describe('/PATCH user',  function() {
     it('it should update user profile', async function() {
         let user = await User.factory();
