@@ -16,7 +16,14 @@ require(path.join(appDir,'app/Providers/RouteServiceProvider')).loadAdminRoutes(
 require(path.join(appDir,'app/Providers/SocketServiceProvider')).load(server);
 
 
+app.use(function( req, res, next){
+    return res.status(500).json({
+        'message': 'Error'
+    });
+});
+
 server.listen(process.env.PORT, () => {
     console.log(`Server running in ${process.env.APP_DOMAIN}:${process.env.PORT}`);
     console.log(`Admin panel running in ${process.env.APP_DOMAIN}:${process.env.PORT}/admin`);
 });
+
