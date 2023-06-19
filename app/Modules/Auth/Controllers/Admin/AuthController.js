@@ -18,7 +18,7 @@ exports.loginForm = (req , res, next) => {
 }
 
 exports.login = async (req , res ,next) => {
-    if (!req.body["g-recaptcha-response"] || process.env.MODE === 'test' || process.env.MODE === 'development') {
+    if (!req.body["g-recaptcha-response"] && (process.env.MODE !== 'test' && process.env.MODE !== 'development')) {
         req.flash("error",'فیلد امنیتی اجباری می باشد');
         req.flash("old_phone",req.body.phone)
         return res.redirect('login');
