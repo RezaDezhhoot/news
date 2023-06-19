@@ -26,7 +26,7 @@ exports.login = async (req , res ,next) => {
 
     const json = await GoogleRecaptcha.verify(req);
 
-    if (json.success) {
+    if (json.success || process.env.MODE === 'test' || process.env.MODE === 'development') {
         passport.authenticate("admin_login",{
             successRedirect: '/admin',
             failureRedirect: 'login',
