@@ -21,7 +21,7 @@
                                 <%}%>
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
                             <label for="status">وضعیت*</label>
                             <select class="form-control" name="status" id="status">
                                 <option value=""></option>
@@ -29,6 +29,14 @@
                                 <option value="0" <%= (oldData?.status ?? gallery.status) == false ? 'selected': '' %> >غیر فعال</option>
                             </select>
                         </div>
+                         <div class="form-group col-md-3">
+                            <label for="priority">نمایش*</label>
+                                <select class="form-control" name="priority" id="priority">
+                                    <option value=""></option>
+                                    <option value="<%= mediaVide.image %>" <%= ((oldData?.priority ?? gallery?.priority) == mediaVide.image) ? 'selected': '' %>>  نمایش تصویر </option>
+                                    <option value="<%= mediaVide.video %>" <%= (oldData?.priority  ?? gallery?.priority) == mediaVide.video ? 'selected': '' %> > نمایش ویدئو</option>
+                                </select>
+                         </div>
                         <div class="form-group col-md-6">
                             <label>تصویر </label>
                             <div class="custom-file">
@@ -41,6 +49,22 @@
                                          style="border-radius: 5px" />
                                 </div>
                             <%}%>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label>ویدئو </label>
+                            <div></div>
+                            <div class="custom-file">
+                                <input type="file" name="video" class="custom-file-input" id="video">
+                                <label class="custom-file-label" for="video">Choose file</label>
+                            </div>
+                            <% if (gallery?.video) {%>
+                                <div class="symbol symbol-40 symbol-lg-80 mt-4">
+                                      <video width="200" height="150" controls class="mr-1 mb-1 imglist" style="border-radius: 5px">
+                                        <source src="<%= asset(`${GALLERY_VIDEO_FOLDER}/${gallery?.video}`)%>" type="video/mp4">
+                                      Your browser does not support the video tag.
+                                      </video>
+                                </div>
+                           <%}%>
                         </div>
                     </div>
                 </div>

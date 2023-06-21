@@ -1,8 +1,7 @@
 const Gallery = require('../../../Models/Gallery');
-const GalleryResource = require('../../../Resources/Api/V1/GalleryResource');
+const GalleryResource = require('../../../Resources/Api/V2/GalleryResource');
 const mongoose = require('mongoose');
 const Redis = require("../../../../../Libraries/Redis");
-const {IMAGE} = require("../../../Enums/Priority");
 
 module.exports.index = async (req , res) => {
     const page = +req.query.page || 1;
@@ -20,7 +19,6 @@ module.exports.index = async (req , res) => {
         } else {
             const condition = {$and:[
                     {status: true},
-                    {priority: IMAGE},
                     {category: new mongoose.Types.ObjectId(req.query.category) }]
             };
 

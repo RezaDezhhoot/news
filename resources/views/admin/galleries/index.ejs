@@ -10,6 +10,7 @@
                 <th>#</th>
                 <th>تصویر</th>
                 <th>عنوان</th>
+                <th>نمایش</th>
                 <th>دسته بندی</th>
                 <th>وضعیت</th>
                 <th>عملیات</th>
@@ -28,6 +29,7 @@
                             </div>
                         </td>
                         <td><%= galleries[gallery]['title'] %></td>
+                        <td><%= galleries[gallery]?.priority === mediaVide.IMAGE ? 'تصویر' : 'ویدئو' %></td>
                         <td><%= galleries[gallery]?.category?.title %></td>
                         <td><%= galleries[gallery].status == true ? 'فعال' : 'غیر فعال' %></td>
                         <td>
@@ -41,7 +43,7 @@
                     </tr>
                 <% } %>
             <% } else { %>
-                <td class="text-center" colspan="8">
+                <td class="text-center" colspan="9">
                     دیتایی جهت نمایش وجود ندارد
                 </td>
             <% } %>

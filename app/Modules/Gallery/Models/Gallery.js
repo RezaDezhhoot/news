@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const {clearCache} = require("../../../../utils/helpers");
+const {VIDEO, IMAGE} = require("../Enums/Priority");
 
 const gallerySchema = new mongoose.Schema({
     title: {
@@ -21,6 +22,17 @@ const gallerySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category"
     },
+    video:{
+        type: String,
+        required: false,
+        trim: true,
+    },
+    priority:{
+        type: String,
+        default: IMAGE,
+        enum: [VIDEO,IMAGE],
+        required: false,
+    },
     created_at: {
         type: Date,
         default: Date.now()
@@ -31,6 +43,7 @@ const gallerySchema = new mongoose.Schema({
 gallerySchema.statics.factory = async function(category) {
     return await this.create({
         title: 'title',
+        priority: VIDEO,
         category
     });
 }

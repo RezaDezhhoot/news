@@ -1,11 +1,11 @@
 const path = require("path");
 const utils = require('../../../../../utils/helpers');
-const {GALLERY_IMAGE_FOLDER, CATEGORY_IMAGE_FOLDER} = require('../../../../Base/Constants/File');
+const {GALLERY_IMAGE_FOLDER, CATEGORY_IMAGE_FOLDER, GALLERY_VIDEO_FOLDER} = require('../../../../Base/Constants/File');
 const GalleryRequest = require('../../Requests/Admin/GalleryRequest');
 const shortid = require('shortid');
 const Gallery = require("../../Models/Gallery");
 const Category = require("../../../Category/Models/Category");
-const CategoryRequest = require("../../../Category/Requests/Admin/CategoryRequest");
+const {VIDEO, IMAGE} = require("../../Enums/Priority");
 
 module.exports.index = async (req, res) => {
     const page = +req.query.page || 1;
@@ -41,7 +41,11 @@ module.exports.index = async (req, res) => {
         asset: utils.asset,
         message: req.flash("success_msg"),
         error:{},
-        GALLERY_IMAGE_FOLDER
+        GALLERY_IMAGE_FOLDER,
+        mediaVide:{
+            video: VIDEO,
+            image: IMAGE
+        }
     });
 }
 
@@ -59,23 +63,34 @@ module.exports.create = async (req, res) => {
         message: req.flash("success_msg"),
         oldData: req.flash("oldData")[0],
         asset: utils.asset,
+        mediaVide:{
+            video: VIDEO,
+            image: IMAGE
+        }
     });
 }
 
 module.exports.store = async (req, res) => {
     try {
         const image = req.files ? req.files.image : {};
-        let {title, status , category}  = req.body;
-        req.flash("oldData",{title,status,category});
+        const video = req.files ? req.files.video : {};
+        let {title, status , category , priority}  = req.body;
+        req.flash("oldData",{title,status,category,priority});
 
-        await GalleryRequest.validate({...req.body,image},{
+        await GalleryRequest.validate({...req.body,image,video},{
             abortEarly: false
         });
 
         let filename = null;
-        if (image.name) {
+        if (image && image.name) {
             filename = `${shortid.generate()}${image.name}`;
             filename = await utils.upload(image,filename,GALLERY_IMAGE_FOLDER);
+        }
+
+        let video_file = null;
+        if (video && video.name) {
+            video_file = `${shortid.generate()}${video.name}`;
+            video_file = await utils.upload(video,video_file,GALLERY_VIDEO_FOLDER);
         }
 
         if (!category) {
@@ -83,7 +98,7 @@ module.exports.store = async (req, res) => {
         }
 
         await Gallery.create({
-            title , category , status , image: filename, created_at: Date.now()
+            title , category , status , image: filename,video:video_file, priority, created_at: Date.now()
         });
     } catch (e) {
         console.log(e);
@@ -116,7 +131,12 @@ module.exports.edit = async (req, res) => {
             message: req.flash("success_msg"),
             oldData: req.flash("oldData")[0],
             asset: utils.asset,
-            GALLERY_IMAGE_FOLDER
+            GALLERY_IMAGE_FOLDER,
+            GALLERY_VIDEO_FOLDER,
+            mediaVide:{
+                video: VIDEO,
+                image: IMAGE
+            }
         });
     } catch (e) {
         return utils.abort(404,res);
@@ -126,10 +146,11 @@ module.exports.edit = async (req, res) => {
 module.exports.update = async (req, res) => {
     try {
         const image = req.files ? req.files.image : {};
+        const video = req.files ? req.files.video : {};
         let {title, status , category}  = req.body;
         req.flash("oldData",{title,status,category});
 
-        await GalleryRequest.validate({...req.body,image},{
+        await GalleryRequest.validate({...req.body,image,video},{
             abortEarly: false
         });
 
@@ -138,11 +159,18 @@ module.exports.update = async (req, res) => {
             return utils.abort(404,res);
         }
 
-        if (image.name) {
+        if (image && image.name) {
             let filename = `${shortid.generate()}${image.name}`;
             filename = await utils.upload(image,filename,GALLERY_IMAGE_FOLDER,true,gallery.image)
             gallery.image = filename;
         }
+
+        if (video && video.name) {
+            let video_file = `${shortid.generate()}${video.name}`;
+            video_file = await utils.upload(video,video_file,GALLERY_VIDEO_FOLDER,true,gallery.video);
+            gallery.video = video_file;
+        }
+
         gallery.title = title;
         gallery.status = status;
 

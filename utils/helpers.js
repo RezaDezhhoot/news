@@ -111,6 +111,9 @@ exports.uploadFIle = async (file , quality , uploadPath , filename , file_ext) =
                 console.log(err);
             });
             return filename;
+        case '.mp4':
+            file.mv(`${uploadPath}/${filename}`);
+            return filename;
     }
 }
 
@@ -143,5 +146,13 @@ exports.clearCache = async (key) => {
     if (keys.length > 0) {
         await Redis.del(keys);
     }
+    await Redis.disconnect();
+}
+
+exports.redis_flush = async () => {
+    await Redis.connect();
+
+    await Redis.flushAll();
+
     await Redis.disconnect();
 }
