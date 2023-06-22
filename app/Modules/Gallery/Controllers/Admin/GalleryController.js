@@ -147,8 +147,8 @@ module.exports.update = async (req, res) => {
     try {
         const image = req.files ? req.files.image : {};
         const video = req.files ? req.files.video : {};
-        let {title, status , category}  = req.body;
-        req.flash("oldData",{title,status,category});
+        let {title, status , category , priority}  = req.body;
+        req.flash("oldData",{title,status,category,priority});
 
         await GalleryRequest.validate({...req.body,image,video},{
             abortEarly: false
@@ -171,6 +171,7 @@ module.exports.update = async (req, res) => {
             gallery.video = video_file;
         }
 
+        gallery.priority = priority;
         gallery.title = title;
         gallery.status = status;
 
