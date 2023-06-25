@@ -18,7 +18,7 @@ require(path.join(appDir,'app/Providers/SocketServiceProvider')).load(server);
 
 app.use(function( req, res, next){
     return res.status(500).json({
-        'message': 'Error'
+        'message': 'Fallback'
     });
 });
 

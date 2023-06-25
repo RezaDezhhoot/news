@@ -34,7 +34,7 @@ exports.loadApiRoutes = (app) => {
     // Gallery API routes V1:
     const {galleryRouterV1 , galleryRouterV2} = require(path.join(appDir,'app','Modules/Gallery/Routes/api.js'));
     app.use('/api/v1/galleries',galleryRouterV1);
-    app.use('/api/v21/galleries',galleryRouterV2);
+    app.use('/api/v2/galleries',galleryRouterV2);
 
     // Article API routes V1:
     const {articleRouterV1} = require(path.join(appDir,'app','Modules/Article/Routes/api.js'));
