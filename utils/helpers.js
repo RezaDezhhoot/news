@@ -111,6 +111,9 @@ exports.uploadFIle = async (file , quality , uploadPath , filename , file_ext) =
                 console.log(err);
             });
             return filename;
+        case '.flv':
+        case '.wmv':
+        case '.avi':
         case '.mp4':
             file.mv(`${uploadPath}/${filename}`);
             return filename;
