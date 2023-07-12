@@ -23,21 +23,21 @@ exports.forgetForm = (req , res , next) => {
 }
 
 exports.forget = async (req , res , next) => {
-    if (!req.body["g-recaptcha-response"]) {
-        req.flash("error",'فیلد امنیتی اجباری می باشد');
-        req.flash("old_phone",req.body.phone)
-        return res.redirect('forget-password');
-    }
+    // if (!req.body["g-recaptcha-response"]) {
+    //     req.flash("error",'فیلد امنیتی اجباری می باشد');
+    //     req.flash("old_phone",req.body.phone)
+    //     return res.redirect('forget-password');
+    // }
 
     if (!req.body["phone"]) {
         req.flash("error",'فیلد شماره هماره اجباری می باشد');
         return res.redirect('forget-password');
     }
 
-    const json = await GoogleRecaptcha.verify(req);
+    // const json = await GoogleRecaptcha.verify(req);
 
 
-    if (json.success) {
+    // if (json.success) {
         const phone = utils.normalizeIranianPhoneNumber(req.body.phone);
         let user = await User.findOne({ $and:[
                 {phone},
@@ -73,10 +73,10 @@ exports.forget = async (req , res , next) => {
 
         req.flash("success_msg",'کد ارسال شده را وارد نمایید');
         return res.redirect('reset-password?phone='+phone);
-    } else {
-        req.flash("error",'خظا در بررسی فیلد امنییتی');
-        return res.redirect('forget-password');
-    }
+    // } else {
+    //     req.flash("error",'خظا در بررسی فیلد امنییتی');
+    //     return res.redirect('forget-password');
+    // }
 }
 
 exports.resetForm = (req , res) => {
@@ -95,14 +95,14 @@ exports.resetForm = (req , res) => {
 }
 
 exports.reset = async (req , res) => {
-    if (!req.body["g-recaptcha-response"]) {
-        req.flash("error",'فیلد امنیتی اجباری می باشد');
-        req.flash("oldCode",req.body.code)
-        return res.redirect('reset-password?phone='+req.body.phone);
-    }
-    const json = await GoogleRecaptcha.verify(req);
+    // if (!req.body["g-recaptcha-response"]) {
+    //     req.flash("error",'فیلد امنیتی اجباری می باشد');
+    //     req.flash("oldCode",req.body.code)
+    //     return res.redirect('reset-password?phone='+req.body.phone);
+    // }
+    // const json = await GoogleRecaptcha.verify(req);
 
-    if (json.success) {
+    // if (json.success) {
         try {
             await ResetPasswordRequest.validate(req.body, {
                 abortEarly: true,
@@ -140,8 +140,8 @@ exports.reset = async (req , res) => {
             req.flash("error",e.errors[0]);
             return res.redirect('reset-password?phone='+req.body.phone);
         }
-    }  else {
-        req.flash("error",'خظا در بررسی فیلد امنییتی');
-        return res.redirect('reset-password?phone='+phone);
-    }
+    // }  else {
+    //     req.flash("error",'خظا در بررسی فیلد امنییتی');
+    //     return res.redirect('reset-password?phone='+phone);
+    // }
 }
