@@ -18,24 +18,24 @@ exports.loginForm = (req , res, next) => {
 }
 
 exports.login = async (req , res ,next) => {
-    if (!req.body["g-recaptcha-response"] && (process.env.MODE !== 'test' && process.env.MODE !== 'development')) {
-        req.flash("error",'فیلد امنیتی اجباری می باشد');
-        req.flash("old_phone",req.body.phone)
-        return res.redirect('login');
-    }
+    // if (!req.body["g-recaptcha-response"] && (process.env.MODE !== 'test' && process.env.MODE !== 'development')) {
+    //     req.flash("error",'فیلد امنیتی اجباری می باشد');
+    //     req.flash("old_phone",req.body.phone)
+    //     return res.redirect('login');
+    // }
+    //
+    // const json = await GoogleRecaptcha.verify(req);
 
-    const json = await GoogleRecaptcha.verify(req);
-
-    if (json.success || process.env.MODE === 'test' || process.env.MODE === 'development') {
+    // if (json.success || process.env.MODE === 'test' || process.env.MODE === 'development') {
         passport.authenticate("admin_login",{
             successRedirect: '/admin',
             failureRedirect: 'login',
             failureFlash: true
         })(req,res,next);
-    } else {
-        req.flash("error",'خظا در بررسی فیلد امنییتی');
-        return res.redirect('login');
-    }
+    // } else {
+    //     req.flash("error",'خظا در بررسی فیلد امنییتی');
+    //     return res.redirect('login');
+    // }
 }
 
 exports.logout = (req , res , next) => {
