@@ -12,6 +12,7 @@ module.exports.collection = (galleries) => {
             'title': v.title,
             'media_type': priority,
             'media': priority === VIDEO ? ( v?.video ? utils.asset(GALLERY_VIDEO_FOLDER + '/' + v?.video) : null) : v.image ? utils.asset(GALLERY_IMAGE_FOLDER + '/' + v.image) : null,
+            'image': v.image ? utils.asset(GALLERY_IMAGE_FOLDER + '/' + v.image) : null,
             'created_at': utils.convertTZ(v.created_at),
         }
     } );

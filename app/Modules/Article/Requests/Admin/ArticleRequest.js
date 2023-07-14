@@ -7,7 +7,12 @@ const schema = Yup.object().shape({
         name: Yup.string(),
         size: Yup.number().max(1024 * 1024 * 3,'حداکثر حجم تصویر 3 مگایایت می باشد'),
         mimetype: Yup.mixed().oneOf(['image/png','image/jpeg','image/jpg'],'تصویر ارسالی نامعتر'),
-    })
+    }),
+    video: Yup.object().shape({
+        name: Yup.string(),
+        size: Yup.number().max(1024 * 1024 * 100,'حداکثر حجم ویدئو 3 مگایایت می باشد'),
+        mimetype: Yup.mixed().oneOf(['video/mp4','video/x-msvideo','video/x-flv','video/x-ms-wmv'],'ویدئو ارسالی نامعتر'),
+    }),
 });
 
 module.exports = schema;

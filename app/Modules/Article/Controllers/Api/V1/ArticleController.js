@@ -21,7 +21,7 @@ module.exports.index = async (req , res) => {
             options.$and.push({title: {$regex: '.*' + req.query.search + '.*'}});
 
         articles = await Article.find(options)
-            .select(['_id','title','image','created_at'])
+            .select(['_id','title','image','priority','video','created_at'])
             .sort([['created_at', 'descending']])
             .skip((page-1)*PerPage)
             .limit(PerPage);

@@ -81,16 +81,16 @@ module.exports.store = async (req, res) => {
             abortEarly: false
         });
 
-        let filename = null;
-        if (image && image.name) {
-            filename = `${shortid.generate()}${image.name}`;
-            filename = await utils.upload(image,filename,GALLERY_IMAGE_FOLDER);
-        }
-
         let video_file = null;
         if (video && video.name) {
             video_file = `${shortid.generate()}${video.name}`;
             video_file = await utils.upload(video,video_file,GALLERY_VIDEO_FOLDER);
+        }
+
+        let filename = null;
+        if (image && image.name) {
+            filename = `${shortid.generate()}${image.name}`;
+            filename = await utils.upload(image,filename,GALLERY_IMAGE_FOLDER,false,null,(priority === VIDEO) ? 90 : 20);
         }
 
         if (!category) {
@@ -159,16 +159,16 @@ module.exports.update = async (req, res) => {
             return utils.abort(404,res);
         }
 
-        if (image && image.name) {
-            let filename = `${shortid.generate()}${image.name}`;
-            filename = await utils.upload(image,filename,GALLERY_IMAGE_FOLDER,true,gallery.image)
-            gallery.image = filename;
-        }
-
         if (video && video.name) {
             let video_file = `${shortid.generate()}${video.name}`;
             video_file = await utils.upload(video,video_file,GALLERY_VIDEO_FOLDER,true,gallery.video);
             gallery.video = video_file;
+        }
+
+        if (image && image.name) {
+            let filename = `${shortid.generate()}${image.name}`;
+            filename = await utils.upload(image,filename,GALLERY_IMAGE_FOLDER,true,gallery.image,(priority === VIDEO) ? 90 : 20)
+            gallery.image = filename;
         }
 
         gallery.priority = priority;

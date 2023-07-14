@@ -36,6 +36,7 @@ describe('/Get galleries',  function() {
             properties: {
                 _id: { type: 'string' },
                 title: { type: 'string' },
+                image: {},
                 media_type: { type: 'string' },
                 media: {},
                 created_at: { type: 'string' },
@@ -45,11 +46,10 @@ describe('/Get galleries',  function() {
 
         const res = await request(app).get(`/?category=${category._id}`)
         expect(res.statusCode).toBe(200);
-        console.log(...res.body.data.galleries)
         expect(...res.body.data.galleries).toMatchSchema(schema);
         expect(res.body.data).toBeDefined();
         expect(res.body.data.galleries).toBeDefined();
-        expect(res.body.data.galleries.length).toBeGreaterThan(0);
+        expect(res.body.data.galleries.length).toEqual(1);
 
     });
 });

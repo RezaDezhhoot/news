@@ -10,6 +10,7 @@
                 <th>#</th>
                 <th>تصویر</th>
                 <th>عنوان</th>
+                <th>نمایش</th>
                 <th>وضعیت</th>
                 <th>تاریخ انتشار</th>
                 <th>عملیات</th>
@@ -28,6 +29,7 @@
                             </div>
                         </td>
                         <td><%= articles[article]['title'] %></td>
+                        <td><%= articles[article]?.priority === mediaVide.image ? 'تصویر' : 'ویدئو' %></td>
                         <td><%= articles[article].status == true ? 'منتشر شده' : 'پیشنویس' %></td>
                         <td><%= formatDate(articles[article]['created_at']) %></td>
                         <td>

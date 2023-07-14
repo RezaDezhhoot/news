@@ -23,13 +23,12 @@ afterAll(async () => {
 describe('/Get articles',  function() {
     it('it should GET all the articles', async function() {
         await Article.factory();
-        await Article.factory();
 
         const res = await request(app).get("/");
         expect(res.statusCode).toBe(200);
         expect(res.body.data).toBeDefined();
         expect(res.body.data.articles).toBeDefined();
-        expect(res.body.data.articles.length).toBeGreaterThan(0);
+        expect(res.body.data.articles.length).toEqual(1);
     });
 });
 
@@ -43,6 +42,8 @@ describe('/Get article',  function() {
         expect(res.body.data.body).toBeDefined();
         expect(res.body.data.image).toBeDefined();
         expect(res.body.data.created_at).toBeDefined();
+        expect(res.body.data.media).toBeDefined();
+        expect(res.body.data.media_type).toBeDefined();
     });
 });
 

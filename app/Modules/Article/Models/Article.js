@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const shortid = require("shortid");
 const Redis = require("../../../Libraries/Redis");
 const {clearCache} = require('../../../../utils/helpers');
+const {IMAGE, VIDEO} = require("../Enums/Priority");
 
 const articleSchema = new mongoose.Schema({
     title: {
@@ -23,6 +24,17 @@ const articleSchema = new mongoose.Schema({
         default: true,
         enum: [true,false]
     },
+    video:{
+        type: String,
+        required: false,
+        trim: true,
+    },
+    priority:{
+        type: String,
+        default: IMAGE,
+        enum: [VIDEO,IMAGE],
+        required: false,
+    },
     created_at: {
         type: Date,
         default: Date.now()
@@ -32,6 +44,7 @@ const articleSchema = new mongoose.Schema({
 articleSchema.statics.factory = async function() {
     return await this.create({
         title: 'title',
+        priority: VIDEO,
         description: 'description',
     });
 }

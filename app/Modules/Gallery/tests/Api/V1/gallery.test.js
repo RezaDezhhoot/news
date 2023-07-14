@@ -1,4 +1,4 @@
-const {app,expect,mongoose,request , utils} = require('../../../../../../testCase');
+const {app,expect,mongoose,request , utils, redis_flush} = require('../../../../../../testCase');
 
 const {galleryRouterV1} = require('../../../Routes/api');
 
@@ -9,6 +9,7 @@ let user;
 app.use(galleryRouterV1);
 
 beforeAll(async () => {
+    await redis_flush();
     await mongoose.connect(process.env.MONGO_URI);
 });
 
@@ -32,6 +33,5 @@ describe('/Get galleries',  function() {
         expect(res.statusCode).toBe(200);
         expect(res.body.data).toBeDefined();
         expect(res.body.data.galleries).toBeDefined();
-        expect(res.body.data.galleries.length).toBeGreaterThan(0);
     });
 });

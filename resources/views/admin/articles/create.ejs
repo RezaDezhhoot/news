@@ -12,7 +12,7 @@
                             <label for="title">عنوان*</label>
                             <input value="<%= oldData?.title %>" type="text" name="title" id="title" class="form-control">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
                             <label for="status">وضعیت*</label>
                             <select class="form-control" name="status" id="status">
                                 <option value=""></option>
@@ -20,6 +20,14 @@
                                 <option value="0" <%= (oldData?.status) == false ? 'selected': '' %> >پیشنویس</option>
                             </select>
                         </div>
+                        <div class="form-group col-md-3">
+                                                                            <label for="priority">نمایش*</label>
+                                                                            <select class="form-control" name="priority" id="priority">
+                                                                                <option value=""></option>
+                                                                                <option value="<%= mediaVide.image %>" <%= ((oldData?.priority) == mediaVide.image) ? 'selected': '' %>>  نمایش تصویر </option>
+                                                                                <option value="<%= mediaVide.video %>" <%= (oldData?.priority) == mediaVide.video ? 'selected': '' %> > نمایش ویدئو</option>
+                                                                            </select>
+                                                                        </div>
                         <div class="form-group col-md-6">
                             <label>تصویر </label>
                             <div></div>
@@ -28,6 +36,14 @@
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                             </div>
                         </div>
+                        <div class="form-group col-md-8">
+                                                                            <label>ویدئو </label>
+                                                                            <div></div>
+                                                                            <div class="custom-file">
+                                                                                <input type="file" name="video" class="custom-file-input" id="video">
+                                                                                <label class="custom-file-label" for="video">Choose file</label>
+                                                                            </div>
+                                                                        </div>
                         <div class="form-group col-12">
                             <label for="description">متن اصلی*</label>
                             <textarea rows="10" class="form-control" name="description" id="description"><%= oldData?.description %></textarea>
