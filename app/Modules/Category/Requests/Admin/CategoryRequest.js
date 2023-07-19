@@ -5,7 +5,7 @@ const schema = Yup.object().shape({
     status: Yup.mixed().required('فیلذ وضعیت الزامی می باشد').oneOf(['0','1'],'وضعیت انتخاب شده نامعتبر می باشد'),
     image: Yup.object().shape({
         name: Yup.string(),
-        size: Yup.number().max(1024 * 1024 * 3,'حداکثر حجم تصویر 3 مگایایت می باشد'),
+        size: Yup.number().max(1024 * 1024 * 50,'حداکثر حجم تصویر 50 مگایایت می باشد'),
         mimetype: Yup.mixed().oneOf(['image/png','image/jpeg','image/jpg'],'تصویر ارسالی نامعتر'),
     })
 });
