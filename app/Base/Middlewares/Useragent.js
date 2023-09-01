@@ -2,7 +2,7 @@ exports.ApiHeaders = (req, res, next) => {
     const userAgent = req.useragent;
     console.log(userAgent);
     if (
-        ((userAgent.isiPhone || userAgent.isiPhoneNative || userAgent.isiPod || userAgent.isiPad || userAgent.isAndroid || userAgent.isAndroidNative ))
+        (userAgent.browser === 'Dart' && ! userAgent.isBot)
         || (userAgent.isBot === 'postman' && process.env.MODE === 'development') ) {
         return next();
     } else {
