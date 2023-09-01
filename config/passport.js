@@ -11,11 +11,14 @@ const I18n = require('./i18n');
 passport.use(
     'login',
     new localStrategy({
+            passReqToCallback: true,
             usernameField: 'phone',
             passwordField: 'password'
         },
-        async(phone, password, done) => {
+        async(req,phone, password, done) => {
             try {
+                I18n.setLocale(I18n.getLocale(req));
+
                 const user = await UserModel.findOne({ phone: utils.normalizeIranianPhoneNumber(phone) });
                 if (!user) {
                     return done(null, false, { message: I18n.__('auth.invalid_mobile_or_password') });
@@ -33,7 +36,6 @@ passport.use(
 
                 return done(null, user, { message: I18n.__('auth.login') });
             } catch (error) {
-                console.log(11);
                 return done(error);
             }
         }
@@ -43,16 +45,20 @@ passport.use(
 passport.use(
     'admin_login',
     new localStrategy({
+            passReqToCallback: true,
             usernameField: 'phone',
             passwordField: 'password'
         },
-        async(phone, password, done) => {
+        async(req,phone, password, done) => {
             try {
                 const user = await UserModel.findOne({ $and: [
                         {phone: utils.normalizeIranianPhoneNumber(phone)},
                         {$or:[{role: ADMIN}, {role: ADMINSTRATOR}]}
                     ]
                 });
+
+                I18n.setLocale(I18n.getLocale(req));
+
                 if (!user) {
                     return done(null, false, { message: I18n.__('auth.invalid_mobile_or_password') });
                 }
@@ -69,7 +75,6 @@ passport.use(
 
                 return done(null, user, { message: I18n.__('auth.login') });
             } catch (error) {
-                console.log(11);
                 return done(error);
             }
         }

@@ -2,21 +2,18 @@ const path = require('path');
 const appDir = path.dirname(require.main.filename);
 const {Headers} = require('../Base/Middlewares/Headers');
 const SetWebLocal = require('../Base/Middlewares/SetWebLocal');
+const Useragent = require('../Base/Middlewares/Useragent');
 const rateLimit = require("express-rate-limit");
 
 exports.loadApiRoutes = (app) => {
     // Set global headers:
-    app.use('/api',Headers);
-
-    app.use(
-        '/api',
-        rateLimit({
-            windowMs: 3 * 60 * 60 * 1000,
-            max: 250,
-            message: {
-                message: 'too many requests'
-            },
-            headers: true,
+    app.use('/api',Headers,Useragent.ApiHeaders,rateLimit({
+        windowMs: 3 * 60 * 60 * 1000,
+        max: 150,
+        message: {
+            message: 'too many requests'
+        },
+        headers: true,
         })
     );
 
@@ -51,7 +48,7 @@ exports.loadApiRoutes = (app) => {
 }
 
 exports.loadAdminRoutes = (app) => {
-    app.use('/admin',SetWebLocal);
+    app.use('/admin',Useragent.AdminHeaders,SetWebLocal);
 
     // Authentication admin routes:
     const {routerAdmin} = require(path.join(appDir,'app','Modules/Auth/Routes/admin.js'));

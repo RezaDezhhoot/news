@@ -22,4 +22,6 @@ exports.load = (app) => {
     require(path.join(LibraryDir,'I18n.js')).useByApp(app);
 
     require(path.join(LibraryDir,'cookieParser.js')).useByApp(app);
+
+    require(path.join(LibraryDir,'Useragent.js')).useByApp(app);
 }

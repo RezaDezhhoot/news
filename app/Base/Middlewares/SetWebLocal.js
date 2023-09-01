@@ -9,5 +9,6 @@ module.exports = (req, res, next) => {
         local = req.cookies.lang;
     }
     res.setLocale(local);
+    req.setLocale(local);
     next();
 }
