@@ -9,9 +9,7 @@ exports.ApiHeaders = (req, res, next) => {
 
 exports.AdminHeaders = (req, res, next) => {
     const userAgent = req.useragent;
-    if (
-        (userAgent.isFirefox || userAgent.isSafari || userAgent.isChromeOS || userAgent.isChrome ||
-            (userAgent.isBot === 'postman' && process.env.MODE === 'development'))
+    if ((userAgent.isFirefox || userAgent.isSafari || userAgent.isChromeOS || userAgent.isChrome)
         && ! userAgent.isBot ) {
         return next();
     } else {
