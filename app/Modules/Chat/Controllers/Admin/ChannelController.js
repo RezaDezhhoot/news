@@ -17,12 +17,12 @@ module.exports.index = async (req , res) => {
     itemNumbers = await Channel.find(options).countDocuments();
 
     res.render(path.join('admin/channels/index'),{
-        page_title:'مدیریت کانال های گفتوگو',
+        page_title: res.__('admin.channels.title'),
         path: "index",
         active: "channels",
         has_action: true,
         action_url : 'channels/create',
-        action_title : 'کانال جدید',
+        action_title : res.__('admin.channels.create'),
         channels,
         formatDate:utils.formatDate,
         currentPage: page,
@@ -35,13 +35,16 @@ module.exports.index = async (req , res) => {
         asset: utils.asset,
         message: req.flash("success_msg"),
         error:{},
-        CHANNEL_IMAGE_FOLDER
+        CHANNEL_IMAGE_FOLDER,
+        language: utils.getLocale(req),
+        direction: utils.getDirection(req),
+        assetsDirection: utils.getAssetsDirection(req),
     });
 }
 
 module.exports.create = async (req , res) => {
     res.render(path.join('admin/channels/create'),{
-        page_title:' مدیریت کانال های گفتوگو '+ ' | ' + 'کانال جدید',
+        page_title: res.__('admin.channels.create'),
         path: "create",
         active: "channels",
         has_action: false,
@@ -49,6 +52,8 @@ module.exports.create = async (req , res) => {
         message: req.flash("success_msg"),
         oldData: req.flash("oldData")[0],
         asset: utils.asset,
+        direction: utils.getDirection(req),
+        assetsDirection: utils.getAssetsDirection(req),
     });
 }
 
@@ -78,7 +83,7 @@ module.exports.store = async (req , res) => {
         return res.redirect(`/admin/channels/create`);
     }
 
-    req.flash("success_msg",'اظلاعات با موفقیت ذحیره شد');
+    req.flash("success_msg",res.__('admin.general.messages.saved'));
     req.flash("oldData",null);
     return res.redirect(`/admin/channels`);
 }
@@ -91,7 +96,7 @@ module.exports.edit = async (req , res) => {
         }
 
         res.render(path.join('admin/channels/edit'),{
-            page_title:' مدیریت کانال های گفتوگو '+ ' | ' + channel.title,
+            page_title: res.__('admin.channels.title') + ' | ' + channel.title,
             path: "edit",
             active: "channels",
             has_action: false,
@@ -100,7 +105,9 @@ module.exports.edit = async (req , res) => {
             message: req.flash("success_msg"),
             oldData: req.flash("oldData")[0],
             asset: utils.asset,
-            CHANNEL_IMAGE_FOLDER
+            CHANNEL_IMAGE_FOLDER,
+            direction: utils.getDirection(req),
+            assetsDirection: utils.getAssetsDirection(req),
         });
     } catch (e) {
         return utils.abort(404,res);
@@ -137,7 +144,7 @@ module.exports.update = async (req , res) => {
         const errors = utils.getErrors(e);
         req.flash("error",errors['errors']);
     }
-    req.flash("success_msg",'اظلاعات با موفقیت ذحیره شد');
+    req.flash("success_msg",res.__('admin.general.messages.saved'));
     req.flash("oldData",null);
     return res.redirect(`/admin/channels/edit/${req.params.id}`);
 }

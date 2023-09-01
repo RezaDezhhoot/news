@@ -1,6 +1,7 @@
 const path = require('path');
 const appDir = path.dirname(require.main.filename);
 const {Headers} = require('../Base/Middlewares/Headers');
+const SetWebLocal = require('../Base/Middlewares/SetWebLocal');
 const rateLimit = require("express-rate-limit");
 
 exports.loadApiRoutes = (app) => {
@@ -50,6 +51,8 @@ exports.loadApiRoutes = (app) => {
 }
 
 exports.loadAdminRoutes = (app) => {
+    app.use('/admin',SetWebLocal);
+
     // Authentication admin routes:
     const {routerAdmin} = require(path.join(appDir,'app','Modules/Auth/Routes/admin.js'));
     app.use('/admin/auth',routerAdmin);

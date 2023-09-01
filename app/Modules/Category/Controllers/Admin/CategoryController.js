@@ -19,12 +19,12 @@ module.exports.index = async (req , res) => {
     }
 
     res.render(path.join('admin/categories/index'),{
-        page_title:'مدیریت دسته بندی ها',
+        page_title: res.__('admin.categories.title'),
         path: "index",
         active: "categories",
         has_action: true,
         action_url : 'categories/create',
-        action_title : 'دسته بندی جدید',
+        action_title : res.__('admin.categories.create'),
         categories,
         formatDate:utils.formatDate,
         currentPage: page,
@@ -37,13 +37,15 @@ module.exports.index = async (req , res) => {
         asset: utils.asset,
         message: req.flash("success_msg"),
         error:{},
-        CATEGORY_IMAGE_FOLDER
+        CATEGORY_IMAGE_FOLDER,
+        direction: utils.getDirection(req),
+        assetsDirection: utils.getAssetsDirection(req),
     });
 }
 
 module.exports.create = (req , res) => {
     res.render(path.join('admin/categories/create'),{
-        page_title:' مدیریت دسته بندی ها '+ ' | ' + 'دسته جدید',
+        page_title: res.__('admin.categories.create'),
         path: "create",
         active: "categories",
         has_action: false,
@@ -51,6 +53,8 @@ module.exports.create = (req , res) => {
         message: req.flash("success_msg"),
         oldData: req.flash("oldData")[0],
         asset: utils.asset,
+        direction: utils.getDirection(req),
+        assetsDirection: utils.getAssetsDirection(req),
     });
 }
 
@@ -80,7 +84,7 @@ module.exports.store = async (req , res) => {
         return res.redirect(`/admin/categories/create`);
     }
 
-    req.flash("success_msg",'اظلاعات با موفقیت ذحیره شد');
+    req.flash("success_msg",res.__('admin.general.messages.saved'));
     req.flash("oldData",null);
     return res.redirect(`/admin/categories`);
 }
@@ -93,7 +97,7 @@ module.exports.edit = async (req , res) => {
         }
 
         res.render(path.join('admin/categories/edit'),{
-            page_title:' مدیریت دسته بندی ها '+ ' | ' + category.title,
+            page_title: res.__('admin.categories.title') + ' | ' + category.title,
             path: "edit",
             active: "categories",
             has_action: false,
@@ -102,7 +106,9 @@ module.exports.edit = async (req , res) => {
             message: req.flash("success_msg"),
             oldData: req.flash("oldData")[0],
             asset: utils.asset,
-            CATEGORY_IMAGE_FOLDER
+            CATEGORY_IMAGE_FOLDER,
+            direction: utils.getDirection(req),
+            assetsDirection: utils.getAssetsDirection(req),
         });
     } catch (e) {
         return utils.abort(404,res);
@@ -138,7 +144,7 @@ module.exports.update = async (req , res) => {
         const errors = utils.getErrors(e);
         req.flash("error",errors['errors']);
     }
-    req.flash("success_msg",'اظلاعات با موفقیت ذحیره شد');
+    req.flash("success_msg",res.__('admin.general.messages.saved'));
     req.flash("oldData",null);
     return res.redirect(`/admin/categories/edit/${req.params.id}`);
 }

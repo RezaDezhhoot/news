@@ -8,12 +8,12 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>تصویر</th>
-                <th>عنوان</th>
-                <th>نمایش</th>
-                <th>دسته بندی</th>
-                <th>وضعیت</th>
-                <th>عملیات</th>
+                <th><%= __('admin.fields.image') %></th>
+                <th><%= __('admin.fields.title') %></th>
+                <th><%= __('admin.fields.view') %></th>
+                <th><%= __('admin.fields.category') %></th>
+                <th><%= __('admin.fields.status') %></th>
+                <th><%= __('admin.fields.actions') %></th>
             </tr>
             </thead>
             <tbody>
@@ -29,9 +29,9 @@
                             </div>
                         </td>
                         <td><%= galleries[gallery]['title'] %></td>
-                        <td><%= galleries[gallery]?.priority === mediaVide.image ? 'تصویر' : 'ویدئو' %></td>
+                        <td><%= galleries[gallery]?.priority === mediaVide.image ? __('admin.media_types.image') : __('admin.media_types.video') %></td>
                         <td><%= galleries[gallery]?.category?.title %></td>
-                        <td><%= galleries[gallery].status == true ? 'فعال' : 'غیر فعال' %></td>
+                        <td><%= galleries[gallery].status == true ? __('admin.statuses.published') : __('admin.statuses.draft') %></td>
                         <td>
                             <a type="button" class="btn btn-sm btn-default btn-text-primary btn-hover-primary btn-icon mr-2" href="galleries/edit/<%= galleries[gallery]['id'] %>">
                                 <i class="flaticon2-edit"></i>
@@ -44,7 +44,7 @@
                 <% } %>
             <% } else { %>
                 <td class="text-center" colspan="9">
-                    دیتایی جهت نمایش وجود ندارد
+                    <%= __('admin.general.no_data') %>
                 </td>
             <% } %>
             </tbody>
@@ -55,17 +55,17 @@
 <script>
     function deleteItem(id) {
         Swal.fire({
-            title: 'حذف!',
-            text: 'آیا از حذف گالری اطمینان دارید؟',
+            title: "<%= __('admin.actions.delete')%>",
+            text: "<%= __('admin.general.delete_confirm')%>",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            cancelButtonText: 'خیر',
-            confirmButtonText: 'بله'
+            cancelButtonText: "<%= __('admin.actions.cancel')%>",
+            confirmButtonText: "<%= __('admin.actions.confirm')%>",
         }).then((result) => {
             if (result.value) {
-                window.location.href = "galleries/delete/"+id;
+                window.location.href = "articles/delete/"+id;
             }
         })
     }

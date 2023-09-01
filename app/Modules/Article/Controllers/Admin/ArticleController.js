@@ -20,12 +20,12 @@ module.exports.index = async (req , res) => {
     }
 
     res.render(path.join('admin/articles/index'),{
-        page_title:'مدیریت مقالات',
+        page_title: res.__('admin.articles.title'),
         path: "index",
         active: "articles",
         has_action: true,
         action_url : 'articles/create',
-        action_title : 'مقاله جدید',
+        action_title : res.__('admin.articles.create'),
         articles,
         formatDate:utils.formatDate,
         currentPage: page,
@@ -42,13 +42,16 @@ module.exports.index = async (req , res) => {
         mediaVide:{
             video: VIDEO,
             image: IMAGE
-        }
+        },
+        language: utils.getLocale(req),
+        direction: utils.getDirection(req),
+        assetsDirection: utils.getAssetsDirection(req),
     });
 }
 
 module.exports.create = (req , res) => {
     res.render(path.join('admin/articles/create'),{
-        page_title:' مدیریت دسته بندی ها '+ ' | ' + 'دسته جدید',
+        page_title: res.__('admin.articles.create'),
         path: "create",
         active: "articles",
         has_action: false,
@@ -56,10 +59,13 @@ module.exports.create = (req , res) => {
         message: req.flash("success_msg"),
         oldData: req.flash("oldData")[0],
         asset: utils.asset,
+        language: utils.getLocale(),
         mediaVide:{
             video: VIDEO,
             image: IMAGE
-        }
+        },
+        direction: utils.getDirection(req),
+        assetsDirection: utils.getAssetsDirection(req),
     });
 }
 
@@ -99,7 +105,7 @@ module.exports.store = async (req , res) => {
         return res.redirect(`/admin/articles/create`);
     }
 
-    req.flash("success_msg",'اظلاعات با موفقیت ذحیره شد');
+    req.flash("success_msg",res.__('admin.general.messages.saved'));
     req.flash("oldData",null);
     return res.redirect(`/admin/articles`);
 }
@@ -112,7 +118,7 @@ module.exports.edit = async (req , res) => {
         }
 
         res.render(path.join('admin/articles/edit'),{
-            page_title:' مدیریت  مقالات '+ ' | ' + article.title,
+            page_title: res.__('admin.articles.title') + ' | ' + article.title,
             path: "edit",
             active: "articles",
             has_action: false,
@@ -121,12 +127,15 @@ module.exports.edit = async (req , res) => {
             message: req.flash("success_msg"),
             oldData: req.flash("oldData")[0],
             asset: utils.asset,
+            language: utils.getLocale(req),
             ARTICLE_IMAGE_FOLDER,
             ARTICLE_VIDEO_FOLDER,
             mediaVide:{
                 video: VIDEO,
                 image: IMAGE
-            }
+            },
+            direction: utils.getDirection(req),
+            assetsDirection: utils.getAssetsDirection(req),
         });
     } catch (e) {
         return utils.abort(404,res);
@@ -171,7 +180,7 @@ module.exports.update = async (req , res) => {
         const errors = utils.getErrors(e);
         req.flash("error",errors['errors']);
     }
-    req.flash("success_msg",'اظلاعات با موفقیت ذحیره شد');
+    req.flash("success_msg",res.__('admin.general.messages.saved'));
     req.flash("oldData",null);
     return res.redirect(`/admin/articles/edit/${req.params.id}`);
 }

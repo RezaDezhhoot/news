@@ -13,6 +13,7 @@
 	"auth.invalid_mobile_or_password": "The number or password is wrong",
 	"auth.user_not_found": "There is no user with this number",
 	"auth.password_updated": "Password edited successfully",
+	"auth.login": "Login was successful",
 
 	"validation.required": "%s is required",
 	"validation.pattern": "Invalid %s",
@@ -30,6 +31,81 @@
 	"fields.image": "Image",
 	"fields.floating_confirmation": "Floating confirmation",
 
-	"sms.error": "Error while sending sms"
+	"sms.error": "Error while sending sms",
 
+	"admin.panel": "Admin panel",
+
+	"admin.fields.title": "Title",
+	"admin.fields.status": "Status",
+	"admin.fields.view": "View content",
+	"admin.fields.image": "Image",
+	"admin.fields.video": "Video",
+	"admin.fields.body": "Body",
+	"admin.fields.published_at": "Published at",
+	"admin.fields.actions": "Actions",
+	"admin.fields.category": "Category",
+	"admin.fields.color": "Color",
+	"admin.fields.sub_title": "Sub title",
+	"admin.fields.name": "Name",
+	"admin.fields.phone": "Phone",
+	"admin.fields.role": "Role",
+	"admin.fields.city": "City",
+	"admin.fields.password": "Password",
+	"admin.fields.registration_date": "Date of registration",
+	"admin.fields.code": "Verification code",
+	"admin.fields.floating_confirmation": "Floating confirmation",
+
+	"admin.statuses.published": "Published",
+	"admin.statuses.draft": "Draft",
+
+	"admin.statuses.active": "Active",
+	"admin.statuses.deactivate": "Deactivate",
+
+	"admin.media_types.video": "View Video",
+	"admin.media_types.image": "View image",
+
+	"admin.actions.save": "Save",
+	"admin.actions.cancel": "Cancel",
+	"admin.actions.delete": "Delete!",
+	"admin.actions.confirm": "Confirm",
+	"admin.actions.search": "Search!",
+	"admin.actions.login": "Login",
+	"admin.actions.send": "Send",
+	"admin.actions.forget_password": "Forget password",
+	"admin.actions.reset_password": "Reset password",
+	"admin.actions.login_age": "Login page",
+
+	"admin.articles.title": "Article management",
+	"admin.articles.create": "Create new article",
+
+	"admin.categories.title": "Category management",
+	"admin.categories.create": "Create new category",
+
+	"admin.galleries.title": "Gallery management",
+	"admin.galleries.create": "Create new Gallery",
+
+	"admin.channels.title": "Channel management",
+	"admin.channels.create": "Channel new Gallery",
+
+	"admin.users.title": "User management",
+
+	"admin.general.no_data": "There is no data to display",
+	"admin.general.delete_confirm": "Are you sure you want to delete this item?",
+	"admin.general.messages.saved": "Data saved successfully",
+	"admin.general.messages.error": "Error",
+	"admin.general.messages.info.empty_password": "No change is applied if left",
+	"admin.general.messages.info.enter_code": "Enter the code sent",
+	"admin.general.messages.success.reset_password": "Password edited successfully",
+
+	"admin.sidebar.users": "Users",
+	"admin.sidebar.categories": "Categories",
+	"admin.sidebar.galleries": "Galleries",
+	"admin.sidebar.articles": "Articles",
+	"admin.sidebar.channels": "Channels",
+	"admin.sidebar.clear_cache": "Clear cache",
+	"admin.sidebar.logout": "Logout",
+	"admin.sidebar.languages": "Languages",
+
+	"admin.auth.login": "Admin login",
+	"admin.auth.forget_password": "Forget password"
 }

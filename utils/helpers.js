@@ -7,6 +7,7 @@ const sharp = require("sharp");
 const multer = require('multer');
 const User = require('../app/Modules/User/Models/User');
 const Redis = require("../app/Libraries/Redis");
+const I18n = require('../config/i18n');
 
 module.exports.normalizeIranianPhoneNumber = (phone) => {
     return phone.startsWith('9') ? '0'+phone :  phone;
@@ -58,8 +59,8 @@ module.exports.makeToken = (user) => {
     );
 }
 
-exports.formatDate = date => {
-    return moment(date).locale("fa").format("D MMM YYYY");
+exports.formatDate = (date , local = null) => {
+    return moment(date).locale(local).format("D MMM YYYY");
 }
 
 exports.abort = (code,res) => {
@@ -122,6 +123,24 @@ exports.uploadFIle = async (file , quality , uploadPath , filename , file_ext) =
 
 exports.asset = (file) => {
     return `${process.env.APP_URL}/storage/${file}`;
+}
+
+exports.getLocale = (req = null) => {
+    return req.query.lang ?? req.cookies.lang ?? null;
+}
+
+exports.getDirection = (req = null) => {
+    if (this.getLocale(req) === 'fa') {
+        return 'rtl';
+    }
+    return 'ltr';
+}
+
+exports.getAssetsDirection = (req = null) => {
+    if (this.getLocale(req) === 'fa') {
+        return '.rtl';
+    }
+    return '';
 }
 
 exports.findUserByToken = async (data) => {

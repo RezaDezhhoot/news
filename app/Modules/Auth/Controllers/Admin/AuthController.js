@@ -2,17 +2,20 @@ const path = require("path");
 const passport = require('passport');
 const appDir = path.dirname(require.main.filename);
 const GoogleRecaptcha = require('../../Services/GoogleRecaptcha');
+const utils = require("../../../../../utils/helpers");
 
 exports.loginForm = (req , res, next) => {
     res.render(path.join('admin/auth/login'),
         {
-            page_title:'ورود مدیریت',
+            page_title: res.__('admin.auth.login'),
             layout: path.join(appDir,'resources','views','layouts','auth'),
             path: "/login",
             message: req.flash("success_msg"),
             error: req.flash("error"),
             oldPhone: req.flash("old_phone"),
-            site_key: process.env.RECAPTCHA_SITE_KEY
+            site_key: process.env.RECAPTCHA_SITE_KEY,
+            direction: utils.getDirection(req),
+            assetsDirection: utils.getAssetsDirection(req),
         }
     );
 }

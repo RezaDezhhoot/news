@@ -6,6 +6,7 @@ const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const utils = require("../utils/helpers");
 const {ADMIN, ADMINSTRATOR} = require("../app/Base/Constants/Role");
+const I18n = require('./i18n');
 
 passport.use(
     'login',
@@ -17,7 +18,7 @@ passport.use(
             try {
                 const user = await UserModel.findOne({ phone: utils.normalizeIranianPhoneNumber(phone) });
                 if (!user) {
-                    return done(null, false, { message: 'کاربری با این شماره همراه یافت نشد' });
+                    return done(null, false, { message: I18n.__('auth.invalid_mobile_or_password') });
                 }
 
                 const isMatch = await bcrypt.compare(password,user.password);
@@ -26,11 +27,11 @@ passport.use(
                     return done(null,user);
                 } else {
                     return done(null,false,{
-                        message: "نام کاربری یا کلمه عبور صحیح نمی باشد"
+                        message: I18n.__('auth.invalid_mobile_or_password')
                     });
                 }
 
-                return done(null, user, { message: 'ورود با موفقیت انجام شد' });
+                return done(null, user, { message: I18n.__('auth.login') });
             } catch (error) {
                 console.log(11);
                 return done(error);
@@ -53,7 +54,7 @@ passport.use(
                     ]
                 });
                 if (!user) {
-                    return done(null, false, { message: 'کاربری با این شماره همراه یافت نشد' });
+                    return done(null, false, { message: I18n.__('auth.invalid_mobile_or_password') });
                 }
 
                 const isMatch = await bcrypt.compare(password,user.password);
@@ -62,11 +63,11 @@ passport.use(
                     return done(null,user);
                 } else {
                     return done(null,false,{
-                        message: "نام کاربری یا کلمه عبور صحیح نمی باشد"
+                        message: I18n.__('auth.invalid_mobile_or_password')
                     });
                 }
 
-                return done(null, user, { message: 'ورود با موفقیت انجام شد' });
+                return done(null, user, { message: I18n.__('auth.login') });
             } catch (error) {
                 console.log(11);
                 return done(error);

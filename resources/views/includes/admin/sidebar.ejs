@@ -10,32 +10,32 @@
     </div>
     <div class="aside-nav d-flex flex-column align-items-center flex-column-fluid pb-10">
         <ul class="nav flex-column">
-            <li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="کاربران">
+            <li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="<%= __('admin.sidebar.users') %>">
                 <a href="/admin" class="nav-link btn btn-icon btn-lg btn-borderless <%= active === 'users' ? 'active' : '' %>">
 					<i class="flaticon2-user"></i>
                 </a>
             </li>
-			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="دسته بندی ها">
+			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="<%= __('admin.sidebar.categories') %>">
 				<a href="/admin/categories" class="nav-link btn btn-icon btn-lg btn-borderless <%= active === 'categories' ? 'active' : '' %>">
 					<i class="flaticon-list-2"></i>
 				</a>
 			</li>
-			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="گالری">
+			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="<%= __('admin.sidebar.galleries') %>">
 				<a href="/admin/galleries" class="nav-link btn btn-icon btn-lg btn-borderless <%= active === 'galleries' ? 'active' : '' %>">
 					<i class="flaticon2-image-file"></i>
 				</a>
 			</li>
-			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="مقالات">
+			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="<%= __('admin.sidebar.articles') %>">
 				<a href="/admin/articles" class="nav-link btn btn-icon btn-lg btn-borderless <%= active === 'articles' ? 'active' : '' %>">
 					<i class="flaticon2-writing"></i>
 				</a>
 			</li>
-			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="چنل های گفتوگو">
+			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="<%= __('admin.sidebar.channels') %>">
 				<a href="/admin/channels" class="nav-link btn btn-icon btn-lg btn-borderless <%= active === 'channels' ? 'active' : '' %>">
 					<i class="flaticon2-group"></i>
 				</a>
 			</li>
-			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="پاگسازی کش">
+			<li class="nav-item mb-2" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="<%= __('admin.sidebar.clear_cache') %>">
             				<a href="/admin/redis/flush" class="nav-link btn btn-icon btn-lg btn-borderless">
             					<i class="fas fa-box-open"></i>
             				</a>
@@ -43,8 +43,41 @@
         </ul>
     </div>
     <div class="aside-footer d-flex flex-column align-items-center flex-column-auto py-8">
-        <a href="/admin/auth/logout" class="btn btn-icon btn-lg btn-borderless mb-1" id="kt_quick_panel_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="خروج">
+        <a href="/admin/auth/logout" class="btn btn-icon btn-lg btn-borderless mb-1" id="kt_quick_panel_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="<%= __('admin.sidebar.logout') %>">
                 <i class="flaticon-logout"></i>
         </a>
+		<!--begin::Languages-->
+		<div class="dropdown" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="<%= __('admin.sidebar.languages') %>">
+			<a href="#" class="btn btn-icon btn-lg btn-borderless" data-toggle="dropdown" data-offset="0px,0px">
+				<img class="w-20px h-20px rounded" src="assets/media/svg/flags/icons8-language-96.png" alt="image" />
+			</a>
+			<!--begin::Dropdown-->
+			<div class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-left">
+				<!--begin::Nav-->
+				<ul class="navi navi-hover py-4">
+					<!--begin::Item-->
+					<li class="navi-item">
+						<a href="?lang=en" class="navi-link">
+                                        <span class="symbol symbol-20 mr-3">
+												<img src="assets/media/svg/flags/en.svg" alt="" />
+											</span>
+							<span class="navi-text">English</span>
+						</a>
+					</li>
+					<!--end::Item-->
+					<li class="navi-item">
+						<a href="?lang=fa" class="navi-link">
+                                        <span class="symbol symbol-20 mr-3">
+												<img src="assets/media/svg/flags/fa.svg" alt="" />
+											</span>
+							<span class="navi-text">فارسی</span>
+						</a>
+					</li>
+				</ul>
+				<!--end::Nav-->
+			</div>
+			<!--end::Dropdown-->
+		</div>
+		<!--end::Languages-->
     </div>
 </div>

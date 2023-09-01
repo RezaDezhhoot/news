@@ -9,19 +9,19 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-12">
-                            <label for="title">عنوان*</label>
+                            <label for="title"><%= __('admin.fields.title') %>*</label>
                             <input value="<%= oldData?.title  ?? category.title %>" type="text" name="title" id="title" class="form-control">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="status">وضعیت*</label>
+                            <label for="status"><%= __('admin.fields.status') %>*</label>
                             <select class="form-control" name="status" id="status">
                                 <option value=""></option>
-                                <option value="1" <%= ((oldData?.status ?? category.status) == true) ? 'selected': '' %> >فعال</option>
-                                <option value="0" <%= (oldData?.status ?? category.status ) == false ? 'selected': '' %> >غیر فعال</option>
+                                <option value="1" <%= ((oldData?.status ?? category.status) == true) ? 'selected': '' %> ><%= __('admin.statuses.published') %></option>
+                                <option value="0" <%= (oldData?.status ?? category.status ) == false ? 'selected': '' %> ><%= __('admin.statuses.draft') %></option>
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label>تصویر </label>
+                            <label><%= __('admin.fields.image') %> </label>
                             <div class="custom-file">
                                 <input type="file" name="image" class="custom-file-input" id="customFile">
                                 <label class="custom-file-label" for="customFile">Choose file</label>
@@ -34,14 +34,14 @@
                             <%}%>
                         </div>
                         <div class="form-group col-12">
-                            <label for="description">توضیحات</label>
+                            <label for="description"><%= __('admin.fields.body') %></label>
                             <textarea rows="10" class="form-control" name="description" id="description"><%= oldData?.description ?? category.description %></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary mr-2">دخیره <i class="fa fa-save"></i></button>
-                    <a href="/admin/categories"  class="btn btn-secondary">بازگشت <i class="fa fa-times"></i></a>
+                    <button type="submit" class="btn btn-primary mr-2"><%= __('admin.actions.save') %> <i class="fa fa-save"></i></button>
+                    <a href="/admin/categories"  class="btn btn-secondary"><%= __('admin.actions.cancel') %> <i class="fa fa-times"></i></a>
                 </div>
             </form>
         </div>

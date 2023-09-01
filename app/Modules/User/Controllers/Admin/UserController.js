@@ -20,7 +20,7 @@ exports.index = async (req,res) => {
     }
 
     res.render(path.join('admin/users/index'),{
-        page_title:'مدیریت کاربران',
+        page_title: res.__('admin.users.title'),
         path: "index",
         active: "users",
         has_action: false,
@@ -34,7 +34,10 @@ exports.index = async (req,res) => {
         lastPage: Math.ceil(userNumbers/userPerPage),
         search:req.query.search,
         asset: utils.asset,
-        USER_PROFILE_IMAGE_FOLDER
+        USER_PROFILE_IMAGE_FOLDER,
+        language: utils.getLocale(req),
+        direction: utils.getDirection(req),
+        assetsDirection: utils.getAssetsDirection(req),
     });
 }
 
@@ -46,7 +49,7 @@ exports.edit = async (req,res) => {
         }
 
         res.render(path.join('admin/users/edit'),{
-            page_title:' مدیریت کاربران '+ ' | ' + user.full_name ?? user.phone,
+            page_title: res.__('admin.users.title') + ' | ' + user.full_name ?? user.phone,
             path: "edit",
             active: "users",
             has_action: false,
@@ -55,7 +58,9 @@ exports.edit = async (req,res) => {
             message: req.flash("success_msg"),
             oldData: req.flash("oldData")[0],
             asset: utils.asset,
-            USER_PROFILE_IMAGE_FOLDER
+            USER_PROFILE_IMAGE_FOLDER,
+            direction: utils.getDirection(req),
+            assetsDirection: utils.getAssetsDirection(req),
         });
     } catch (e) {
         return utils.abort(404,res);
@@ -107,7 +112,7 @@ exports.update = async (req,res) => {
         req.flash("error",errors['errors']);
     }
 
-    req.flash("success_msg",'اظلاعات با موفقیت ذحیره شد');
+    req.flash("success_msg",res.__('admin.general.messages.saved'));
     req.flash("oldData",null);
     return res.redirect(`/admin/edit/${req.params.id}`);
 }

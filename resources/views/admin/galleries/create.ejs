@@ -9,36 +9,36 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-lg-6 col-12">
-                            <label for="title">عنوان*</label>
+                            <label for="title"><%= __('admin.fields.title') %>*</label>
                             <input value="<%= oldData?.title %>" type="text" name="title" id="title" class="form-control">
                         </div>
                         <div class="form-group col-12 col-lg-6">
-                            <label for="category">دسته این تصویر</label>
+                            <label for="title"><%= __('admin.fields.category') %>*</label>
                             <select class="form-control select2 " id="category" name="category">
-                                <option value="">انتخاب</option>
+                                <option value=""></option>
                                 <% for (let category in categories) { %>
                                     <option <%= oldData?.category === categories[category]['id'] ? 'selected' : '' %> value="<%=categories[category]._id %>"> <%=categories[category]['title'] %></option>
                                 <%}%>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="status">وضعیت*</label>
+                            <label for="status"><%= __('admin.fields.status') %>*</label>
                             <select class="form-control" name="status" id="status">
                                 <option value=""></option>
-                                <option value="1" <%= ((oldData?.status) == true) ? 'selected': '' %> >فعال</option>
-                                <option value="0" <%= (oldData?.status) == false ? 'selected': '' %> >غیر فعال</option>
+                                <option value="1" <%= ((oldData?.status) == true) ? 'selected': '' %> ><%= __('admin.statuses.published') %></option>
+                                <option value="0" <%= (oldData?.status) == false ? 'selected': '' %> > <%= __('admin.statuses.draft') %></option>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                                                    <label for="priority">نمایش*</label>
+                            <label for="priority"><%= __('admin.fields.view') %>*</label>
                                                     <select class="form-control" name="priority" id="priority">
                                                         <option value=""></option>
-                                                        <option value="<%= mediaVide.image %>" <%= ((oldData?.priority) == mediaVide.image) ? 'selected': '' %>>  نمایش تصویر </option>
-                                                        <option value="<%= mediaVide.video %>" <%= (oldData?.priority) == mediaVide.video ? 'selected': '' %> > نمایش ویدئو</option>
+                                                        <option value="<%= mediaVide.image %>" <%= ((oldData?.priority) == mediaVide.image) ? 'selected': '' %>>   <%= __('admin.media_types.image') %> </option>
+                                                        <option value="<%= mediaVide.video %>" <%= (oldData?.priority) == mediaVide.video ? 'selected': '' %> > <%= __('admin.media_types.video') %></option>
                                                     </select>
                                                 </div>
                         <div class="form-group col-md-6">
-                            <label>تصویر </label>
+                            <label><%= __('admin.fields.image') %> </label>
                             <div></div>
                             <div class="custom-file">
                                 <input type="file" name="image" class="custom-file-input" id="customFile">
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-8">
-                                                    <label>ویدئو </label>
+                            <label><%= __('admin.fields.video') %> </label>
                                                     <div></div>
                                                     <div class="custom-file">
                                                         <input type="file" name="video" class="custom-file-input" id="video">
@@ -56,8 +56,8 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary mr-2">دخیره <i class="fa fa-save"></i></button>
-                    <a href="/admin/galleries"  class="btn btn-secondary">بازگشت <i class="fa fa-times"></i></a>
+                    <button type="submit" class="btn btn-primary mr-2"><%= __('admin.actions.save') %> <i class="fa fa-save"></i></button>
+                    <a href="/admin/galleries"  class="btn btn-secondary"><%= __('admin.actions.cancel') %> <i class="fa fa-times"></i></a>
                 </div>
             </form>
         </div>

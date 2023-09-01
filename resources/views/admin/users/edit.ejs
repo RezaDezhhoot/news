@@ -9,19 +9,19 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label for="full_name">نام کاربر*</label>
+                            <label for="full_name"> <%= __('admin.fields.name') %>*</label>
                             <input value="<%= oldData?.full_name ?? user.full_name%>" type="text" name="full_name" id="full_name" class="form-control">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="full_name">شهر*</label>
+                            <label for="full_name"> <%= __('admin.fields.city') %>*</label>
                             <input value="<%= oldData?.city ?? user.city%>" type="text" name="city" id="city" class="form-control">
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="phone">شماره همراه*</label>
+                            <label for="full_name"> <%= __('admin.fields.phone') %>*</label>
                             <input disabled value="<%= oldData?.phone ?? user.phone%>" type="text" name="phone" id="phone" class="form-control">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="role">نقش*</label>
+                            <label for="full_name"> <%= __('admin.fields.role') %>*</label>
                             <select <%= (user?.role) === 'administrator' ? 'disabled': '' %> class="form-control" name="role" id="role">
                                 <option value=""></option>
                                 <option value="admin" <%= (oldData?.role ?? user?.role) === 'admin' ? 'selected': '' %> >admin</option>
@@ -32,7 +32,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="status">وضعیت*</label>
+                            <label for="full_name"> <%= __('admin.fields.status') %>*</label>
                             <select class="form-control" name="status" id="status">
                                 <option value=""></option>
                                 <option value="1" <%= ((oldData?.status ?? user?.status) == true) ? 'selected': '' %> >فعال</option>
@@ -40,12 +40,12 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="password">رمز عبور</label>
+                            <label for="full_name"> <%= __('admin.fields.password') %>*</label>
                             <input value="" type="password" name="password" id="password" class="form-control">
-                            <small class="text-info">در صورت رها کردن تغییری اعمال نمی شود</small>
+                            <small class="text-info"><%= __('admin.general.messages.info.empty_password') %></small>
                         </div>
                         <div class="form-group col-12">
-                            <label>تصویر پروفایل</label>
+                            <label for="full_name"> <%= __('admin.fields.image') %>*</label>
                             <div class="custom-file">
                                 <input type="file" name="image" class="custom-file-input" id="customFile">
                                 <label class="custom-file-label" for="customFile">Choose file</label>
@@ -60,8 +60,8 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary mr-2">دخیره <i class="fa fa-save"></i></button>
-                    <a href="/admin"  class="btn btn-secondary">بازگشت <i class="fa fa-times"></i></a>
+                    <button type="submit" class="btn btn-primary mr-2"><%= __('admin.actions.save') %> <i class="fa fa-save"></i></button>
+                    <a href="/admin"  class="btn btn-secondary"><%= __('admin.actions.cancel') %> <i class="fa fa-times"></i></a>
                 </div>
             </form>
         </div>

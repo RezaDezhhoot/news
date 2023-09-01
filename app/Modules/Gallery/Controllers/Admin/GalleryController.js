@@ -23,12 +23,12 @@ module.exports.index = async (req, res) => {
     }
 
     res.render(path.join('admin/galleries/index'),{
-        page_title:'مدیریت گالری',
+        page_title: res.__('admin.galleries.title'),
         path: "index",
         active: "galleries",
         has_action: true,
         action_url : 'galleries/create',
-        action_title : 'گالری جدید',
+        action_title :res.__('admin.galleries.create'),
         galleries,
         formatDate:utils.formatDate,
         currentPage: page,
@@ -45,7 +45,9 @@ module.exports.index = async (req, res) => {
         mediaVide:{
             video: VIDEO,
             image: IMAGE
-        }
+        },
+        direction: utils.getDirection(req),
+        assetsDirection: utils.getAssetsDirection(req),
     });
 }
 
@@ -54,7 +56,7 @@ module.exports.create = async (req, res) => {
     const categories = await Category.find({status:true});
 
     res.render(path.join('admin/galleries/create'),{
-        page_title:' مدیریت گالری '+ ' | ' + 'گالری جدید',
+        page_title: res.__('admin.galleries.create'),
         path: "create",
         active: "galleries",
         categories,
@@ -66,7 +68,9 @@ module.exports.create = async (req, res) => {
         mediaVide:{
             video: VIDEO,
             image: IMAGE
-        }
+        },
+        direction: utils.getDirection(req),
+        assetsDirection: utils.getAssetsDirection(req),
     });
 }
 
@@ -107,7 +111,7 @@ module.exports.store = async (req, res) => {
         return res.redirect(`/admin/galleries/create`);
     }
 
-    req.flash("success_msg",'اظلاعات با موفقیت ذحیره شد');
+    req.flash("success_msg",res.__('admin.general.messages.saved'));
     req.flash("oldData",null);
     return res.redirect(`/admin/galleries`);
 }
@@ -121,7 +125,7 @@ module.exports.edit = async (req, res) => {
         const categories = await Category.find({status:true});
 
         res.render(path.join('admin/galleries/edit'),{
-            page_title:' مدیریت گالری '+ ' | ' + gallery.title,
+            page_title: res.__('admin.galleries.title') + ' | ' + gallery.title,
             path: "edit",
             active: "galleries",
             has_action: false,
@@ -136,7 +140,9 @@ module.exports.edit = async (req, res) => {
             mediaVide:{
                 video: VIDEO,
                 image: IMAGE
-            }
+            },
+            direction: utils.getDirection(req),
+            assetsDirection: utils.getAssetsDirection(req),
         });
     } catch (e) {
         return utils.abort(404,res);
@@ -185,7 +191,7 @@ module.exports.update = async (req, res) => {
         const errors = utils.getErrors(e);
         req.flash("error",errors['errors']);
     }
-    req.flash("success_msg",'اظلاعات با موفقیت ذحیره شد');
+    req.flash("success_msg",res.__('admin.general.messages.saved'));
     req.flash("oldData",null);
     return res.redirect(`/admin/galleries/edit/${req.params.id}`);
 }
