@@ -1,6 +1,5 @@
 exports.ApiHeaders = (req, res, next) => {
     const userAgent = req.useragent;
-    console.log(userAgent);
     if (
         (userAgent.browser === 'Dart' && ! userAgent.isBot)
         || (userAgent.isBot === 'postman' && process.env.MODE === 'development') ) {
