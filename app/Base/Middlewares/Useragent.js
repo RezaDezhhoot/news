@@ -1,7 +1,8 @@
 exports.ApiHeaders = (req, res, next) => {
     const userAgent = req.useragent;
+    console.log(userAgent);
     if (
-        ((userAgent.isiPhone || userAgent.isiPhoneNative || userAgent.isiPod || userAgent.isiPad || userAgent.isAndroid || userAgent.isAndroidNative ) && ! userAgent.isBot)
+        ((userAgent.isiPhone || userAgent.isiPhoneNative || userAgent.isiPod || userAgent.isiPad || userAgent.isAndroid || userAgent.isAndroidNative ))
         || (userAgent.isBot === 'postman' && process.env.MODE === 'development') ) {
         return next();
     } else {
