@@ -6,7 +6,6 @@ const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const utils = require("../utils/helpers");
 const {ADMIN, ADMINSTRATOR} = require("../app/Base/Constants/Role");
-const I18n = require('./i18n');
 
 passport.use(
     'login',
@@ -17,11 +16,10 @@ passport.use(
         },
         async(req,phone, password, done) => {
             try {
-                I18n.setLocale(I18n.getLocale(req));
 
                 const user = await UserModel.findOne({ phone: utils.normalizeIranianPhoneNumber(phone) });
                 if (!user) {
-                    return done(null, false, { message: I18n.__('auth.invalid_mobile_or_password') });
+                    return done(null, false, { message: req.__('auth.invalid_mobile_or_password') });
                 }
 
                 const isMatch = await bcrypt.compare(password,user.password);
@@ -30,11 +28,11 @@ passport.use(
                     return done(null,user);
                 } else {
                     return done(null,false,{
-                        message: I18n.__('auth.invalid_mobile_or_password')
+                        message: req.__('auth.invalid_mobile_or_password')
                     });
                 }
 
-                return done(null, user, { message: I18n.__('auth.login') });
+                return done(null, user, { message: req.__('auth.login') });
             } catch (error) {
                 return done(error);
             }
@@ -57,10 +55,8 @@ passport.use(
                     ]
                 });
 
-                I18n.setLocale(I18n.getLocale(req));
-
                 if (!user) {
-                    return done(null, false, { message: I18n.__('auth.invalid_mobile_or_password') });
+                    return done(null, false, { message: req.__('auth.invalid_mobile_or_password') });
                 }
 
                 const isMatch = await bcrypt.compare(password,user.password);
@@ -69,11 +65,11 @@ passport.use(
                     return done(null,user);
                 } else {
                     return done(null,false,{
-                        message: I18n.__('auth.invalid_mobile_or_password')
+                        message: req.__('auth.invalid_mobile_or_password')
                     });
                 }
 
-                return done(null, user, { message: I18n.__('auth.login') });
+                return done(null, user, { message: req.__('auth.login') });
             } catch (error) {
                 return done(error);
             }
