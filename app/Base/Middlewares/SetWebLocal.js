@@ -1,5 +1,3 @@
-const I18n = require('../../../config/i18n');
-
 module.exports = (req, res, next) => {
     let local = 'en';
     if (req.query.lang) {

@@ -7,7 +7,6 @@ const sharp = require("sharp");
 const multer = require('multer');
 const User = require('../app/Modules/User/Models/User');
 const Redis = require("../app/Libraries/Redis");
-const I18n = require('../config/i18n');
 
 module.exports.normalizeIranianPhoneNumber = (phone) => {
     return phone.startsWith('9') ? '0'+phone :  phone;
