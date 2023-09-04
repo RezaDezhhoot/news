@@ -1,4 +1,40 @@
 
+
+
+
+/*//////////////////////////////////////////////////////////////////
+[ FONT ]*/
+
+@font-face {
+  font-family: Ubuntu-Regular;
+  src: url("../../fonts/IRANSansWeb.eot");
+  /* IE */
+  src: url("../../fonts/IRANSansWeb.eot?#iefix") format("embedded-opentype"), /* IE */
+  url("../../fonts/IRANSansWeb.woff") format("woff"), /* Modern Browsers */
+  url("../../fonts/IRANSansWeb.ttf") format("truetype");
+  /* Safari, Android, iOS */
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Ubuntu-Bold;
+  src: url("../../fonts/IRANSansWeb.eot");
+  /* IE */
+  src: url("../../fonts/IRANSansWeb_Bold.woff") format("woff"), /* Modern Browsers */
+  url("../../fonts/IRANSansWeb_Bold.ttf") format("truetype");
+  /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-family: JosefinSans-Bold;
+  /* IE */
+  src: url("../../fonts/IRANSansWeb_Bold.woff") format("woff"), /* Modern Browsers */
+  url("../../fonts/IRANSansWeb_Bold.ttf") format("truetype");
+  /* Safari, Android, iOS */
+}
+
+
+
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
@@ -9,13 +45,13 @@
 }
 
 body, html {
-  height: 100%;
-  font-family: Poppins, Helvetica, "sans-serif";
+	height: 100%;
+	font-family: Ubuntu-Regular, sans-serif;
 }
 
 /*---------------------------------------------*/
 a {
-	font-family: Poppins, Helvetica, "sans-serif";
+	font-family: Ubuntu-Regular;
 	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
