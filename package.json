@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "cross-env MODE=test jest --testTimeout=10000",
-    "start": "nodemon -e ejs,js,json app.js",
+    "start": "nodemon -e ejs,js,twig,json --inspect=0.0.0.0 app.js",
     "seed": "node seeder.js"
   },
   "keywords": [],
