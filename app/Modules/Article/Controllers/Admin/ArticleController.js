@@ -59,7 +59,7 @@ module.exports.create = (req , res) => {
         message: req.flash("success_msg"),
         oldData: req.flash("oldData")[0],
         asset: utils.asset,
-        language: utils.getLocale(),
+        language: utils.getLocale(req),
         mediaVide:{
             video: VIDEO,
             image: IMAGE

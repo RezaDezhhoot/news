@@ -125,7 +125,7 @@ exports.asset = (file) => {
 }
 
 exports.getLocale = (req = null) => {
-    return req.query.lang ?? req.cookies.lang ?? null;
+    return req?.query.lang ?? req?.cookies.lang ?? null;
 }
 
 exports.getDirection = (req = null) => {

@@ -11,7 +11,6 @@ exports.ApiHeaders = (req, res, next) => {
 
 exports.AdminHeaders = (req, res, next) => {
     const userAgent = req.useragent;
-    console.log(userAgent);
     if ((userAgent.isFirefox || userAgent.isSafari || userAgent.isChromeOS || userAgent.isChrome || userAgent.isEdge || userAgent.isOpera)
         && ! userAgent.isBot ) {
         return next();

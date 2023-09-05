@@ -1,0 +1,45 @@
+version: '3'
+services:
+  nodejs-app:
+    build:
+      context: . # Use the current directory as the build context
+      dockerfile: Dockerfile # Your Node.js app's Dockerfile
+    container_name: app
+    restart: always
+    working_dir: /app
+    command: npm start
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - main
+
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - '27017:27017' # Map host port 27017 to container port 27017
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - main
+
+  redis:
+    image: redis
+    container_name: redisService
+    ports:
+      - '6379:6379' # Map host port 6379 to container port 6379
+    networks:
+      - main
+
+volumes:
+  mongo-data:
+
+networks:
+  main:
+    driver: bridge
