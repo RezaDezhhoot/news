@@ -53,6 +53,11 @@ gallerySchema.pre('findOneAndDelete', async function(next) {
     next();
 });
 
+gallerySchema.pre('save', async function(next) {
+    await clearCache('galleries*');
+    next();
+});
+
 const Gallery = mongoose.model('Gallery', gallerySchema);
 
 module.exports = Gallery;

@@ -54,6 +54,11 @@ articleSchema.pre('findOneAndDelete', async function(next) {
     next();
 });
 
+articleSchema.pre('save', async function(next) {
+    await clearCache('articles*');
+    next();
+});
+
 const Article = mongoose.model('Article', articleSchema);
 
 module.exports = Article;
