@@ -39,6 +39,11 @@ categorySchema.pre('findOneAndDelete', async function(next) {
     next();
 });
 
+categorySchema.pre('save', async function(next) {
+    await clearCache('categories*');
+    next();
+});
+
 const Category = mongoose.model('Category', categorySchema);
 
 module.exports = Category;
