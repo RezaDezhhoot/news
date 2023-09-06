@@ -9,7 +9,7 @@ const {VIDEO, IMAGE} = require("../../Enums/Priority");
 
 module.exports.index = async (req, res) => {
     const page = +req.query.page || 1;
-    const PerPage = 5;
+    const PerPage = 20;
     let galleries , itemNumbers;
 
     if (req.query.search) {
