@@ -42,7 +42,7 @@ npm run user-seeder
 ####  Run app
 you can enter the following command to run app on development mode
 ````bash
-npm start
+npm run dev
 ````
 you can Now access to the admin panel in ****APP_DOMAIN/admin/login****
 
