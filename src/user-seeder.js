@@ -1,8 +1,11 @@
+const path = require('path');
+const appDir = path.dirname(require.main.filename);
+const LibraryDir = path.join(appDir,'app','Libraries');
+require(path.join(LibraryDir,'Dotenv.js'));
+
 const connectDB = require('./config/database');
-const dotenv = require('dotenv');
 const { spawn, execSync } = require('child_process');
 const roles = require('./app/Base/Constants/Role');
-dotenv.config({path:'./.env'});
 connectDB().then((r)=>{});
 
 const User = require('./app/Modules/User/Models/User');

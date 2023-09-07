@@ -2,11 +2,13 @@
   "name": "news",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "cross-env MODE=test jest --testTimeout=10000",
-    "start": "nodemon -e ejs,js,twig,json --inspect=0.0.0.0 app.js",
-    "seed": "node seeder.js"
+    "start": "node src/app.js",
+    "dev": "nodemon -L main",
+    "user-seeder": "node src/user-seeder.js",
+    "admin-seeder": "node src/admin-sseder.js"
   },
   "keywords": [],
   "author": "",

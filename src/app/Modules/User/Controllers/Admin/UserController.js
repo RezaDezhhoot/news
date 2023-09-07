@@ -122,7 +122,7 @@ exports.destroy = async (req,res) => {
             {_id:req.params.id},
         ]});
 
-    if (!user || user.role === RoleConst.ADMINSTRATOR) {
+    if ((!user || user.role === RoleConst.ADMINSTRATOR) && process.env.MODE !== 'development') {
         return utils.abort(404,res);
     }
     await Chat.deleteMany({user: req.params.id});
