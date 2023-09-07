@@ -8,8 +8,7 @@ copy src/.env.example src/.env
 ````bash
 npm install
 ````
-### Launching the project on Docker
-#### Run docker compose up
+### Launching project on Docker
 ````bash
 ./installer.sh
 ````
@@ -18,7 +17,7 @@ Now the admin panel is available with the number ****1234**** and password ****1
 ````bash
 docker-compose logs -f nodejs-app
 ````
-### Launching the project with npm
+### Launching project with npm
 
 #### Install nodemon
 ````bash
