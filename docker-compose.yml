@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: nodejs
     container_name: app
     restart: on-failure
     working_dir: /app
@@ -77,4 +78,3 @@ volumes:
 networks:
   main:
     driver: overlay
-    name: main
