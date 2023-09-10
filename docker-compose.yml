@@ -77,3 +77,4 @@ volumes:
 networks:
   main:
     driver: overlay
+    name: main
