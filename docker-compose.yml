@@ -15,6 +15,14 @@ services:
       - mongo
       - redis
     command: npm run dev
+    deploy:
+      replicas: 1
+      update_config:
+        delay: 5s
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.hostname == slave1]
     environment:
       MONGO_URI: mongodb://admin:root@mongodb/admin?authSource=admin&directConnection=true
       REDIS_URL: redis://:@redisService:6379
@@ -34,17 +42,35 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_DATABASE: admin
       MONGO_INITDB_ROOT_PASSWORD: root
+    deploy:
+      replicas: 1
+      update_config:
+        delay: 5s
+        parallelism: 3
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.hostname == master]
     networks:
       - main
 
   redis:
-    image: redis
+    image: redis:7.2.1
     container_name: redisService
     restart: on-failure
     ports:
       - '6379:6379'
     networks:
       - main
+    deploy:
+      replicas: 1
+      update_config:
+        delay: 5s
+        parallelism: 3
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [ node.hostname == master ]
 volumes:
   mongo-data:
 
