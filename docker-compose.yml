@@ -4,14 +4,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: nodejs
+    image: node:14
     container_name: app
     restart: on-failure
     working_dir: /app
     ports:
       - '3000:3000'
     volumes:
-      - type: volume
+      - type: bind
         source: ./src
         target: /app/src
     depends_on:
@@ -31,6 +31,7 @@ services:
       REDIS_URL: redis://:@redisService:6379
     networks:
       - main
+      - swarm
 
   mongo:
     image: mongo
@@ -56,6 +57,7 @@ services:
         constraints: [node.hostname == master]
     networks:
       - main
+      - swarm
 
   redis:
     image: redis:7.2.1
@@ -65,6 +67,7 @@ services:
       - '6379:6379'
     networks:
       - main
+      - swarm
     deploy:
       replicas: 1
       update_config:
@@ -79,5 +82,8 @@ volumes:
 
 networks:
   main:
-    driver: overlay
+    driver: bridge
     name: main
+  swarm:
+    driver: bridge
+    name: swarm
