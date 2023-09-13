@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to Server
+      - name: Deploying to Server
         uses: appleboy/ssh-action@master
         with:
           username: root
@@ -17,5 +17,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
-            cd /root/news
+            cd /root/news/
+            chmod +x ./scripts/deploy.sh
             ./scripts/deploy.sh
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: |
+          docker image build --file Dockerfile --tag reza78/app:$(date +%s) .
