@@ -8,15 +8,16 @@ copy src/.env.example src/.env
 ````bash
 ./installer.sh
 ````
-Now the admin panel is available with the number ****1234**** and password ****1234****
+Now the admin panel is available with the number ****1234**** and password ****1234**** on ****APP_DOMAIN/admin/login****
 #### Service logs
 ````bash
 docker-compose logs -f nodejs-app
 ````
 ### Launching project with npm
 
-#### Install nodemon
+#### Install dependencies and nodemon
 ````bash
+npm install
 npm install -g nodemon
 ````
 ####  Add default admin panel
@@ -30,7 +31,7 @@ you can enter the following command to run app on development mode
 ````bash
 npm run dev
 ````
-you can Now access to the admin panel in ****APP_DOMAIN/admin/login****
+you can Now access to the admin panel on ****APP_DOMAIN/admin/login****
 
 ####  Add custom admin account
 Execute the following command and enter your profile information
