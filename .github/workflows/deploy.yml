@@ -12,10 +12,10 @@ jobs:
       - name: Deploying to Server
         uses: appleboy/ssh-action@master
         with:
-          username: root
-          host: 192.168.1.13
+          username: ${{ secrets.SSH_USER }}
+          host: ${{ secrets.SSH_HOST }}
           key: ${{ secrets.SSH_KEY }}
-          port: 22
+          port: ${{ secrets.SSH_PORT }}
           script: |
             cd /root/news/
             chmod +x ./scripts/deploy.sh
@@ -23,4 +23,4 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build the Docker image
         run: |
-          docker image build --file Dockerfile --tag reza78/app:$(date +%s) .
+          docker image build --file Dockerfile --tag reza78/pirouz_app .

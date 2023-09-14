@@ -9,6 +9,6 @@ echo "🟡 Update code base"
 git pull origin main
 
 echo "🟡 Install dependency based on lock file"
-npm install
+docker-compose exec nodejs-app npm install
 
 echo "🚀 Application deployed!"

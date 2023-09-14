@@ -18,6 +18,6 @@ COMPOSE_FILE="docker-compose.yml"
 docker-compose -f $COMPOSE_FILE down
 
 # Rebuild and start containers
-docker-compose -f $COMPOSE_FILE up --build -d
+docker-compose -f $COMPOSE_FILE up nodejs-app --build -d
 
 docker-compose exec nodejs-app npm run admin-seeder

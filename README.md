@@ -4,10 +4,6 @@
 ````bash
 copy src/.env.example src/.env
 ````
-### Install dependencies
-````bash
-npm install
-````
 ### Launching project on Docker
 ````bash
 ./installer.sh

@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: app
+    image: reza78/pirouz_app
     container_name: app
     restart: on-failure
     working_dir: /app
@@ -13,7 +13,8 @@ services:
     volumes:
       - type: bind
         source: ./src
-        target: /app/src
+        target: /app
+      - /app/node_modules
     depends_on:
       - mongo
       - redis
@@ -77,6 +78,7 @@ services:
         condition: on-failure
       placement:
         constraints: [ node.hostname == master ]
+
 volumes:
   mongo-data:
 
